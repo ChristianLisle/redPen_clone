@@ -4,7 +4,7 @@ Redpen is an android application that is in development for the COM S 309 course
 ## Group Members:
 * [Christian Lisle](http://christianlisle.com/)
 * [Carter Moseley](cartermoseley.com)
-* ...
+* [Jonah Decker]
 * ...
 
 [Project Proposal](https://canvas.iastate.edu/groups/134229/pages/project-proposal)
