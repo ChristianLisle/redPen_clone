@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>RedPen</groupId>
+  <groupId>UG_05</groupId>
   <artifactId>RedPen</artifactId>
   <version>1.0-SNAPSHOT</version>
 
@@ -41,9 +41,20 @@
 		</dependency>
 		
     <!-- libraries for H2 database driver - an in-memory database -->
+    <!--
 		<dependency>
 	    <groupId>com.h2database</groupId>
 	    <artifactId>h2</artifactId>
+    </dependency>
+    -->
+     
+    
+    <!-- libraries for myql driver  -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.12</version>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- libraries for hibernate -->
