@@ -15,11 +15,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button btnJsonObject = (Button) findViewById(R.id.button_string_array);
-        Button btnJsonArray = (Button) findViewById(R.id.button_string_object);
-
-
-
-
 
     }
 }
