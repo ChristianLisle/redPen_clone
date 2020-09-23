@@ -1,49 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93d37e15-711e-47fe-8a7b-1dbdc81dae09" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Experiments/Hello_Android/app/src/main/java/com/example/hello_android/HomeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/androidTest/java/com/example/hello_android/ExampleInstrumentedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/java/com/example/hello_android/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/values/colors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/app/src/test/java/com/example/hello_android/ExampleUnitTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiments/settings.gradle" beforeDir="false" />
-    </list>
+    <list default="true" id="93d37e15-711e-47fe-8a7b-1dbdc81dae09" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
