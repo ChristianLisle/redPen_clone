@@ -11,11 +11,11 @@ public class AssignmentController {
 	@Autowired
 	AssignmentDatabase db;
 	
-	@GetMapping("/assignemnt/{id}")
+	@GetMapping("/assignment/{id}")
 	Assignment getAssignment(@PathVariable Integer id) {
 		return db.findOne(id);
 	}
-	@RequestMapping("/assignment")
+	@RequestMapping("/assignments")
 	List<Assignment> hello() {
 		return db.findAll();
 	}
@@ -30,7 +30,7 @@ public class AssignmentController {
 	@PutMapping("/assignment/{id}")
 	Assignment updateAssignment(@RequestBody Assignment p, @PathVariable Integer id) {
 		Assignment old_p = db.findOne(id);
-		old_p.setDesc(p.desc);
+		old_p.setAssignmentDesc(p.assignmentDesc);
 		db.save(old_p);
 		return old_p;
 	}

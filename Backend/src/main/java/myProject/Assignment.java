@@ -13,13 +13,13 @@ class Assignment {
 	String assignment;
 	
 	@Column
-	String desc; //assignment description (homework, exam, etc.)
+	String assignmentDesc; //assignment description (homework, exam, etc.)
 	
 	public Integer getId() { return id; }
 	
 	public String getAssignment() { return assignment; }
-	public String getDesc() { return desc; }
-	public void setDesc(String desc) { this.desc = desc; }
+	public String getAssignmentDesc() { return assignmentDesc; }
+	public void setAssignmentDesc(String assignmentDesc) { this.assignmentDesc = assignmentDesc; }
 	
 	
 }
