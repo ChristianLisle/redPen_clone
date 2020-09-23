@@ -40,7 +40,7 @@ public class MyController {
 		db.delete(id);
 		return "deleted " + id;
 	}
-
+	
 }
 
 
