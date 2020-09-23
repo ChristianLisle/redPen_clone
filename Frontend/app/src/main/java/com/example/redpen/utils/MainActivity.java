@@ -1,8 +1,10 @@
-package com.example.redpen;
+package com.example.redpen.utils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.redpen.R;
 
 public class MainActivity extends AppCompatActivity {
 
