@@ -1,24 +1,26 @@
-package myProject;
+package parentToStudentSelection;
 
 import javax.persistence.*;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table (name = "parent - student selection")
 class parentToStudentSelection {
 	
 	@Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	
-	@Column
+	@NotEmpty
 	//String user;
 	String parent;
 	
-	@Column
+	@NotEmpty
 	//String role; //User role (teacher, student, or parent)
 	String student;
 	
-	@Column
+	@NotEmpty
 	Integer grade;
 	
 	public Integer getId() { return id; }
