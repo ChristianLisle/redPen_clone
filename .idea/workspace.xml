@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93d37e15-711e-47fe-8a7b-1dbdc81dae09" name="Default Changelist" comment="" />
+    <list default="true" id="93d37e15-711e-47fe-8a7b-1dbdc81dae09" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Frontend/app/src/main/java/com/example/redpen/utils/StringActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/app/src/main/java/com/example/redpen/utils/StringActivity.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
