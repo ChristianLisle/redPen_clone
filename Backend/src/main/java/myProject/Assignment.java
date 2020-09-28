@@ -1,25 +1,57 @@
 package myProject;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-class Assignment {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
-	
-	@Column
-	String assignment;
-	
-	@Column
-	String assignmentDesc; //assignment description (homework, exam, etc.)
-	
-	public Integer getId() { return id; }
-	
-	public String getAssignment() { return assignment; }
-	public String getAssignmentDesc() { return assignmentDesc; }
-	public void setAssignmentDesc(String assignmentDesc) { this.assignmentDesc = assignmentDesc; }
-	
-	
+@Table(name= "assignment")
+public class Assignment {
+
+    @Id
+    private int id;
+
+    private String name;
+
+    private String assignmentDesc;
+    
+    private int grade;
+    
+    public int getId() {
+        return id;
+    }
+    
+    public void setId(Integer id)	{
+    	this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name)	{
+    	this.name = name;
+    }
+    
+    public String getAssignmentDescription()	{
+    	return assignmentDesc;
+    }
+    
+    public void setAssignmentDescription(String description)	{
+    	this.assignmentDesc = description;
+    }
+    
+    public int getGrade()	{
+    	return grade;
+    }
+    
+    public void setGrade(int grade)	{
+    	this.grade = grade;
+    }
+    
 }
