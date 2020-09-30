@@ -43,38 +43,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jsonParseUsers(){
-        String url = "http://coms-309-ug-05.cs.iastate.edu:8080/assignments.json";
+        String url = "http://coms-309-ug-05.cs.iastate.edu:8080/users.json";
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                JSONArray users = response;
 
-                for(int i = 0; i < users.length(); i++){
+                for(int i = 0; i < response.length(); i++) {
                     try {
-                        JSONObject user = users.getJSONObject(i);
+                        JSONObject userObject = response.getJSONObject(i);
 
-                        int id = user.getInt("id");
-                        String name = user.getString("user");
-                        String role = user.getString("role");
+                        int id = userObject.getInt("id");
+                        String name = userObject.getString("user");
+                        String role = userObject.getString("role");
 
-                        resultsTextView.append("ID: " + id + ", NAME: " + name + ", ROLE: " + role);
+                        resultsTextView.append("ID: " + id + ", NAME: " + name + ", ROLE: " + role + "\n");
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
-
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+
             }
         });
 
-        queue.add(request);
+        queue.add(jsonArrayRequest);
     }
 }
