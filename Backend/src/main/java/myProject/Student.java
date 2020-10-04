@@ -8,14 +8,33 @@ import javax.persistence.*;
 class Student {
  
     @Id
-    int id;
- 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+    
+    @Column
+    String name;
+    
     @OneToMany(mappedBy = "student")
     Set<CourseRegistration> registrations;
+    
  
-    public int getId()	{
+    public Integer getId()	{
     	return id;
     }
+
+    public String getName()	{
+    	return name;
+    }
+    
+    public void setName(String name)	{
+    	this.name = name;
+    }
+    
+    /*
+    public Set<Course> getCourses()	{
+    	return registrations.getCourse();
+    }
+    */
     
     /*public Set<CourseRegistration> getCourses()	{
     	return registrations;
