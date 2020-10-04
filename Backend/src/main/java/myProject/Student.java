@@ -1,5 +1,7 @@
 package myProject;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -17,6 +19,11 @@ class Student {
     @OneToMany(mappedBy = "student")
     Set<CourseRegistration> registrations;
     
+    public Student()	{}
+    
+    public Student(String name) {
+    	this.name = name;
+    }
  
     public Integer getId()	{
     	return id;
@@ -30,15 +37,16 @@ class Student {
     	this.name = name;
     }
     
-    /*
-    public Set<Course> getCourses()	{
-    	return registrations.getCourse();
-    }
-    */
-    
-    /*public Set<CourseRegistration> getCourses()	{
-    	return registrations;
+    /*public Set<Course> getCourses()	{
+    	Set<Course> courses = Collections.emptySet();
+    	for (CourseRegistration cr : registrations) {
+    		if (this == cr.student) {
+    			courses.add(cr.getCourse());
+    		}
+    	}
+    	return courses;
     }*/
+    
     // additional properties
     // standard constructors, getters, and setters
 }

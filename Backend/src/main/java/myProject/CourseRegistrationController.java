@@ -20,12 +20,6 @@ public class CourseRegistrationController {
 		return registrations.findAll();
 	}
 	
-	@PostMapping("registration")
-	CourseRegistration createCourseRegistration(@RequestBody CourseRegistration s)	{
-		registrations.save(s);
-		return s;
-	}
-	
 	
 	/*@PutMapping("/registration/{id}")
 	CourseRegistration updateCourseRegistration(@RequestBody CourseRegistration s, @PathVariable Integer id)	{

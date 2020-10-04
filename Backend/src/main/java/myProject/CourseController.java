@@ -1,5 +1,6 @@
 package myProject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,21 @@ public class CourseController {
 	String deleteCourse(@PathVariable Integer id)	{
 		courses.delete(id);
 		return "deleted " + id;
+	}
+	
+	@Autowired
+	CourseRegistrationRepository registrar;
+	
+	@RequestMapping("/course/{id}/students")
+	List<Student> getStudents(@PathVariable Integer id)	{
+		List<Student> c = new ArrayList<Student>();
+		List<CourseRegistration> list = registrar.findAll();
+		for (CourseRegistration cr : list) {
+			if (cr.getStudent().getId() == id) {
+				c.add(cr.getStudent());
+			}
+		}
+		return c;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package myProject;
 
+import java.util.Collections;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -20,7 +21,13 @@ class Course {
     @OneToMany(mappedBy = "course")
     Set<CourseRegistration> registrations;
     
- 
+    public Course()	{}
+    
+    public Course(String name, String d)	{
+    	this.name = name;
+    	this.courseDescription = d;
+    }
+    
     public Integer getId()	{
     	return id;
     }
@@ -44,7 +51,4 @@ class Course {
     /*public Set<CourseRegistration> getRegistrations()	{
     	return registrations;
     }*/
-    
-    // additional properties
-    // standard constructors, getters, and setters
 }

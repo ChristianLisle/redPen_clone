@@ -18,8 +18,21 @@ class CourseRegistration {
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     Course course;
+    
+    boolean completed;
  
-    // int grade;
+    // int grade; TO be implemented still TODO!
+    
+    public CourseRegistration()	{}
+    
+    public CourseRegistration(Student s, Course c){
+    	this.student = s;
+    	this.course = c;
+    }
+    
+    public Integer getId()	{
+    	return id;
+    }
     
     public Student getStudent()	{ 
     	return student;
@@ -29,6 +42,15 @@ class CourseRegistration {
     	return course;
     }
     
-    // additional properties
-    // standard constructors, getters, and setters
+    // TODO: implement the following methods:
+    // TODO: getGrade()
+    // TODO: setGrade()
+    
+    public boolean getCompleted()	{
+    	return completed;
+    }
+    
+    public void complete()	{
+    	this.completed = true;
+    }
 }
