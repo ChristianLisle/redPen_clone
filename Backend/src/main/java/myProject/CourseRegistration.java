@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "registration")
-class CourseRegistration {
+public class CourseRegistration {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ class CourseRegistration {
     
     boolean completed;
  
-    // int grade; TO be implemented still TODO!
+    double grade;
     
     public CourseRegistration()	{}
     
@@ -42,9 +42,13 @@ class CourseRegistration {
     	return course;
     }
     
-    // TODO: implement the following methods:
-    // TODO: getGrade()
-    // TODO: setGrade()
+    public double getGrade()	{
+    	return grade;
+    }
+    
+    public void setGrade(double grade)	{
+    	this.grade = grade;
+    }
     
     public boolean getCompleted()	{
     	return completed;

@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-class Course {
+public class Course {
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
