@@ -7,40 +7,40 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AssignmentController {
-	
 	@Autowired
-	AssignmentDatabase db;
+	AssignmentRepository assignments;
 	
 	@GetMapping("/assignment/{id}")
-	Assignment getAssignment(@PathVariable Integer id) {
-		return db.findOne(id);
+	Assignment getAssignment(@PathVariable Integer id)	{
+		return assignments.findOne(id);
 	}
+	
 	@RequestMapping("/assignments")
-	List<Assignment> hello() {
-		return db.findAll();
+	List<Assignment> hello()	{
+		return assignments.findAll();
 	}
+	
 	
 	@PostMapping("/assignment")
-	Assignment createAssignment(@RequestBody Assignment p) {
-		db.save(p);
-		return p;
+	Assignment createAssignment(@RequestBody Assignment a)	{
+		assignments.save(a);
+		return a;
 	}
 	
-	
-	@PutMapping("/assignment/{id}")
-	Assignment updateAssignment(@RequestBody Assignment p, @PathVariable Integer id) {
-		Assignment old_p = db.findOne(id);
-		old_p.setAssignmentDesc(p.assignmentDesc);
-		db.save(old_p);
-		return old_p;
+	@PutMapping("/assignment/{id}/update")
+	Assignment updateAssignment(@RequestBody Assignment s, @PathVariable Integer id)	{
+		Assignment old_a = assignments.findOne(id);
+		old_a.setName(s.getName());
+		old_a.setAssignmentDescription(s.getAssignmentDescription());
+		assignments.save(old_a);
+		return old_a;
 	}
+	
 	
 	@DeleteMapping("/assignment/{id}")
-	String deleteAssignment(@PathVariable Integer id) {
-		db.delete(id);
+	String deleteAssignment(@PathVariable Integer id)	{
+		assignments.delete(id);
 		return "deleted " + id;
 	}
 	
 }
-
-

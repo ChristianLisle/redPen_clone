@@ -1,25 +1,62 @@
 package myProject;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
-class Assignment {
-	
+@Table(name = "assignment")
+public class Assignment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	
-	@Column
-	String assignment;
+	@ManyToOne
+	@JoinColumn(name = "course_id", nullable = false)
+	Course course;
+	
+	@OneToMany(mappedBy = "assigned")
+	Set<AssignedAssignment> assignedAssignments;
 	
 	@Column
-	String assignmentDesc; //assignment description (homework, exam, etc.)
+	String name;
 	
-	public Integer getId() { return id; }
+	@Column
+	String assignmentDescription;
 	
-	public String getAssignment() { return assignment; }
-	public String getAssignmentDesc() { return assignmentDesc; }
-	public void setAssignmentDesc(String assignmentDesc) { this.assignmentDesc = assignmentDesc; }
+	public Assignment()	{}
 	
+	public Assignment(String name, String d)	{
+		this.name = name;
+		this.assignmentDescription = d;
+	}
 	
+	public Assignment(Assignment a)	{
+		this.name = a.getName();
+		this.assignmentDescription = a.getAssignmentDescription();
+	}
+	
+	public Integer getId()	{
+    	return id;
+    }
+    
+    public String getName()	{
+    	return name;
+    }
+    
+    public void setName(String n)	{
+    	this.name = n;
+    }
+	
+    public String getAssignmentDescription()	{
+    	return assignmentDescription;
+    }
+    
+    public void setAssignmentDescription(String d)	{
+    	this.assignmentDescription = d;
+    }
+    
+    public void setCourse(Course c)	{
+    	this.course = c;
+    }
 }
