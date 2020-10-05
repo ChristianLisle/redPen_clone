@@ -21,6 +21,10 @@ public class Course {
     @OneToMany(mappedBy = "course")
     Set<CourseRegistration> registrations;
     
+    @OneToMany(mappedBy = "course")
+    Set<Assignment> assignments;
+    
+    
     public Course()	{}
     
     public Course(String name, String d)	{
@@ -46,6 +50,10 @@ public class Course {
     
     public void setCourseDescription(String d)	{
     	this.courseDescription = d;
+    }
+    
+    public Set<Assignment> getAssignments()	{
+    	return assignments;
     }
     
     /*public Set<CourseRegistration> getRegistrations()	{

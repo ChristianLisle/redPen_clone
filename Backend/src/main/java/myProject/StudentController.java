@@ -28,13 +28,15 @@ public class StudentController {
 		return s;
 	}
 
+	// Unnecessary for the time being.
+	/*
 	@PutMapping("/student/{id}")
 	Student updateStudent(@RequestBody Student s, @PathVariable Integer id) {
 		Student old_s = students.findOne(id);
 		old_s.setName(s.getName());
 		students.save(old_s);
 		return old_s;
-	}
+	}*/
 
 	@DeleteMapping("/student/{id}")
 	String deleteStudent(@PathVariable Integer id) {
@@ -47,6 +49,7 @@ public class StudentController {
 
 	@Autowired
 	CourseRegistrationRepository registrar;
+	
 
 	// Method for class registration
 	@PutMapping("/student/{id}/register/{course_id}")
@@ -54,8 +57,7 @@ public class StudentController {
 		Student student = students.findOne(id);
 		Course course = courses.findOne(course_id);
 		registrar.save(new CourseRegistration(student, course));
-		return registrar.findOne((int) registrar.count()); // Make sure that this will always return an id of the last
-															// element added (in the line above)
+		return registrar.findOne((int) registrar.count()); // count() returns the number of entities (last pos)
 	}
 
 	// Method for getting all registrations performed by student
@@ -82,6 +84,66 @@ public class StudentController {
 			}
 		}
 		return s;
+	}
+	
+	@Autowired
+	AssignmentRepository assignments;
+	
+	@Autowired
+	AssignedAssignmentRepository assignedAssignments;
+	
+	// Method assigns assignment to student
+	@PutMapping("/student/{id}/assign/{assignment_id}")
+	AssignedAssignment assignStudentAssignment(@PathVariable Integer id, @PathVariable Integer assignment_id) {
+		Student student = students.findOne(id);
+		Assignment assignment = assignments.findOne(assignment_id);
+		assignedAssignments.save(new AssignedAssignment(student, assignment));
+		return assignedAssignments.findOne((int) assignedAssignments.count()); // count() returns the number of entities (last pos)
+	}
+	
+	// Method returns a list of assignments
+	@RequestMapping("/student/{id}/assignments/overview")
+	List<Assignment> listAssignments(@PathVariable Integer id)	{
+		List<Assignment> a = new ArrayList<Assignment>();
+		List<AssignedAssignment> list = assignedAssignments.findAll();
+		for (AssignedAssignment aa : list) {
+			if (aa.getStudent().getId() == id)	{
+				a.add(aa.getAssignment());
+			}
+		}
+		return a;
+	}
+	
+	// Method returns a list of assignments with feedback/grade (assignedAssignment object)
+	@RequestMapping("/student/{id}/report")
+	List<AssignedAssignment> listAssignedAssignments(@PathVariable Integer id)	{
+		List<AssignedAssignment> a = new ArrayList<AssignedAssignment>();
+		List<AssignedAssignment> list = assignedAssignments.findAll();
+		for (AssignedAssignment aa : list) {
+			if (aa.getStudent().getId() == id)	{
+				a.add(aa);
+			}
+		}
+		return a;
+	}
+	
+	// Method returns a single assignment overview (assignment object)
+	@GetMapping("student/{id}/assignment/{assignment_id}/overview")
+	Assignment getAssignment(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
+		Assignment a = assignments.findOne(assignment_id);
+		return a;
+	}
+	
+	// Method returns a single assignment with feedback and grades (assignedAssignment object)
+	@GetMapping("student/{id}/assignment/{assignment_id}/report")
+	AssignedAssignment getAssignedAssignment(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
+		List<AssignedAssignment> list = assignedAssignments.findAll();
+		for (AssignedAssignment aa : list)	{
+			if (aa.getAssignment().getId() == assignment_id)	{
+				return aa;
+			}
+		}
+		return null;
 	}
 
 }

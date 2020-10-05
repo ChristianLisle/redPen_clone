@@ -3,6 +3,7 @@ package myProject;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class CourseController {
 	}
 	
 	
-	@PutMapping("/course/{id}")
+	@PutMapping("/course/{id}/update")
 	Course updateCourse(@RequestBody Course c, @PathVariable Integer id)	{
 		Course old_c = courses.findOne(id);
 		old_c.setName(c.getName());
@@ -52,11 +53,45 @@ public class CourseController {
 		List<Student> c = new ArrayList<Student>();
 		List<CourseRegistration> list = registrar.findAll();
 		for (CourseRegistration cr : list) {
-			if (cr.getStudent().getId() == id) {
+			if (cr.getCourse().getId() == id) {
 				c.add(cr.getStudent());
 			}
 		}
 		return c;
 	}
+	
+	
+	@Autowired
+	AssignmentRepository assignments;
+	
+	@Autowired
+	AssignedAssignmentRepository assignedAssignments;
+	
+	@RequestMapping("/course/{id}/assignments")
+	List<Assignment> getCourseAssignments(@PathVariable Integer id)	{
+		java.util.Set<Assignment> setAssignments = courses.findOne(id).getAssignments();
+		List<Assignment> listAssignments = new ArrayList<Assignment>(setAssignments);
+		return listAssignments;
+	}
+	
+	@PostMapping("/course/{id}/create-assignment")
+	Assignment createCourseAssignment(@PathVariable Integer id, @RequestBody Assignment assignment)	{
+		Assignment a = new Assignment(assignment);
+		a.setCourse(courses.findOne(id));
+		assignments.save(a);
+		return a;
+	}
+	
+	@PutMapping("/course/{id}/assignment/{assignment_id}/assign")
+	List<AssignedAssignment> assignAllStudents(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
+		List<AssignedAssignment> aa = new ArrayList<AssignedAssignment>();
+		List<Student> students = getStudents(id);
+		for (Student s : students) {
+			assignedAssignments.save(new AssignedAssignment(s, assignments.findOne(assignment_id)));
+			aa.add(assignedAssignments.findOne((int) assignedAssignments.count())); // count() returns the number of entities (last pos)
+		}
+		return aa;
+	}
+	
 	
 }
