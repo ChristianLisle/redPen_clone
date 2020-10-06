@@ -16,11 +16,8 @@ public class Teacher {
     @Column
     String name;
     
-    //@OneToMany(mappedBy = "teacher")
-    //Set<CourseRegistration> registrations;
-    
-    //@OneToMany(mappedBy = "teacher")
-    //Set<AssignedAssignment> assignments;
+    @OneToMany(mappedBy = "teacher")
+    Set<TeacherClasses> teacherClasses;
     
     public Teacher()	{}
     
