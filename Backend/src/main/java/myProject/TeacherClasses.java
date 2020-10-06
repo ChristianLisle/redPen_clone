@@ -25,8 +25,8 @@ public class TeacherClasses {
     
     public TeacherClasses()	{}
     
-    public TeacherClasses(Teacher s, Course c){
-    	this.teacher = s;
+    public TeacherClasses(Teacher t, Course c){
+    	this.teacher = t;
     	this.course = c;
     }
     
