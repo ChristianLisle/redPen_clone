@@ -5,8 +5,12 @@ import java.util.Collections;
 import java.util.Set;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
+@Table(name = "student")
 public class Student {
  
     @Id
@@ -15,6 +19,9 @@ public class Student {
     
     @Column
     String name;
+    
+    @Column
+    String password;
     
     @OneToMany(mappedBy = "student")
     Set<CourseRegistration> registrations;
@@ -39,6 +46,19 @@ public class Student {
     public void setName(String name)	{
     	this.name = name;
     }
+    
+    public String getPassword()	{
+    	return password;
+    }
+    
+    public boolean resetPassword(String oldPassword, String newPassword)	{
+    	if (this.password.equals(oldPassword))	{
+    		this.password = newPassword;
+    		return true;
+    	}
+    	else return false;
+    }
+    
     
     /*public Set<AssignedAssignment> getAssignments()	{
     	return assignments;

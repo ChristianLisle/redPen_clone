@@ -22,11 +22,12 @@ public class StudentController {
 		return students.findAll();
 	}
 
-	@PostMapping("student")
+	/*
+	@PostMapping("student/")
 	Student createStudent(@RequestBody Student s) {
 		students.save(s);
 		return s;
-	}
+	}/*
 
 	// Unnecessary for the time being.
 	/*
@@ -37,7 +38,19 @@ public class StudentController {
 		students.save(old_s);
 		return old_s;
 	}*/
-
+	
+	
+	@PutMapping("/student/{id}/reset-password")
+	String resetPassword(@RequestBody NewPassword np, @PathVariable Integer id)	{
+		Student old_s = students.findOne(id);
+		if (old_s.resetPassword(np.getOldPassword(), np.getNewPassword()))	{
+			students.save(old_s);
+			return "Password reset successfuly.";
+		}
+		return "Password not reset.";
+	}
+	
+	
 	@DeleteMapping("/student/{id}")
 	String deleteStudent(@PathVariable Integer id) {
 		students.delete(id);
@@ -145,5 +158,6 @@ public class StudentController {
 		}
 		return null;
 	}
-
+	
 }
+
