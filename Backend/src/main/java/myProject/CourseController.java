@@ -28,7 +28,6 @@ public class CourseController {
 		return s;
 	}
 	
-	
 	@PutMapping("/course/{id}/update")
 	Course updateCourse(@RequestBody Course c, @PathVariable Integer id)	{
 		Course old_c = courses.findOne(id);
@@ -60,26 +59,25 @@ public class CourseController {
 		return c;
 	}
 	
-	
 	@Autowired
 	AssignmentRepository assignments;
 	
 	@Autowired
 	AssignedAssignmentRepository assignedAssignments;
 	
-	@RequestMapping("/course/{id}/assignments")
-	List<Assignment> getCourseAssignments(@PathVariable Integer id)	{
-		java.util.Set<Assignment> setAssignments = courses.findOne(id).getAssignments();
-		List<Assignment> listAssignments = new ArrayList<Assignment>(setAssignments);
-		return listAssignments;
-	}
-	
-	@PostMapping("/course/{id}/create-assignment")
+	@PostMapping("/course/{id}/assignment")
 	Assignment createCourseAssignment(@PathVariable Integer id, @RequestBody Assignment assignment)	{
 		Assignment a = new Assignment(assignment);
 		a.setCourse(courses.findOne(id));
 		assignments.save(a);
 		return a;
+	}
+	
+	@RequestMapping("/course/{id}/assignments")
+	List<Assignment> getCourseAssignments(@PathVariable Integer id)	{
+		java.util.Set<Assignment> setAssignments = courses.findOne(id).getAssignments();
+		List<Assignment> listAssignments = new ArrayList<Assignment>(setAssignments);
+		return listAssignments;
 	}
 	
 	@PutMapping("/course/{id}/assignment/{assignment_id}/assign")

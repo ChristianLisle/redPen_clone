@@ -14,13 +14,13 @@ public class StudentController {
 	
 	// Student Login/Register mappings
 	
-	@PostMapping("create-account/student")
+	@PostMapping("/register-student")
 	Student createStudent(@RequestBody Student s) {
 		students.save(s);
 		return s;
 	}
 	
-	@GetMapping("/student/login")
+	@GetMapping("/login-student")
 	String getStudent(@RequestBody Student s)	{
 		for (int i = 1; i < (int) students.count(); i++) {
 			if (s.getName().equals((students.getOne(i)).getName()))	{

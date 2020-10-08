@@ -1,6 +1,5 @@
 package myProject;
 
-import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -21,7 +20,7 @@ public class CourseRegistration {
     
     boolean completed;
  
-    double grade;
+    Double grade;
     
     public CourseRegistration()	{}
     
@@ -42,12 +41,14 @@ public class CourseRegistration {
     	return course;
     }
     
-    public double getGrade()	{
+    public Double getGrade()	{
     	return grade;
     }
     
     public void setGrade(double grade)	{
-    	this.grade = grade;
+    	// Grade can not be set if the course has already been completed.
+    	if (!getCompleted())
+    		this.grade = grade;
     }
     
     public boolean getCompleted()	{
@@ -55,6 +56,8 @@ public class CourseRegistration {
     }
     
     public void complete()	{
-    	this.completed = true;
+    	// Course cannot be completed if no grade has been set
+    	if (getGrade() != null)
+    		this.completed = true;
     }
 }
