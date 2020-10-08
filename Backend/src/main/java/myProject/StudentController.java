@@ -11,34 +11,27 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 	@Autowired
 	StudentRepository students;
-
-	@GetMapping("/student/{id}")
-	Student getStudent(@PathVariable Integer id) {
-		return students.findOne(id);
-	}
-
-	@RequestMapping("/students")
-	List<Student> hello() {
-		return students.findAll();
-	}
-
-	/*
-	@PostMapping("student/")
+	
+	// Student Login/Register mappings
+	
+	@PostMapping("create-account/student")
 	Student createStudent(@RequestBody Student s) {
 		students.save(s);
 		return s;
-	}/*
-
-	// Unnecessary for the time being.
-	/*
-	@PutMapping("/student/{id}")
-	Student updateStudent(@RequestBody Student s, @PathVariable Integer id) {
-		Student old_s = students.findOne(id);
-		old_s.setName(s.getName());
-		students.save(old_s);
-		return old_s;
-	}*/
+	}
 	
+	@GetMapping("/student/login")
+	String getStudent(@RequestBody Student s)	{
+		for (int i = 1; i < (int) students.count(); i++) {
+			if (s.getName().equals((students.getOne(i)).getName()))	{
+				if (s.getPassword().equals(students.getOne(i).getPassword()))	{
+					return "Logged in as " + s.getName();
+				}
+				else return "Incorrect password";
+			}
+		}
+		return "There are no students with the name " + s.getName();
+	}
 	
 	@PutMapping("/student/{id}/reset-password")
 	String resetPassword(@RequestBody NewPassword np, @PathVariable Integer id)	{
@@ -50,12 +43,24 @@ public class StudentController {
 		return "Password not reset.";
 	}
 	
+	// Basic student info mappings
+	
+	@GetMapping("/student/{id}")
+	Student getStudent(@PathVariable Integer id) {
+		return students.findOne(id);
+	}
+
+	@RequestMapping("/students")
+	List<Student> hello() {
+		return students.findAll();
+	}
 	
 	@DeleteMapping("/student/{id}")
 	String deleteStudent(@PathVariable Integer id) {
 		students.delete(id);
 		return "deleted " + id;
 	}
+	
 
 	@Autowired
 	CourseRepository courses;
@@ -64,7 +69,9 @@ public class StudentController {
 	CourseRegistrationRepository registrar;
 	
 
-	// Method for class registration
+	// Students and courses relationship mappings
+	
+	// Method for course registration
 	@PutMapping("/student/{id}/register/{course_id}")
 	CourseRegistration registerCourse(@PathVariable Integer id, @PathVariable Integer course_id) {
 		Student student = students.findOne(id);
@@ -104,6 +111,8 @@ public class StudentController {
 	
 	@Autowired
 	AssignedAssignmentRepository assignedAssignments;
+	
+	// Students and assigned assignments relationship mappings
 	
 	// Method assigns assignment to student
 	@PutMapping("/student/{id}/assign/{assignment_id}")
