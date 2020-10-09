@@ -17,7 +17,7 @@ public class TeacherController {
 	
 	@Autowired
 	TeacherClassesRepository classes;
-	/*
+	
 	@GetMapping("/teacher/{id}")
 	Teacher getTeacher(@PathVariable Integer id) {
 		return teacher.findOne(id);
@@ -77,5 +77,5 @@ public class TeacherController {
 		}
 		return returned;
 	}
-	*/
+	
 }
