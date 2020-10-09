@@ -41,6 +41,7 @@ public class TeacherController {
 	TeacherClassesRepository classes;
 	
 	//For adding a class to a teacher
+	//The class must have already been created. This just links them
 	@PutMapping("/teacher/{id}/addClass/{class_id}")
 	TeacherClasses addTeacher(@PathVariable Integer id, @PathVariable Integer class_id) {
 		Teacher teachers = teacher.findOne(id);					//Gets teacher
@@ -50,13 +51,28 @@ public class TeacherController {
 	}
 	
 	//Gets all courses a teacher is in
+	//Shows all courses that this teacher teaches
 	@RequestMapping("/teacher/{id}/courses")
-	List<Course> allTeachersClasses(@PathVariable Integer id) {
+	List<Course> allTeachersCourses(@PathVariable Integer id) {
 		List<Course> returned = new ArrayList<Course>();
 		List<TeacherClasses> allClasses = classes.findAll();
 		for (TeacherClasses tc : allClasses) {
 			if (tc.getTeacher().getId() == id) {
 				returned.add(tc.getCourse());
+			}
+		}
+		return returned;
+	}
+	
+	//Gets all teacherClasses the teacher is in
+	//Shows all items of assigned_classes that include this teacher
+	@RequestMapping("/teacher/{id}/teacherClasses")
+	List<TeacherClasses> allTeachersClasses(@PathVariable Integer id) {
+		List<TeacherClasses> returned = new ArrayList<TeacherClasses>();
+		List<TeacherClasses> allClasses = classes.findAll();
+		for (TeacherClasses tc : allClasses) {
+			if (tc.getTeacher().getId() == id) {
+				returned.add(tc);
 			}
 		}
 		return returned;
