@@ -19,10 +19,6 @@ public class TeacherClasses {
     @JoinColumn(name = "course_id", nullable = false)
     Course course;
     
-    boolean completed;
- 
-    double grade;
-    
     public TeacherClasses()	{}
     
     public TeacherClasses(Teacher t, Course c){

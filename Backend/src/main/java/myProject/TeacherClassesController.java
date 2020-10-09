@@ -10,6 +10,7 @@ public class TeacherClassesController {
 	@Autowired
 	TeacherClassesRepository teacherClasses;
 	
+	/*
 	@GetMapping("/teacherToClass/{id}")
 	TeacherClasses getTeacherClasses(@PathVariable Integer id)	{
 		return teacherClasses.findOne(id);
@@ -25,5 +26,5 @@ public class TeacherClassesController {
 		teacherClasses.delete(id);
 		return "deleted teachers class" + teacherClasses.findOne(id).teacher.name + ":" + teacherClasses.findOne(id).course.name;
 	}
-	
+	*/
 }

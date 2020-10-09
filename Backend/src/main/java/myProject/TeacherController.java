@@ -11,7 +11,13 @@ import org.springframework.web.bind.annotation.*;
 public class TeacherController {
 	@Autowired
 	TeacherRepository teacher;
-
+	
+	@Autowired
+	CourseRepository courses;
+	
+	@Autowired
+	TeacherClassesRepository classes;
+	/*
 	@GetMapping("/teacher/{id}")
 	Teacher getTeacher(@PathVariable Integer id) {
 		return teacher.findOne(id);
@@ -33,12 +39,6 @@ public class TeacherController {
 		teacher.delete(id);
 		return "deleted teacher" + teacher.findOne(id).name;
 	}	
-	
-	@Autowired
-	CourseRepository courses;
-	
-	@Autowired
-	TeacherClassesRepository classes;
 	
 	//For adding a class to a teacher
 	//The class must have already been created. This just links them
@@ -77,5 +77,5 @@ public class TeacherController {
 		}
 		return returned;
 	}
-
+	*/
 }

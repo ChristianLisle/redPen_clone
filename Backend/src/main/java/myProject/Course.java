@@ -24,6 +24,10 @@ public class Course {
     @OneToMany(mappedBy = "course")
     Set<Assignment> assignments;
     
+    //Carter added this
+    @OneToMany(mappedBy = "course")
+    Set<TeacherClasses> teacherClasses;
+    
     
     public Course()	{}
     
