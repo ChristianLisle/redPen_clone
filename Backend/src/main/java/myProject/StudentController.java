@@ -20,7 +20,7 @@ public class StudentController {
 		return s;
 	}
 	
-	@GetMapping("/login-student")
+	@PostMapping("/login-student")
 	String getStudent(@RequestBody Student s)	{
 		for (int i = 1; i < (int) students.count(); i++) {
 			if (s.getName().equals((students.getOne(i)).getName()))	{

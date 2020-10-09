@@ -31,25 +31,15 @@ public class Student {
 	public Student() {
 	}
 
-	public Student(String name) {
-		this.name = name;
-	}
+	public Student(String name) { this.name = name; }
 
-	public Integer getId() {
-		return id;
-	}
+	public Integer getId() { return id; }
 
-	public String getName() {
-		return name;
-	}
+	public String getName() { return name; }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name) { this.name = name; }
 
-	public String getPassword() {
-		return password;
-	}
+	public String getPassword() { return password; }
 
 	public boolean resetPassword(String oldPassword, String newPassword) {
 		if (this.password.equals(oldPassword)) {
