@@ -84,7 +84,7 @@ public class CourseController {
 		return a;
 	}
 	
-	/*
+	
 	@PutMapping("/course/{id}/assignment/{assignment_id}/assign")
 	List<AssignedAssignment> assignAllStudents(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
 		List<AssignedAssignment> aa = new ArrayList<AssignedAssignment>();
@@ -95,6 +95,6 @@ public class CourseController {
 		}
 		return aa;
 	}
-	*/
 	
+
 }
