@@ -1,9 +1,6 @@
 package myProject;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,7 +57,6 @@ public class StudentController {
 		students.delete(id);
 		return "deleted " + id;
 	}
-	
 
 	@Autowired
 	CourseRepository courses;
@@ -80,30 +76,16 @@ public class StudentController {
 		return registrar.findOne((int) registrar.count()); // count() returns the number of entities (last pos)
 	}
 
-	// Method for getting all registrations performed by student
+	// Method for getting all registrations for a student
 	@RequestMapping("/student/{id}/registrations")
-	List<CourseRegistration> listRegistrations(@PathVariable Integer id) {
-		List<CourseRegistration> s = new ArrayList<CourseRegistration>();
-		List<CourseRegistration> list = registrar.findAll();
-		for (CourseRegistration cr : list) {
-			if (cr.getStudent().getId() == id) {
-				s.add(cr);
-			}
-		}
-		return s;
+	java.util.Set<CourseRegistration> listRegistrations(@PathVariable Integer id) {
+		return students.findOne(id).getCourseRegistrations();
 	}
 
 	// Method for getting all courses for a specific student
 	@RequestMapping("/student/{id}/courses")
-	List<Course> listCourses(@PathVariable Integer id) {
-		List<Course> s = new ArrayList<Course>();
-		List<CourseRegistration> list = registrar.findAll();
-		for (CourseRegistration cr : list) {
-			if (cr.getStudent().getId() == id) {
-				s.add(cr.getCourse());
-			}
-		}
-		return s;
+	java.util.Set<Course> listCourses(@PathVariable Integer id) {
+		return students.findOne(id).getCourses();
 	}
 	
 	@Autowired
@@ -125,28 +107,14 @@ public class StudentController {
 	
 	// Method returns a list of assignments
 	@RequestMapping("/student/{id}/assignments/overview")
-	List<Assignment> listAssignments(@PathVariable Integer id)	{
-		List<Assignment> a = new ArrayList<Assignment>();
-		List<AssignedAssignment> list = assignedAssignments.findAll();
-		for (AssignedAssignment aa : list) {
-			if (aa.getStudent().getId() == id)	{
-				a.add(aa.getAssignment());
-			}
-		}
-		return a;
+	java.util.Set<Assignment> listAssignments(@PathVariable Integer id)	{
+		return students.getOne(id).getAssignments();
 	}
 	
 	// Method returns a list of assignments with feedback/grade (assignedAssignment object)
-	@RequestMapping("/student/{id}/report")
-	List<AssignedAssignment> listAssignedAssignments(@PathVariable Integer id)	{
-		List<AssignedAssignment> a = new ArrayList<AssignedAssignment>();
-		List<AssignedAssignment> list = assignedAssignments.findAll();
-		for (AssignedAssignment aa : list) {
-			if (aa.getStudent().getId() == id)	{
-				a.add(aa);
-			}
-		}
-		return a;
+	@RequestMapping("/student/{id}/assignments/report")
+	java.util.Set<AssignedAssignment> listAssignedAssignments(@PathVariable Integer id)	{
+		return students.getOne(id).getAssignedAssignments();
 	}
 	
 	// Method returns a single assignment overview (assignment object)

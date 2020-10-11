@@ -14,18 +14,16 @@ public class AssignmentController {
 	Assignment getAssignment(@PathVariable Integer id) {
 		return assignments.findOne(id);
 	}
+	
+	@GetMapping("/assignment/{id}/assigned")
+	java.util.Set<AssignedAssignment> getAssignedAssignments(@PathVariable Integer id)	{
+		return assignments.getOne(id).getAssignedAssignments();
+	}
 
 	@RequestMapping("/assignments")
 	List<Assignment> hello() {
 		return assignments.findAll();
 	}
-
-	// Not used, since we only want to create assignments specific to courses.
-	/*@PostMapping("/assignment")
-	Assignment createAssignment(@RequestBody Assignment a) {
-		assignments.save(a);
-		return a;
-	}*/
 
 	@PutMapping("/assignment/{id}/update")
 	Assignment updateAssignment(@RequestBody Assignment s, @PathVariable Integer id) {

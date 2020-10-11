@@ -1,11 +1,12 @@
 package myProject;
 
-import java.util.Collections;
 import java.util.Set;
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "course")
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer", "assignments"})
 public class Course {
 
 	@Id
@@ -24,8 +25,7 @@ public class Course {
 	@OneToMany(mappedBy = "course")
 	Set<Assignment> assignments;
 
-	public Course() {
-	}
+	public Course() {}
 
 	public Course(String name, String d) {
 		this.name = name;

@@ -2,8 +2,6 @@ package myProject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +9,12 @@ import org.springframework.web.bind.annotation.*;
 public class CourseController {
 	@Autowired
 	CourseRepository courses;
+	
+	@Autowired
+	AssignmentRepository assignments;
+	
+	@Autowired
+	AssignedAssignmentRepository assignedAssignments;
 	
 	@GetMapping("/course/{id}")
 	Course getCourse(@PathVariable Integer id)	{
@@ -59,12 +63,6 @@ public class CourseController {
 		return c;
 	}
 	
-	@Autowired
-	AssignmentRepository assignments;
-	
-	@Autowired
-	AssignedAssignmentRepository assignedAssignments;
-	
 	@PostMapping("/course/{id}/assignment")
 	Assignment createCourseAssignment(@PathVariable Integer id, @RequestBody Assignment assignment)	{
 		Assignment a = new Assignment(assignment);
@@ -74,22 +72,18 @@ public class CourseController {
 	}
 	
 	@RequestMapping("/course/{id}/assignments")
-	List<Assignment> getCourseAssignments(@PathVariable Integer id)	{
-		java.util.Set<Assignment> setAssignments = courses.findOne(id).getAssignments();
-		List<Assignment> listAssignments = new ArrayList<Assignment>(setAssignments);
-		return listAssignments;
+	java.util.Set<Assignment> getCourseAssignments(@PathVariable Integer id)	{
+		return courses.getOne(id).getAssignments();
 	}
 	
 	@PutMapping("/course/{id}/assignment/{assignment_id}/assign")
 	List<AssignedAssignment> assignAllStudents(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
 		List<AssignedAssignment> aa = new ArrayList<AssignedAssignment>();
-		List<Student> students = getStudents(id);
+		List<Student> students = getStudents(id); // getStudent() method from above
 		for (Student s : students) {
 			assignedAssignments.save(new AssignedAssignment(s, assignments.findOne(assignment_id)));
 			aa.add(assignedAssignments.findOne((int) assignedAssignments.count())); // count() returns the number of entities (last pos)
 		}
 		return aa;
 	}
-	
-	
 }

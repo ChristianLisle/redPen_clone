@@ -1,11 +1,12 @@
 package myProject;
 
 import java.util.Set;
-
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "assignment")
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer", "assignedAssignments"})
 public class Assignment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,5 +60,9 @@ public class Assignment {
 
 	public void setCourse(Course c) {
 		this.course = c;
+	}
+	
+	public Set<AssignedAssignment> getAssignedAssignments()	{
+		return assignedAssignments;
 	}
 }
