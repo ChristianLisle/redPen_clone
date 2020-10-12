@@ -111,9 +111,5 @@ public class CourseController {
 		return aa;
 	}
 	*/
-<<<<<<< Backend/src/main/java/myProject/CourseController.java
 
-=======
-	
->>>>>>> Backend/src/main/java/myProject/CourseController.java
 }
