@@ -1,0 +1,20 @@
+stages: 
+    - mavenbuild
+    - maventest
+    
+mavenbuild: 
+    stage: mavenbuild
+    tags:
+        - shell
+    script: 
+        - cd Backend
+        - mvn package
+        
+maven-test:
+    stage: maventest
+    tags: 
+        - shell
+    script: 
+        - cd Backend
+        - mvn test
+        - mvn package
