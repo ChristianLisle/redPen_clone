@@ -48,7 +48,7 @@ public class StudentController {
 	}
 
 	@RequestMapping("/students")
-	List<Student> hello() {
+	List<Student> getAllStudents() {
 		return students.findAll();
 	}
 	
@@ -64,15 +64,18 @@ public class StudentController {
 	@Autowired
 	CourseRegistrationRepository registrar;
 	
+	@Autowired
+	TeacherCourseRepository assignedCourses;
+	
 
 	// Students and courses relationship mappings
 	
 	// Method for course registration
-	@PutMapping("/student/{id}/register/{course_id}")
-	CourseRegistration registerCourse(@PathVariable Integer id, @PathVariable Integer course_id) {
+	@PutMapping("/student/{id}/register/{assignedCourse_id}")
+	CourseRegistration registerCourse(@PathVariable Integer id, @PathVariable Integer assignedCourse_id) {
 		Student student = students.findOne(id);
-		Course course = courses.findOne(course_id);
-		registrar.save(new CourseRegistration(student, course));
+		TeacherCourse assignedCourse = assignedCourses.findOne(assignedCourse_id);
+		registrar.save(new CourseRegistration(student, assignedCourse));
 		return registrar.findOne((int) registrar.count()); // count() returns the number of entities (last pos)
 	}
 

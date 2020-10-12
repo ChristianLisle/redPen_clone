@@ -15,8 +15,8 @@ public class CourseRegistration {
     Student student;
  
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
-    Course course;
+    @JoinColumn(name = "teacher_classes_id", nullable = false)
+    TeacherCourse teacherCourse;
     
     boolean completed;
  
@@ -24,9 +24,9 @@ public class CourseRegistration {
     
     public CourseRegistration()	{}
     
-    public CourseRegistration(Student s, Course c){
+    public CourseRegistration(Student s, TeacherCourse tc){
     	this.student = s;
-    	this.course = c;
+    	this.teacherCourse = tc;
     }
     
     public Integer getId()	{
@@ -37,8 +37,16 @@ public class CourseRegistration {
     	return student;
     }
     
+    public TeacherCourse getAssignedCourse()	{
+    	return teacherCourse;
+    }
+    
     public Course getCourse()	{
-    	return course;
+    	return teacherCourse.getCourse();
+    }
+    
+    public Teacher getTeacher()	{
+    	return teacherCourse.getTeacher();
     }
     
     public Double getGrade()	{

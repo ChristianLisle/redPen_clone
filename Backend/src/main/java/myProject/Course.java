@@ -20,7 +20,7 @@ public class Course {
 	String courseDescription;
 
 	@OneToMany(mappedBy = "course")
-	Set<CourseRegistration> registrations;
+	Set<TeacherCourse> teacherCourses;
 
 	@OneToMany(mappedBy = "course")
 	Set<Assignment> assignments;
