@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
-@JsonIgnoreProperties({ "handler", "hibernateLazyInitializer", "courses", "courseRegistrations", "assignments", "assignedAssignments"})
+@JsonIgnoreProperties({ "handler", "hibernateLazyInitializer", "courses", "courseRegistrations", "assignments", "assignedAssignments", "parent"})
 @Table(name = "student")
 public class Student {
 
@@ -28,6 +28,10 @@ public class Student {
 
 	@OneToMany(mappedBy = "student")
 	Set<AssignedAssignment> assignments;
+	
+	@ManyToOne
+	@JoinColumn(name = "parent_id")
+	Parent parent;
 
 	public Student() {}
 
@@ -83,4 +87,7 @@ public class Student {
 		return a;
 	}
 	
+	public Parent getParent()	{
+		return parent;
+	}
 }

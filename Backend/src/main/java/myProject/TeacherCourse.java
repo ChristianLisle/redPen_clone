@@ -2,8 +2,10 @@ package myProject;
 
 import java.util.Set;
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties({ "handler", "hibernateLazyInitializer", "teacher", "course"})
 @Table(name = "assigned_course")
 public class TeacherCourse {
 	

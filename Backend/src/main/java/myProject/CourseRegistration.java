@@ -15,7 +15,7 @@ public class CourseRegistration {
     Student student;
  
     @ManyToOne
-    @JoinColumn(name = "teacher_classes_id", nullable = false)
+    @JoinColumn(name = "assigned_course_id", nullable = false)
     TeacherCourse teacherCourse;
     
     boolean completed;
