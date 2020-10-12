@@ -78,21 +78,6 @@ public class CourseController {
 		return t;
 	}
 	
-	/*
-	@Autowired
-	CourseRegistrationRepository registrar;
-	//A method to get all students in a class
-	@RequestMapping("/course/{id}/students")
-	List<Student> getStudents(@PathVariable Integer id)	{
-		List<Student> t = new ArrayList<Student>();
-		List<TeacherClasses> list = teacherClasses.findAll();
-		for (TeacherClasses tc : list) {
-			if (tc.get)
-		}
-		return t;
-	}
-	*/
-	
 	@Autowired
 	AssignmentRepository assignments;
 	
