@@ -62,6 +62,21 @@ public class CourseController {
 	}
 	*/
 	
+	@Autowired
+	TeacherClassesRepository teacherClasses;
+	
+	//Gets teachers of a class
+	@RequestMapping("/course/{id}/teachers")
+	List<Teacher> getTeachers(@PathVariable Integer id)	{
+		List<Teacher> t = new ArrayList<Teacher>();
+		List<TeacherClasses> list = teacherClasses.findAll();
+		for (TeacherClasses tc : list) {
+			if (tc.getCourse().getId() == id) {
+				t.add(tc.getTeacher());
+			}
+		}
+		return t;
+	}
 	
 	@Autowired
 	AssignmentRepository assignments;
@@ -96,5 +111,9 @@ public class CourseController {
 		return aa;
 	}
 	*/
+<<<<<<< Backend/src/main/java/myProject/CourseController.java
+
+=======
 	
+>>>>>>> Backend/src/main/java/myProject/CourseController.java
 }

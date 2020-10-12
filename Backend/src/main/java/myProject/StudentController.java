@@ -43,20 +43,20 @@ public class StudentController {
 		students.delete(id);
 		return "deleted " + id;
 	}
-
+	
+	
 	@Autowired
-	CourseRepository courses;
+	TeacherClassesRepository teacherClasses;
 
 	@Autowired
 	CourseRegistrationRepository registrar;
-	
 
 	// Method for class registration
 	@PutMapping("/student/{id}/register/{course_id}")
 	CourseRegistration registerCourse(@PathVariable Integer id, @PathVariable Integer course_id) {
 		Student student = students.findOne(id);
-		Course course = courses.findOne(course_id);
-		registrar.save(new CourseRegistration(student, course));
+		TeacherClasses tc = teacherClasses.findOne(course_id);
+		registrar.save(new CourseRegistration(student, tc));
 		return registrar.findOne((int) registrar.count()); // count() returns the number of entities (last pos)
 	}
 
@@ -80,11 +80,12 @@ public class StudentController {
 		List<CourseRegistration> list = registrar.findAll();
 		for (CourseRegistration cr : list) {
 			if (cr.getStudent().getId() == id) {
-				s.add(cr.getCourse());
+				s.add(cr.getTeacherCourse().getCourse());
 			}
 		}
 		return s;
 	}
+	
 	
 	@Autowired
 	AssignmentRepository assignments;

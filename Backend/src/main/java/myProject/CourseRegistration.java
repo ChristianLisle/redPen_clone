@@ -15,9 +15,16 @@ public class CourseRegistration {
     @JoinColumn(name = "student_id", nullable = false)
     Student student;
  
+    /* Changed for assigned courses integreation
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     Course course;
+    */
+    
+    //Added for assigned courses integreation
+    @ManyToOne
+    @JoinColumn(name = "teacher_classes_id", nullable = false)
+    TeacherClasses teacherCourse;
     
     boolean completed;
  
@@ -25,9 +32,9 @@ public class CourseRegistration {
     
     public CourseRegistration()	{}
     
-    public CourseRegistration(Student s, Course c){
+    public CourseRegistration(Student s, TeacherClasses tc){
     	this.student = s;
-    	this.course = c;
+    	this.teacherCourse = tc;
     }
     
     public Integer getId()	{
@@ -38,8 +45,8 @@ public class CourseRegistration {
     	return student;
     }
     
-    public Course getCourse()	{
-    	return course;
+    public TeacherClasses getTeacherCourse()	{
+    	return teacherCourse;
     }
     
     public double getGrade()	{
