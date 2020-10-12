@@ -44,6 +44,8 @@ public class StudentController {
 		return "deleted " + id;
 	}
 
+	
+	/* changed for teacher class integration
 	@Autowired
 	CourseRepository courses;
 
@@ -85,6 +87,50 @@ public class StudentController {
 		}
 		return s;
 	}
+	*/
+	
+	
+	@Autowired
+	TeacherClassesRepository teacherClasses;
+
+	@Autowired
+	CourseRegistrationRepository registrar;
+
+	// Method for class registration
+	@PutMapping("/student/{id}/register/{course_id}")
+	CourseRegistration registerCourse(@PathVariable Integer id, @PathVariable Integer course_id) {
+		Student student = students.findOne(id);
+		TeacherClasses tc = teacherClasses.findOne(course_id);
+		registrar.save(new CourseRegistration(student, tc));
+		return registrar.findOne((int) registrar.count()); // count() returns the number of entities (last pos)
+	}
+
+	// Method for getting all registrations performed by student
+	@RequestMapping("/student/{id}/registrations")
+	List<CourseRegistration> listRegistrations(@PathVariable Integer id) {
+		List<CourseRegistration> s = new ArrayList<CourseRegistration>();
+		List<CourseRegistration> list = registrar.findAll();
+		for (CourseRegistration cr : list) {
+			if (cr.getStudent().getId() == id) {
+				s.add(cr);
+			}
+		}
+		return s;
+	}
+
+	// Method for getting all courses for a specific student
+	@RequestMapping("/student/{id}/courses")
+	List<Course> listCourses(@PathVariable Integer id) {
+		List<Course> s = new ArrayList<Course>();
+		List<CourseRegistration> list = registrar.findAll();
+		for (CourseRegistration cr : list) {
+			if (cr.getStudent().getId() == id) {
+				s.add(cr.getTeacherCourse().getCourse());
+			}
+		}
+		return s;
+	}
+	
 	
 	@Autowired
 	AssignmentRepository assignments;

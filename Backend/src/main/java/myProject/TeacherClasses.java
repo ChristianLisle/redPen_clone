@@ -19,6 +19,10 @@ public class TeacherClasses {
     @JoinColumn(name = "course_id", nullable = false)
     Course course;
     
+    //Added for teacher course integration
+    @OneToMany(mappedBy = "teacherCourse")
+    Set<CourseRegistration> registrations;
+    
     public TeacherClasses()	{}
     
     public TeacherClasses(Teacher t, Course c){

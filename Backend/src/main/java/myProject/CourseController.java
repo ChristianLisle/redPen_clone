@@ -62,6 +62,36 @@ public class CourseController {
 	}
 	*/
 	
+	@Autowired
+	TeacherClassesRepository teacherClasses;
+	
+	//Gets teachers of a class
+	@RequestMapping("/course/{id}/teachers")
+	List<Teacher> getTeachers(@PathVariable Integer id)	{
+		List<Teacher> t = new ArrayList<Teacher>();
+		List<TeacherClasses> list = teacherClasses.findAll();
+		for (TeacherClasses tc : list) {
+			if (tc.getCourse().getId() == id) {
+				t.add(tc.getTeacher());
+			}
+		}
+		return t;
+	}
+	
+	/*
+	@Autowired
+	CourseRegistrationRepository registrar;
+	//A method to get all students in a class
+	@RequestMapping("/course/{id}/students")
+	List<Student> getStudents(@PathVariable Integer id)	{
+		List<Student> t = new ArrayList<Student>();
+		List<TeacherClasses> list = teacherClasses.findAll();
+		for (TeacherClasses tc : list) {
+			if (tc.get)
+		}
+		return t;
+	}
+	*/
 	
 	@Autowired
 	AssignmentRepository assignments;
