@@ -4,7 +4,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "assigned_classes")
+@Table(name = "assigned_course")
 public class TeacherClasses {
 	
     @Id
