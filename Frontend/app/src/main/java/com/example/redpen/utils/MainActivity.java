@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jsonParseUsers(){
-        String url = "http://coms-309-ug-05.cs.iastate.edu:8080/users.json";
+        //String url = "http://coms-309-ug-05.cs.iastate.edu:8080/users.json";
+        String url = "https://api.jsonbin.io/b/5f83bb3665b18913fc5e020a";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override

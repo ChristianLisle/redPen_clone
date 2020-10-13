@@ -57,16 +57,20 @@ public class StudentController {
 		students.delete(id);
 		return "deleted " + id;
 	}
-
+	
+	
 	@Autowired
-	CourseRepository courses;
+	TeacherClassesRepository teacherClasses;
 
 	@Autowired
 	CourseRegistrationRepository registrar;
+<<<<<<< Backend/src/main/java/myProject/StudentController.java
 	
 	@Autowired
 	TeacherCourseRepository assignedCourses;
 	
+=======
+>>>>>>> Backend/src/main/java/myProject/StudentController.java
 
 	// Students and courses relationship mappings
 	
@@ -74,8 +78,13 @@ public class StudentController {
 	@PutMapping("/student/{id}/register/{assignedCourse_id}")
 	CourseRegistration registerCourse(@PathVariable Integer id, @PathVariable Integer assignedCourse_id) {
 		Student student = students.findOne(id);
+<<<<<<< Backend/src/main/java/myProject/StudentController.java
 		TeacherCourse assignedCourse = assignedCourses.findOne(assignedCourse_id);
 		registrar.save(new CourseRegistration(student, assignedCourse));
+=======
+		TeacherClasses tc = teacherClasses.findOne(course_id);
+		registrar.save(new CourseRegistration(student, tc));
+>>>>>>> Backend/src/main/java/myProject/StudentController.java
 		return registrar.findOne((int) registrar.count()); // count() returns the number of entities (last pos)
 	}
 
@@ -87,9 +96,22 @@ public class StudentController {
 
 	// Method for getting all courses for a specific student
 	@RequestMapping("/student/{id}/courses")
+<<<<<<< Backend/src/main/java/myProject/StudentController.java
 	java.util.Set<Course> listCourses(@PathVariable Integer id) {
 		return students.findOne(id).getCourses();
+=======
+	List<Course> listCourses(@PathVariable Integer id) {
+		List<Course> s = new ArrayList<Course>();
+		List<CourseRegistration> list = registrar.findAll();
+		for (CourseRegistration cr : list) {
+			if (cr.getStudent().getId() == id) {
+				s.add(cr.getTeacherCourse().getCourse());
+			}
+		}
+		return s;
+>>>>>>> Backend/src/main/java/myProject/StudentController.java
 	}
+	
 	
 	@Autowired
 	AssignmentRepository assignments;

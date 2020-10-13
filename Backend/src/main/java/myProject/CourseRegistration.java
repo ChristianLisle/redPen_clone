@@ -14,9 +14,21 @@ public class CourseRegistration {
     @JoinColumn(name = "student_id", nullable = false)
     Student student;
  
+    /* Changed for assigned courses integreation
     @ManyToOne
+<<<<<<< Backend/src/main/java/myProject/CourseRegistration.java
     @JoinColumn(name = "assigned_course_id", nullable = false)
     TeacherCourse teacherCourse;
+=======
+    @JoinColumn(name = "course_id", nullable = false)
+    Course course;
+    */
+    
+    //Added for assigned courses integreation
+    @ManyToOne
+    @JoinColumn(name = "teacher_classes_id", nullable = false)
+    TeacherClasses teacherCourse;
+>>>>>>> Backend/src/main/java/myProject/CourseRegistration.java
     
     boolean completed;
  
@@ -24,7 +36,11 @@ public class CourseRegistration {
     
     public CourseRegistration()	{}
     
+<<<<<<< Backend/src/main/java/myProject/CourseRegistration.java
     public CourseRegistration(Student s, TeacherCourse tc){
+=======
+    public CourseRegistration(Student s, TeacherClasses tc){
+>>>>>>> Backend/src/main/java/myProject/CourseRegistration.java
     	this.student = s;
     	this.teacherCourse = tc;
     }
@@ -37,6 +53,7 @@ public class CourseRegistration {
     	return student;
     }
     
+<<<<<<< Backend/src/main/java/myProject/CourseRegistration.java
     public TeacherCourse getAssignedCourse()	{
     	return teacherCourse;
     }
@@ -47,6 +64,10 @@ public class CourseRegistration {
     
     public Teacher getTeacher()	{
     	return teacherCourse.getTeacher();
+=======
+    public TeacherClasses getTeacherCourse()	{
+    	return teacherCourse;
+>>>>>>> Backend/src/main/java/myProject/CourseRegistration.java
     }
     
     public Double getGrade()	{
