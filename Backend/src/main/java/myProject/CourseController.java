@@ -53,12 +53,7 @@ public class CourseController {
 		courses.delete(id);
 		return "deleted " + id;
 	}
-<<<<<<< Backend/src/main/java/myProject/CourseController.java
 
-=======
-	
-	/*
->>>>>>> Backend/src/main/java/myProject/CourseController.java
 	@Autowired
 	CourseRegistrationRepository registrar;
 
@@ -79,7 +74,6 @@ public class CourseController {
 		}
 		return s;
 	}
-<<<<<<< Backend/src/main/java/myProject/CourseController.java
 
 	// Get teachers of course {id}
 	@RequestMapping("/course/{id}/teachers")
@@ -87,40 +81,11 @@ public class CourseController {
 		List<Teacher> t = new ArrayList<Teacher>();
 		List<TeacherCourse> list = teacherCourses.findAll();
 		for (TeacherCourse tc : list) {
-=======
-	*/
-	
-	@Autowired
-	TeacherClassesRepository teacherClasses;
-	
-	//Gets teachers of a class
-	@RequestMapping("/course/{id}/teachers")
-	List<Teacher> getTeachers(@PathVariable Integer id)	{
-		List<Teacher> t = new ArrayList<Teacher>();
-		List<TeacherClasses> list = teacherClasses.findAll();
-		for (TeacherClasses tc : list) {
->>>>>>> Backend/src/main/java/myProject/CourseController.java
 			if (tc.getCourse().getId() == id) {
 				t.add(tc.getTeacher());
 			}
 		}
 		return t;
-<<<<<<< Backend/src/main/java/myProject/CourseController.java
-=======
-	}
-	
-	@Autowired
-	AssignmentRepository assignments;
-	
-	@Autowired
-	AssignedAssignmentRepository assignedAssignments;
-	
-	@RequestMapping("/course/{id}/assignments")
-	List<Assignment> getCourseAssignments(@PathVariable Integer id)	{
-		java.util.Set<Assignment> setAssignments = courses.findOne(id).getAssignments();
-		List<Assignment> listAssignments = new ArrayList<Assignment>(setAssignments);
-		return listAssignments;
->>>>>>> Backend/src/main/java/myProject/CourseController.java
 	}
 
 	// Course assignment mappings
@@ -133,7 +98,6 @@ public class CourseController {
 		assignments.save(a);
 		return a;
 	}
-<<<<<<< Backend/src/main/java/myProject/CourseController.java
 
 	// Get assignments for course {id}
 	@RequestMapping("/course/{id}/assignments")
@@ -144,12 +108,6 @@ public class CourseController {
 	// Assign Assignment {assignment_id} to students in course {id}
 	@PutMapping("/course/{id}/assign-assignment/{assignment_id}")
 	List<AssignedAssignment> assignAllStudents(@PathVariable Integer id, @PathVariable Integer assignment_id) {
-=======
-	
-	/*
-	@PutMapping("/course/{id}/assignment/{assignment_id}/assign")
-	List<AssignedAssignment> assignAllStudents(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
->>>>>>> Backend/src/main/java/myProject/CourseController.java
 		List<AssignedAssignment> aa = new ArrayList<AssignedAssignment>();
 		List<Student> students = getStudents(id);// getStudent() method from above
 		Assignment a = assignments.findOne(assignment_id);
@@ -159,13 +117,4 @@ public class CourseController {
 		}
 		return aa;
 	}
-<<<<<<< Backend/src/main/java/myProject/CourseController.java
-=======
-	*/
-<<<<<<< Backend/src/main/java/myProject/CourseController.java
-
-=======
-	
->>>>>>> Backend/src/main/java/myProject/CourseController.java
->>>>>>> Backend/src/main/java/myProject/CourseController.java
 }
