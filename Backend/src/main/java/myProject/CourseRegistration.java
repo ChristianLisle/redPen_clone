@@ -1,6 +1,5 @@
 package myProject;
 
-import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +16,10 @@ public class CourseRegistration {
  
     /* Changed for assigned courses integreation
     @ManyToOne
+<<<<<<< Backend/src/main/java/myProject/CourseRegistration.java
+    @JoinColumn(name = "assigned_course_id", nullable = false)
+    TeacherCourse teacherCourse;
+=======
     @JoinColumn(name = "course_id", nullable = false)
     Course course;
     */
@@ -25,14 +28,19 @@ public class CourseRegistration {
     @ManyToOne
     @JoinColumn(name = "teacher_classes_id", nullable = false)
     TeacherClasses teacherCourse;
+>>>>>>> Backend/src/main/java/myProject/CourseRegistration.java
     
     boolean completed;
  
-    double grade;
+    Double grade;
     
     public CourseRegistration()	{}
     
+<<<<<<< Backend/src/main/java/myProject/CourseRegistration.java
+    public CourseRegistration(Student s, TeacherCourse tc){
+=======
     public CourseRegistration(Student s, TeacherClasses tc){
+>>>>>>> Backend/src/main/java/myProject/CourseRegistration.java
     	this.student = s;
     	this.teacherCourse = tc;
     }
@@ -45,16 +53,31 @@ public class CourseRegistration {
     	return student;
     }
     
-    public TeacherClasses getTeacherCourse()	{
+<<<<<<< Backend/src/main/java/myProject/CourseRegistration.java
+    public TeacherCourse getAssignedCourse()	{
     	return teacherCourse;
     }
     
-    public double getGrade()	{
+    public Course getCourse()	{
+    	return teacherCourse.getCourse();
+    }
+    
+    public Teacher getTeacher()	{
+    	return teacherCourse.getTeacher();
+=======
+    public TeacherClasses getTeacherCourse()	{
+    	return teacherCourse;
+>>>>>>> Backend/src/main/java/myProject/CourseRegistration.java
+    }
+    
+    public Double getGrade()	{
     	return grade;
     }
     
     public void setGrade(double grade)	{
-    	this.grade = grade;
+    	// Grade can not be set if the course has already been completed.
+    	if (!getCompleted())
+    		this.grade = grade;
     }
     
     public boolean getCompleted()	{
@@ -62,6 +85,8 @@ public class CourseRegistration {
     }
     
     public void complete()	{
-    	this.completed = true;
+    	// Course cannot be completed if no grade has been set
+    	if (getGrade() != null)
+    		this.completed = true;
     }
 }
