@@ -1,0 +1,33 @@
+stages: 
+    - mavenbuild
+    - maventest
+    - autodeploy
+    
+mavenbuild: 
+    stage: mavenbuild
+    tags:
+        - BACKEND
+    script: 
+        - cd Backend
+        - mvn package
+        
+maven-test:
+    stage: maventest
+    tags: 
+        - BACKEND
+    script: 
+        - cd Backend
+        - mvn test
+        - mvn package
+
+auto-deploy:
+    stage: autodeploy
+    tags:
+        - BACKEND
+    script: 
+        - cd Backend
+        - mvn test
+        - mvn package
+        - sudo mv target/RedPen-1.0-SNAPSHOT.jar /target/web-demo.jar
+        - sudo systemctl stop web-demo
+        - sudo systemctl start web-demo
