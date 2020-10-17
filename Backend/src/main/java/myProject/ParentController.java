@@ -62,8 +62,9 @@ public class ParentController {
 	// Delete parent {id}
 	@DeleteMapping("/parent/{id}")
 	String deleteParent(@PathVariable Integer id) {
+		String name = parents.findOne(id).getName();
 		parents.delete(id);
-		return "deleted " + id;
+		return "deleted parent " + name;
 	}
 	
 	// Need methods for getting students of a parent

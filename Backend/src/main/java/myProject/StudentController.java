@@ -58,8 +58,9 @@ public class StudentController {
 	
 	@DeleteMapping("/student/{id}")
 	String deleteStudent(@PathVariable Integer id) {
+		String name = students.findOne(id).getName();
 		students.delete(id);
-		return "deleted " + id;
+		return "deleted student " + name;
 	}
 
 	@Autowired
