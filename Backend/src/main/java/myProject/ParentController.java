@@ -13,22 +13,26 @@ public class ParentController {
 	// Parent Login/Register mappings
 
 	@PostMapping("/register-parent")
-	Parent createParent(@RequestBody Parent s) {
-		parents.save(s);
-		return s;
+	Parent createParent(@RequestBody Parent p) {
+		parents.save(p);
+		return p;
 	}
 	
 	@PostMapping("/login-parent")
-	String getParent(@RequestBody Parent s)	{
-		for (int i = 1; i <= (int) parents.count(); i++) {
-			if (parents.exists(i) && s.getName().equals((parents.getOne(i)).getName()))	{
-				if (s.getPassword().equals(parents.getOne(i).getPassword()))	{
-					return "" + parents.getOne(i).getId();
+	String getParent(@RequestBody Parent p)	{
+		int j = (int) parents.count(); // count() method does not include the number of deleted entities (this causes issues when iterating over id with deleted entity)
+		for (int i = 1; i <= j; i++) {
+			if (!parents.exists(i)) j++; // deleted entity id found. Increment number of iterations to make up for this.
+			else	{
+				if (p.getName().equals((parents.getOne(i)).getName()))	{
+					if (p.getPassword().equals(parents.getOne(i).getPassword()))	{
+						return "" + parents.getOne(i).getId();
+					}
+					else return "Incorrect password";
 				}
-				else return "Incorrect password";
 			}
 		}
-		return "There are no parents with the name " + s.getName();
+		return "There are no parents with the name " + p.getName();
 	}
 	
 	@PutMapping("/parent/{id}/reset-password")

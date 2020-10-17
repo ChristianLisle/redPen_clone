@@ -19,12 +19,16 @@ public class StudentController {
 	
 	@PostMapping("/login-student")
 	String getStudent(@RequestBody Student s)	{
-		for (int i = 1; i <= (int) students.count(); i++) {
-			if (students.exists(i) && s.getName().equals((students.getOne(i)).getName()))	{
-				if (s.getPassword().equals(students.getOne(i).getPassword()))	{
-					return "" + students.getOne(i).getId();
+		int j = (int) students.count(); // count() method does not include the number of deleted entities (this causes issues when iterating over id with deleted entity)
+		for (int i = 1; i <= (int) j; i++) {
+			if (!students.exists(i)) j++; // deleted entity id found. Increment number of iterations to make up for this.
+			else	{
+				if (s.getName().equals((students.getOne(i)).getName()))	{
+					if (s.getPassword().equals(students.getOne(i).getPassword()))	{
+						return "" + students.getOne(i).getId();
+					}
+					else return "Incorrect password";
 				}
-				else return "Incorrect password";
 			}
 		}
 		return "There are no students with the name " + s.getName();

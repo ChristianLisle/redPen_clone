@@ -22,12 +22,16 @@ public class TeacherController {
 	
 	@PostMapping("/login-teacher")
 	String getTeacher(@RequestBody Teacher t)	{
-		for (int i = 1; i <= (int) teachers.count(); i++) {
-			if (teachers.exists(i) && t.getName().equals((teachers.getOne(i)).getName()))	{
-				if (t.getPassword().equals(teachers.getOne(i).getPassword()))	{
-					return "" + teachers.getOne(i).getId();
+		int j = (int) teachers.count(); // count() method does not include the number of deleted entities (this causes issues when iterating over id with deleted entity)
+		for (int i = 1; i <= j; i++) {
+			if (!teachers.exists(i)) j++; // deleted entity id found. Increment number of iterations to make up for this.
+			else	{
+				if (t.getName().equals((teachers.getOne(i)).getName()))	{
+					if (t.getPassword().equals(teachers.getOne(i).getPassword()))	{
+						return "" + teachers.getOne(i).getId();
+					}
+					else return "Incorrect password";
 				}
-				else return "Incorrect password";
 			}
 		}
 		return "There are no teachers with the name " + t.getName();
