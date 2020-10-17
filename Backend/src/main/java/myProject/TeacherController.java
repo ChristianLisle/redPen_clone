@@ -23,7 +23,7 @@ public class TeacherController {
 	@PostMapping("/login-teacher")
 	String getTeacher(@RequestBody Teacher t)	{
 		for (int i = 1; i <= (int) teachers.count(); i++) {
-			if (t.getName().equals((teachers.getOne(i)).getName()))	{
+			if (teachers.exists(i) && t.getName().equals((teachers.getOne(i)).getName()))	{
 				if (t.getPassword().equals(teachers.getOne(i).getPassword()))	{
 					return "" + teachers.getOne(i).getId();
 				}

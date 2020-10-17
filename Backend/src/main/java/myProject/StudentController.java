@@ -20,7 +20,7 @@ public class StudentController {
 	@PostMapping("/login-student")
 	String getStudent(@RequestBody Student s)	{
 		for (int i = 1; i <= (int) students.count(); i++) {
-			if (s.getName().equals((students.getOne(i)).getName()))	{
+			if (students.exists(i) && s.getName().equals((students.getOne(i)).getName()))	{
 				if (s.getPassword().equals(students.getOne(i).getPassword()))	{
 					return "" + students.getOne(i).getId();
 				}
