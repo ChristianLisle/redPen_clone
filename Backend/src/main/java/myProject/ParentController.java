@@ -23,7 +23,7 @@ public class ParentController {
 		for (int i = 1; i < (int) parents.count(); i++) {
 			if (s.getName().equals((parents.getOne(i)).getName()))	{
 				if (s.getPassword().equals(parents.getOne(i).getPassword()))	{
-					return "Parent id: " + parents.getOne(i).getId();
+					return "" + parents.getOne(i).getId();
 				}
 				else return "Incorrect password";
 			}

@@ -22,7 +22,7 @@ public class StudentController {
 		for (int i = 1; i < (int) students.count(); i++) {
 			if (s.getName().equals((students.getOne(i)).getName()))	{
 				if (s.getPassword().equals(students.getOne(i).getPassword()))	{
-					return "Student id: " + students.getOne(i).getId();
+					return "" + students.getOne(i).getId();
 				}
 				else return "Incorrect password";
 			}

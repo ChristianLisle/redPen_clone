@@ -25,7 +25,7 @@ public class TeacherController {
 		for (int i = 1; i < (int) teachers.count(); i++) {
 			if (t.getName().equals((teachers.getOne(i)).getName()))	{
 				if (t.getPassword().equals(teachers.getOne(i).getPassword()))	{
-					return "Teacher id: " + teachers.getOne(i).getId();
+					return "" + teachers.getOne(i).getId();
 				}
 				else return "Incorrect password";
 			}
