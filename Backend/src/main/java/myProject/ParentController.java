@@ -20,7 +20,7 @@ public class ParentController {
 	
 	@PostMapping("/login-parent")
 	String getParent(@RequestBody Parent s)	{
-		for (int i = 1; i < (int) parents.count(); i++) {
+		for (int i = 1; i <= (int) parents.count(); i++) {
 			if (s.getName().equals((parents.getOne(i)).getName()))	{
 				if (s.getPassword().equals(parents.getOne(i).getPassword()))	{
 					return "" + parents.getOne(i).getId();
