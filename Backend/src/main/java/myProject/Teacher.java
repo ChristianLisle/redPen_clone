@@ -27,6 +27,9 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher")
     Set<TeacherCourse> teacherCourses;
     
+    @OneToMany(mappedBy = "teacher")
+    Set<PTInbox> ptinbox;
+    
     public Teacher()	{}
     
     public Teacher(String name) {

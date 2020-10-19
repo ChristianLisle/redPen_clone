@@ -24,6 +24,9 @@ public class Parent {
 	
 	@OneToMany(mappedBy = "parent")
 	Set<Student> students;
+	
+	@OneToMany(mappedBy = "parent")
+    Set<PTInbox> ptinbox;
 
 	public Parent() {}
 
