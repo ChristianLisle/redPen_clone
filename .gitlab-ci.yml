@@ -46,7 +46,7 @@ android-build:
         - cd Android-test
         - ./gradlew assemble
     artifacts:
-        pats:
+        paths:
             - Android_test/apps/build/outputs
 
 unitTests:
