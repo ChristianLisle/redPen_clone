@@ -39,7 +39,7 @@ android-build:
     stage: androidbuild
     before_script:
         - export GRADLE_USER_HOME=`pwd`/.gradle
-        - chmod +x ./Android_test/gradlew
+        - chmod +x ./Frontend/gradlew
     tags:
         - FRONTEND
     script:
@@ -54,7 +54,7 @@ unitTests:
     stage: androidtest
     before_script:
         - export GRADLE_USER_HOME=`pwd`/.gradle
-        - chmod +x ./Android_test/gradlew
+        - chmod +x ./Frontend/gradlew
     tags:
         - FRONTEND
     script:
