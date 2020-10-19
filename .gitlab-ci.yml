@@ -43,7 +43,7 @@ android-build:
     tags:
         - FRONTEND
     script:
-        - cd Android-test
+        - cd Frontend
         - ./gradlew assemble
     artifacts:
         paths:
@@ -58,7 +58,7 @@ unitTests:
     tags:
         - FRONTEND
     script:
-        - cd Android_test
+        - cd Frontend
         - ./gradlew test
     only:
         refs:
