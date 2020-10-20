@@ -30,6 +30,9 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher")
     Set<PTInbox> ptinbox;
     
+    @OneToMany(mappedBy = "teacher")
+    Set<STInbox> stinbox;
+    
     public Teacher()	{}
     
     public Teacher(String name) {

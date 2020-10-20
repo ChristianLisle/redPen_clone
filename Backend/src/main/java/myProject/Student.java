@@ -29,6 +29,9 @@ public class Student {
 	@OneToMany(mappedBy = "student")
 	Set<AssignedAssignment> assignments;
 	
+	@OneToMany(mappedBy = "student")
+    Set<STInbox> stinbox;
+	
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
 	Parent parent;
