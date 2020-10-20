@@ -37,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
         buttonRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                jsonParseUsers();
+                jsonParseTeachers();
             }
         });
     }
 
     public void jsonParseUsers(){
-        //String url = "http://coms-309-ug-05.cs.iastate.edu:8080/users.json";
-        String url = "https://api.jsonbin.io/b/5f83bb3665b18913fc5e020a";
+        String url = "http://coms-309-ug-05.cs.iastate.edu:8080/users.json";
+        //String url = "https://api.jsonbin.io/b/5f83bb3665b18913fc5e020a";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -76,4 +76,42 @@ public class MainActivity extends AppCompatActivity {
 
         queue.add(jsonArrayRequest);
     }
+
+    public void jsonParseTeachers(){
+        String url = "http://coms-309-ug-05.cs.iastate.edu:8080/teachers";
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                for(int i = 0; i < response.length(); i++){
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        String obj = jsonObject.toString();
+
+                        String id = jsonObject.getString("id");
+                        String name = jsonObject.getString("name");
+
+                        resultsTextView.append("ID: " + id + ", NAME: " + name + "\n");
+                        resultsTextView.append(obj + "\n");
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                resultsTextView.append("Error: " + error.toString());
+            }
+        });
+
+        queue.add(request);
+    }
+
+
 }
