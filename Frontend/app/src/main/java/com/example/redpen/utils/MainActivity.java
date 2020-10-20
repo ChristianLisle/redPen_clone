@@ -32,19 +32,34 @@ public class MainActivity extends AppCompatActivity {
 
         resultsTextView = findViewById(R.id.text_view_result);
         Button buttonRequest = (Button) findViewById(R.id.button_request);
+        Button buttonRequestTeachers = (Button) findViewById(R.id.button_request_teachers);
+        Button buttonClear = (Button) findViewById(R.id.button_clear);
         queue = Volley.newRequestQueue(this);
 
         buttonRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                jsonParseUsers();
+            }
+        });
+
+        buttonRequestTeachers.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
                 jsonParseTeachers();
+            }
+        });
+
+        buttonClear.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                resultsTextView.setText("");
             }
         });
     }
 
     public void jsonParseUsers(){
-        String url = "http://coms-309-ug-05.cs.iastate.edu:8080/users.json";
-        //String url = "https://api.jsonbin.io/b/5f83bb3665b18913fc5e020a";
+        String url = "http://coms-309-ug-05.cs.iastate.edu:8080/users";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -87,14 +102,11 @@ public class MainActivity extends AppCompatActivity {
                 for(int i = 0; i < response.length(); i++){
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
-                        String obj = jsonObject.toString();
 
                         String id = jsonObject.getString("id");
                         String name = jsonObject.getString("name");
 
                         resultsTextView.append("ID: " + id + ", NAME: " + name + "\n");
-                        resultsTextView.append(obj + "\n");
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
