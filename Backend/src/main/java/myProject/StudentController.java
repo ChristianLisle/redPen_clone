@@ -1,5 +1,6 @@
 package myProject;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -146,5 +147,64 @@ public class StudentController {
 	
 	
 	// Need methods for assigning student to a parent
+	
+	
+	@Autowired
+	STInboxRepository stinbox;
+	
+	@Autowired
+	STMessagesRepository stmessage;
+	
+	//Gets all messages a student has between teachers
+	@RequestMapping("/student/{id}/stinbox")
+	List<STInbox> studentTeacherInbox(@PathVariable Integer id) {
+		List<STInbox> sti = new ArrayList<STInbox>();
+		List<STInbox> list = stinbox.findAll();
+		for (STInbox st : list) {
+			if (st.student.id == id) {
+				sti.add(st);
+			}
+		}
+		return sti;
+	}
+	
+	//Gets all the PTMessages between a parent and teacher in an inbox
+	@GetMapping("student/{id}/stinbox/{sid}/messages")
+	List<STMessages> studentTeacherInboxMessages(@PathVariable Integer id, @PathVariable Integer sid) {
+		List<STMessages> stm = new ArrayList<STMessages>();
+		List<STMessages> list = stmessage.findAll();
+		for (STMessages st : list) {
+			if (st.stinbox.student.id == id && st.stinbox.id == sid) {
+				stm.add(st);
+			}
+		}
+		return stm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("student/{id}/stinbox/{sid}/messagesOnly")
+	List<String> studentTeacherInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer sid) {
+		List<String> stm = new ArrayList<String>();
+		List<STMessages> list = stmessage.findAll();
+		for (STMessages st : list) {
+			if (st.stinbox.student.id == id && st.stinbox.id == sid) {
+				stm.add(st.message);
+			}
+		}
+		return stm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("student/{id}/stinbox/{sid}/messagesSender")
+	List<String> studentTeacherInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer sid) {
+		List<String> stm = new ArrayList<String>();
+		List<STMessages> list = stmessage.findAll();
+		for (STMessages st : list) {
+			if (st.stinbox.student.id == id && st.stinbox.id == sid) {
+				stm.add(st.sender);
+			}
+		}
+		return stm;
+	}
 }
 

@@ -1,5 +1,6 @@
 package myProject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,66 @@ public class ParentController {
 		return "deleted parent " + name;
 	}
 	
+	
 	// Need methods for getting students of a parent
+	
+	
+	@Autowired
+	PTInboxRepository ptinbox;
+	
+	@Autowired
+	PTMessagesRepository ptmessage;
+	
+	//Gets all messages a student has between teachers
+	@RequestMapping("/parent/{id}/ptinbox")
+	List<PTInbox> parentTeacherInbox(@PathVariable Integer id) {
+		List<PTInbox> pti = new ArrayList<PTInbox>();
+		List<PTInbox> list = ptinbox.findAll();
+		for (PTInbox pt : list) {
+			if (pt.parent.id == id) {
+				pti.add(pt);
+			}
+		}
+		return pti;
+	}
+	
+	//Gets all the PTMessages between a parent and teacher in an inbox
+	@GetMapping("parent/{id}/ptinbox/{pid}/messages")
+	List<PTMessages> parentTeacherInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<PTMessages> ptm = new ArrayList<PTMessages>();
+		List<PTMessages> list = ptmessage.findAll();
+		for (PTMessages pt : list) {
+			if (pt.ptinbox.parent.id == id && pt.ptinbox.id == pid) {
+				ptm.add(pt);
+			}
+		}
+		return ptm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("parent/{id}/ptinbox/{pid}/messagesOnly")
+	List<String> parentTeacherInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> ptm = new ArrayList<String>();
+		List<PTMessages> list = ptmessage.findAll();
+		for (PTMessages pt : list) {
+			if (pt.ptinbox.parent.id == id && pt.ptinbox.id == pid) {
+				ptm.add(pt.message);
+			}
+		}
+		return ptm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("parent/{id}/ptinbox/{pid}/messagesSender")
+	List<String> parentTeacherInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> ptm = new ArrayList<String>();
+		List<PTMessages> list = ptmessage.findAll();
+		for (PTMessages pt : list) {
+			if (pt.ptinbox.parent.id == id && pt.ptinbox.id == pid) {
+				ptm.add(pt.sender);
+			}
+		}
+		return ptm;
+	}
+
 }

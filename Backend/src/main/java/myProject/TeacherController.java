@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class TeacherController {
 	@Autowired
@@ -97,4 +99,121 @@ public class TeacherController {
 		}
 		return returned;
 	}
+	
+	@Autowired
+	PTInboxRepository ptinbox;
+	
+	@Autowired
+	PTMessagesRepository ptmessage;
+	
+	//Gets all conversations a teacher has between parents
+	@RequestMapping("/teacher/{id}/ptinbox")
+	List<PTInbox> teacherParentInbox(@PathVariable Integer id) {
+		List<PTInbox> pti = new ArrayList<PTInbox>();
+		List<PTInbox> list = ptinbox.findAll();
+		for (PTInbox pt : list) {
+			if (pt.teacher.id == id) {
+				pti.add(pt);
+			}
+		}
+		return pti;
+	}
+	
+	//Gets all the PTMessages between a parent and teacher in an inbox
+	@GetMapping("teacher/{id}/ptinbox/{pid}/messages")
+	List<PTMessages> teacherParentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<PTMessages> ptm = new ArrayList<PTMessages>();
+		List<PTMessages> list = ptmessage.findAll();
+		for (PTMessages pt : list) {
+			if (pt.ptinbox.teacher.id == id && pt.ptinbox.id == pid) {
+				ptm.add(pt);
+			}
+		}
+		return ptm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("teacher/{id}/ptinbox/{pid}/messagesOnly")
+	List<String> teacherParentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> ptm = new ArrayList<String>();
+		List<PTMessages> list = ptmessage.findAll();
+		for (PTMessages pt : list) {
+			if (pt.ptinbox.teacher.id == id && pt.ptinbox.id == pid) {
+				ptm.add(pt.message);
+			}
+		}
+		return ptm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("teacher/{id}/ptinbox/{pid}/messagesSender")
+	List<String> teacherParentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> ptm = new ArrayList<String>();
+		List<PTMessages> list = ptmessage.findAll();
+		for (PTMessages pt : list) {
+			if (pt.ptinbox.teacher.id == id && pt.ptinbox.id == pid) {
+				ptm.add(pt.sender);
+			}
+		}
+		return ptm;
+	}
+	
+	@Autowired
+	STInboxRepository stinbox;
+	
+	@Autowired
+	STMessagesRepository stmessage;
+	
+	//Gets all conversations a teacher has between parents
+	@RequestMapping("/teacher/{id}/stinbox")
+	List<STInbox> teacherStudentInbox(@PathVariable Integer id) {
+		List<STInbox> sti = new ArrayList<STInbox>();
+		List<STInbox> list = stinbox.findAll();
+		for (STInbox st : list) {
+			if (st.teacher.id == id) {
+				sti.add(st);
+			}
+		}
+		return sti;
+	}
+	
+	//Gets all the PTMessages between a parent and teacher in an inbox
+	@GetMapping("teacher/{id}/stinbox/{pid}/messages")
+	List<STMessages> teacherStudentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<STMessages> stm = new ArrayList<STMessages>();
+		List<STMessages> list = stmessage.findAll();
+		for (STMessages st : list) {
+			if (st.stinbox.teacher.id == id && st.stinbox.id == pid) {
+				stm.add(st);
+			}
+		}
+		return stm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("teacher/{id}/stinbox/{pid}/messagesOnly")
+	List<String> teacherStudentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> stm = new ArrayList<String>();
+		List<STMessages> list = stmessage.findAll();
+		for (STMessages st : list) {
+			if (st.stinbox.teacher.id == id && st.stinbox.id == pid) {
+				stm.add(st.message);
+			}
+		}
+		return stm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("teacher/{id}/stinbox/{pid}/messagesSender")
+	List<String> teacherStudentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> stm = new ArrayList<String>();
+		List<STMessages> list = stmessage.findAll();
+		for (STMessages st : list) {
+			if (st.stinbox.teacher.id == id && st.stinbox.id == pid) {
+				stm.add(st.sender);
+			}
+		}
+		return stm;
+	}
+	
 }
