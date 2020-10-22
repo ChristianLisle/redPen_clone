@@ -23,9 +23,10 @@ public class PTMessagesController {
 
 	@DeleteMapping("/ptmessage/{id}")
 	String deleteP2TMessages(@PathVariable Integer id) {
+		String send = messages.findOne(id).sender;
+		String sub = messages.findOne(id).subject;
 		messages.delete(id);
-		return "Deleted message sent by " + messages.findOne(id).sender 
-				+ " with the subject " + messages.findOne(id).subject; 
+		return "Deleted message sent by " + send + " with the subject " + sub; 
 	}
 
 }

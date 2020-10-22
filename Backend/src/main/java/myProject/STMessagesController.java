@@ -23,9 +23,10 @@ public class STMessagesController {
 
 	@DeleteMapping("/stmessage/{id}")
 	String deleteS2TMessages(@PathVariable Integer id) {
+		String send = messages.findOne(id).sender;
+		String mess = messages.findOne(id).message;
 		messages.delete(id);
-		return "Deleted message sent by " + messages.findOne(id).sender 
-				+ " with the subject " + messages.findOne(id).subject; 
+		return "Deleted message sent by " + send + " with the subject " + mess; 
 	}
 
 }

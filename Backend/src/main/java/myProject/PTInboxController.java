@@ -23,9 +23,11 @@ public class PTInboxController {
 
 	@DeleteMapping("/ptinbox/{id}")
 	String deleteP2TInbox(@PathVariable Integer id) {
+		String teach = inbox.findOne(id).teacher.name;
+		String paren = inbox.findOne(id).parent.name;
+		String sub = inbox.findOne(id).subject;
 		inbox.delete(id);
-		return "Deleted message between " + inbox.findOne(id).teacher.name + " and " 
-				+ inbox.findOne(id).parent.name + " with the subject " + inbox.findOne(id).subject;
+		return "Deleted message between " + teach + " and " + paren + " with the subject " + sub;
 	}
 	
 	@Autowired

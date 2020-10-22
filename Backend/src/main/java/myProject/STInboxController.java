@@ -23,9 +23,11 @@ public class STInboxController {
 
 	@DeleteMapping("/stinbox/{id}")
 	String deleteS2TInbox(@PathVariable Integer id) {
+		String teach = inbox.findOne(id).teacher.name;
+		String stud = inbox.findOne(id).student.name;
+		String sub = inbox.findOne(id).subject;
 		inbox.delete(id);
-		return "Deleted message between " + inbox.findOne(id).teacher.name + " and " 
-				+ inbox.findOne(id).student.name + " with the subject " + inbox.findOne(id).subject;
+		return "Deleted inbox between " + teach + " and " + stud + " with the subject " + sub;
 	}
 	
 	@Autowired

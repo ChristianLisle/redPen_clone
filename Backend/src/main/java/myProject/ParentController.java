@@ -149,5 +149,25 @@ public class ParentController {
 		ptmessage.save(ptm);
 		return ptm;
 	}
+	
+	//Deletes an inbox and all associated messages for pti
+	@DeleteMapping("/parent/{id}/deletePTI/{stid}")
+	String deletePTInbox(@PathVariable Integer id, @PathVariable Integer ptid) {
+		List<PTMessages> list = ptmessage.findAll();
+		int messages = 0;
+		for (PTMessages ptm : list) {
+			if (ptm.ptinbox.id == ptid && ptm.ptinbox.parent.id == id) {
+				ptmessage.delete(ptm);
+				messages++;
+			}
+		}
+		String teach = ptinbox.findOne(id).teacher.name;
+		String par = ptinbox.findOne(id).parent.name;
+		String sub = ptinbox.findOne(id).subject;
+		if (ptinbox.findOne(ptid).parent.id == id) {
+			ptinbox.delete(id);
+		}
+		return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + par + " with the subject " + sub;
+	}
 
 }

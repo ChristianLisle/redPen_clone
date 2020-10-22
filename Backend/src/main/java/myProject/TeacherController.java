@@ -176,6 +176,26 @@ public class TeacherController {
 		return ptm;
 	}
 	
+	//Deletes an inbox and all associated messages for pti
+	@DeleteMapping("/teacher/{id}/deletePTI/{stid}")
+	String deletePTInbox(@PathVariable Integer id, @PathVariable Integer ptid) {
+		List<PTMessages> list = ptmessage.findAll();
+		int messages = 0;
+		for (PTMessages ptm : list) {
+			if (ptm.ptinbox.id == ptid && ptm.ptinbox.teacher.id == id) {
+				ptmessage.delete(ptm);
+				messages++;
+			}
+		}
+		String teach = ptinbox.findOne(id).teacher.name;
+		String par = ptinbox.findOne(id).parent.name;
+		String sub = ptinbox.findOne(id).subject;
+		if (ptinbox.findOne(ptid).teacher.id == id) {
+			ptinbox.delete(id);
+		}
+		return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + par + " with the subject " + sub;
+	}
+	
 	@Autowired
 	STInboxRepository stinbox;
 	
@@ -252,6 +272,26 @@ public class TeacherController {
 		STMessages stm = new STMessages(stinbox.findOne(sid), stinbox.findOne(sid).subject, teachers.findOne(id).name, message);
 		stmessage.save(stm);
 		return stm;
+	}
+	
+	//Deletes an inbox and all associated messages for sti
+	@DeleteMapping("/teacher/{id}/deleteSTI/{stid}")
+	String deleteSTInbox(@PathVariable Integer id, @PathVariable Integer stid) {
+		List<STMessages> list = stmessage.findAll();
+		int messages = 0;
+		for (STMessages stm : list) {
+			if (stm.stinbox.id == stid && stm.stinbox.teacher.id == id) {
+				stmessage.delete(stm);
+				messages++;
+			}
+		}
+		String teach = stinbox.findOne(id).teacher.name;
+		String stu = stinbox.findOne(id).student.name;
+		String sub = stinbox.findOne(id).subject;
+		if (stinbox.findOne(stid).teacher.id == id) {
+			stinbox.delete(id);
+		}
+		return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + stu + " with the subject " + sub;
 	}
 	
 }
