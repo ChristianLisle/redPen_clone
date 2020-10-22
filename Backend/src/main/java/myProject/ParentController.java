@@ -129,5 +129,25 @@ public class ParentController {
 		}
 		return ptm;
 	}
+	
+	@Autowired
+	TeacherRepository teachers;
+	
+	//Creates a ptinbox
+	@PostMapping("/parent/{id}/makePTI/{tid}/titled/{subject}")
+	PTInbox createPTInbox(@PathVariable Integer id, @PathVariable Integer tid, @PathVariable String subject) {
+		PTInbox pt = new PTInbox(parents.findOne(id), teachers.findOne(tid), subject);
+		ptinbox.save(pt);
+		return pt;
+	}
+	
+	//Creates a ptmessage
+	@PostMapping("/parent/{id}/makePTM/{pid}/message/{message}")
+	PTMessages createPTMessages(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String message) {
+		//pid is the id of a ptinbox
+		PTMessages ptm = new PTMessages(ptinbox.findOne(pid), ptinbox.findOne(pid).subject, parents.findOne(id).name, message);
+		ptmessage.save(ptm);
+		return ptm;
+	}
 
 }

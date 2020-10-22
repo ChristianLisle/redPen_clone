@@ -206,5 +206,26 @@ public class StudentController {
 		}
 		return stm;
 	}
+	
+	@Autowired
+	TeacherRepository teachers;
+	
+	//Creates a stinbox
+	@PostMapping("/student/{id}/makeSTI/{tid}/titled/{subject}")
+	STInbox createSTInbox(@PathVariable Integer id, @PathVariable Integer tid, @PathVariable String subject) {
+		STInbox st = new STInbox(students.findOne(id), teachers.findOne(tid), subject);
+		stinbox.save(st);
+		return st;
+	}
+	
+	//Creates a stmessage
+	@PostMapping("/student/{id}/makeSTM/{sid}/message/{message}")
+	STMessages createSTMessages(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String message) {
+		//sid is the id of a stinbox
+		STMessages stm = new STMessages(stinbox.findOne(sid), stinbox.findOne(sid).subject, students.findOne(id).name, message);
+		stmessage.save(stm);
+		return stm;
+	}
+	
 }
 

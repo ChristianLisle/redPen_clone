@@ -157,6 +157,26 @@ public class TeacherController {
 	}
 	
 	@Autowired
+	ParentRepository parents;
+
+	//Creates a ptinbox
+	@PostMapping("/teacher/{id}/makePTI/{pid}/titled/{subject}")
+	PTInbox createPTInbox(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String subject) {
+		PTInbox pt = new PTInbox(parents.findOne(pid), teachers.findOne(id), subject);
+		ptinbox.save(pt);
+		return pt;
+	}
+	
+	//Creates a ptmessage
+	@PostMapping("/teacher/{id}/makePTM/{pid}/message/{message}")
+	PTMessages createPTMessages(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String message) {
+		//pid is the id of a ptinbox
+		PTMessages ptm = new PTMessages(ptinbox.findOne(pid), ptinbox.findOne(pid).subject, teachers.findOne(id).name, message);
+		ptmessage.save(ptm);
+		return ptm;
+	}
+	
+	@Autowired
 	STInboxRepository stinbox;
 	
 	@Autowired
@@ -211,6 +231,26 @@ public class TeacherController {
 				stm.add(st.sender);
 			}
 		}
+		return stm;
+	}
+	
+	@Autowired
+	StudentRepository students;
+
+	//Creates a stinbox
+	@PostMapping("/teacher/{id}/makeSTI/{sid}/titled/{subject}")
+	STInbox createSTInbox(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String subject) {
+		STInbox st = new STInbox(students.findOne(sid), teachers.findOne(id), subject);
+		stinbox.save(st);
+		return st;
+	}
+	
+	//Creates a stmessage
+	@PostMapping("/teacher/{id}/makeSTM/{sid}/message/{message}")
+	STMessages createSTMessages(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String message) {
+		//sid is the id of a stinbox
+		STMessages stm = new STMessages(stinbox.findOne(sid), stinbox.findOne(sid).subject, teachers.findOne(id).name, message);
+		stmessage.save(stm);
 		return stm;
 	}
 	
