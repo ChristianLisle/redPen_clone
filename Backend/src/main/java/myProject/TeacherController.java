@@ -118,7 +118,7 @@ public class TeacherController {
 	}
 	
 	//Gets all the PTMessages between a parent and teacher in an inbox
-	@GetMapping("teacher/{id}/ptinbox/{pid}/messages")
+	@GetMapping("teacher/{id}/ptinbox/{pid}")
 	List<PTMessages> teacherParentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<PTMessages> ptm = new ArrayList<PTMessages>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -131,7 +131,7 @@ public class TeacherController {
 	}
 	
 	//Gets all the messages between a parent and a teacher in an inbox
-	@GetMapping("teacher/{id}/ptinbox/{pid}/messagesOnly")
+	@GetMapping("teacher/{id}/ptinbox/{pid}/messages")
 	List<String> teacherParentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -144,7 +144,7 @@ public class TeacherController {
 	}
 	
 	//Gets all the messages between a parent and a teacher in an inbox
-	@GetMapping("teacher/{id}/ptinbox/{pid}/messagesSender")
+	@GetMapping("teacher/{id}/ptinbox/{pid}/senders")
 	List<String> teacherParentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -196,7 +196,7 @@ public class TeacherController {
 	}
 	
 	//Gets all the PTMessages between a parent and teacher in an inbox
-	@GetMapping("teacher/{id}/stinbox/{pid}/messages")
+	@GetMapping("teacher/{id}/stinbox/{pid}")
 	List<STMessages> teacherStudentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<STMessages> stm = new ArrayList<STMessages>();
 		List<STMessages> list = stmessage.findAll();
@@ -209,7 +209,7 @@ public class TeacherController {
 	}
 	
 	//Gets all the messages between a parent and a teacher in an inbox
-	@GetMapping("teacher/{id}/stinbox/{pid}/messagesOnly")
+	@GetMapping("teacher/{id}/stinbox/{pid}/messages")
 	List<String> teacherStudentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> stm = new ArrayList<String>();
 		List<STMessages> list = stmessage.findAll();
@@ -222,7 +222,7 @@ public class TeacherController {
 	}
 	
 	//Gets all the messages between a parent and a teacher in an inbox
-	@GetMapping("teacher/{id}/stinbox/{pid}/messagesSender")
+	@GetMapping("teacher/{id}/stinbox/{pid}/senders")
 	List<String> teacherStudentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> stm = new ArrayList<String>();
 		List<STMessages> list = stmessage.findAll();

@@ -92,7 +92,7 @@ public class ParentController {
 	}
 	
 	//Gets all the PTMessages between a parent and teacher in an inbox
-	@GetMapping("parent/{id}/ptinbox/{pid}/messages")
+	@GetMapping("parent/{id}/ptinbox/{pid}")
 	List<PTMessages> parentTeacherInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<PTMessages> ptm = new ArrayList<PTMessages>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -105,7 +105,7 @@ public class ParentController {
 	}
 	
 	//Gets all the messages between a parent and a teacher in an inbox
-	@GetMapping("parent/{id}/ptinbox/{pid}/messagesOnly")
+	@GetMapping("parent/{id}/ptinbox/{pid}/messages")
 	List<String> parentTeacherInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -118,7 +118,7 @@ public class ParentController {
 	}
 	
 	//Gets all the messages between a parent and a teacher in an inbox
-	@GetMapping("parent/{id}/ptinbox/{pid}/messagesSender")
+	@GetMapping("parent/{id}/ptinbox/{pid}/senders")
 	List<String> parentTeacherInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
 		List<PTMessages> list = ptmessage.findAll();

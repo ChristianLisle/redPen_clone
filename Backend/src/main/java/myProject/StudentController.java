@@ -169,7 +169,7 @@ public class StudentController {
 	}
 	
 	//Gets all the PTMessages between a parent and teacher in an inbox
-	@GetMapping("student/{id}/stinbox/{sid}/messages")
+	@GetMapping("student/{id}/stinbox/{sid}")
 	List<STMessages> studentTeacherInboxMessages(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<STMessages> stm = new ArrayList<STMessages>();
 		List<STMessages> list = stmessage.findAll();
@@ -182,7 +182,7 @@ public class StudentController {
 	}
 	
 	//Gets all the messages between a parent and a teacher in an inbox
-	@GetMapping("student/{id}/stinbox/{sid}/messagesOnly")
+	@GetMapping("student/{id}/stinbox/{sid}/messages")
 	List<String> studentTeacherInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<String> stm = new ArrayList<String>();
 		List<STMessages> list = stmessage.findAll();
@@ -195,7 +195,7 @@ public class StudentController {
 	}
 	
 	//Gets all the messages between a parent and a teacher in an inbox
-	@GetMapping("student/{id}/stinbox/{sid}/messagesSender")
+	@GetMapping("student/{id}/stinbox/{sid}/senders")
 	List<String> studentTeacherInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<String> stm = new ArrayList<String>();
 		List<STMessages> list = stmessage.findAll();
