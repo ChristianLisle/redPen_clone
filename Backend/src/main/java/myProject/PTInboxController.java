@@ -30,6 +30,13 @@ public class PTInboxController {
 		return "Deleted message between " + teach + " and " + paren + " with the subject " + sub;
 	}
 	
+	// Create a new ptinbox
+	@PostMapping("ptinbox")
+	PTInbox createInbox(@RequestBody PTInbox p) {
+		inbox.save(p);
+		return p;
+	}
+	
 	@Autowired
 	PTMessagesRepository ptmessages;
 	

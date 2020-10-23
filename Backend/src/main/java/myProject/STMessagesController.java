@@ -28,5 +28,12 @@ public class STMessagesController {
 		messages.delete(id);
 		return "Deleted message sent by " + send + " with the subject " + mess; 
 	}
+	
+	// Create a new stmessage
+	@PostMapping("stmessage")
+	STMessages createSTMessage(@RequestBody STMessages s) {
+		messages.save(s);
+		return s;
+	}
 
 }

@@ -30,6 +30,13 @@ public class STInboxController {
 		return "Deleted inbox between " + teach + " and " + stud + " with the subject " + sub;
 	}
 	
+	// Create a new stinbox
+	@PostMapping("stinbox")
+	STInbox createSTInbox(@RequestBody STInbox s) {
+		inbox.save(s);
+		return s;
+	}
+	
 	@Autowired
 	STMessagesRepository stmessages;
 	
