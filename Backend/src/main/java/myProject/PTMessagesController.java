@@ -29,7 +29,7 @@ public class PTMessagesController {
 		return "Deleted message sent by " + send + " with the subject " + sub; 
 	}
 	
-	// Create a new ptinbox
+	// Create a new ptmessages
 	@PostMapping("ptmessage")
 	PTMessages createPTMessage(@RequestBody PTMessages p) {
 		messages.save(p);
