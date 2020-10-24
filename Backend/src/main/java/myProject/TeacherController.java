@@ -97,4 +97,201 @@ public class TeacherController {
 		}
 		return returned;
 	}
+	
+	@Autowired
+	PTInboxRepository ptinbox;
+	
+	@Autowired
+	PTMessagesRepository ptmessage;
+	
+	//Gets all conversations a teacher has between parents
+	@RequestMapping("/teacher/{id}/ptinbox")
+	List<PTInbox> teacherParentInbox(@PathVariable Integer id) {
+		List<PTInbox> pti = new ArrayList<PTInbox>();
+		List<PTInbox> list = ptinbox.findAll();
+		for (PTInbox pt : list) {
+			if (pt.teacher.id == id) {
+				pti.add(pt);
+			}
+		}
+		return pti;
+	}
+	
+	//Gets all the PTMessages between a parent and teacher in an inbox
+	@GetMapping("teacher/{id}/ptinbox/{pid}")
+	List<PTMessages> teacherParentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<PTMessages> ptm = new ArrayList<PTMessages>();
+		List<PTMessages> list = ptmessage.findAll();
+		for (PTMessages pt : list) {
+			if (pt.ptinbox.teacher.id == id && pt.ptinbox.id == pid) {
+				ptm.add(pt);
+			}
+		}
+		return ptm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("teacher/{id}/ptinbox/{pid}/messages")
+	List<String> teacherParentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> ptm = new ArrayList<String>();
+		List<PTMessages> list = ptmessage.findAll();
+		for (PTMessages pt : list) {
+			if (pt.ptinbox.teacher.id == id && pt.ptinbox.id == pid) {
+				ptm.add(pt.message);
+			}
+		}
+		return ptm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("teacher/{id}/ptinbox/{pid}/senders")
+	List<String> teacherParentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> ptm = new ArrayList<String>();
+		List<PTMessages> list = ptmessage.findAll();
+		for (PTMessages pt : list) {
+			if (pt.ptinbox.teacher.id == id && pt.ptinbox.id == pid) {
+				ptm.add(pt.sender);
+			}
+		}
+		return ptm;
+	}
+	
+	@Autowired
+	ParentRepository parents;
+
+	//Creates a ptinbox
+	@PostMapping("/teacher/{id}/makePTI/{pid}/titled/{subject}")
+	PTInbox createPTInbox(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String subject) {
+		PTInbox pt = new PTInbox(parents.findOne(pid), teachers.findOne(id), subject);
+		ptinbox.save(pt);
+		return pt;
+	}
+	
+	//Creates a ptmessage
+	@PostMapping("/teacher/{id}/makePTM/{pid}/message/{message}")
+	PTMessages createPTMessages(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String message) {
+		//pid is the id of a ptinbox
+		PTMessages ptm = new PTMessages(ptinbox.findOne(pid), ptinbox.findOne(pid).subject, teachers.findOne(id).name, message);
+		ptmessage.save(ptm);
+		return ptm;
+	}
+	
+	//Deletes an inbox and all associated messages for pti
+	@DeleteMapping("/teacher/{id}/deletePTI/{stid}")
+	String deletePTInbox(@PathVariable Integer id, @PathVariable Integer ptid) {
+		List<PTMessages> list = ptmessage.findAll();
+		int messages = 0;
+		for (PTMessages ptm : list) {
+			if (ptm.ptinbox.id == ptid && ptm.ptinbox.teacher.id == id) {
+				ptmessage.delete(ptm);
+				messages++;
+			}
+		}
+		String teach = ptinbox.findOne(id).teacher.name;
+		String par = ptinbox.findOne(id).parent.name;
+		String sub = ptinbox.findOne(id).subject;
+		if (ptinbox.findOne(ptid).teacher.id == id) {
+			ptinbox.delete(id);
+		}
+		return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + par + " with the subject " + sub;
+	}
+	
+	@Autowired
+	STInboxRepository stinbox;
+	
+	@Autowired
+	STMessagesRepository stmessage;
+	
+	//Gets all conversations a teacher has between parents
+	@RequestMapping("/teacher/{id}/stinbox")
+	List<STInbox> teacherStudentInbox(@PathVariable Integer id) {
+		List<STInbox> sti = new ArrayList<STInbox>();
+		List<STInbox> list = stinbox.findAll();
+		for (STInbox st : list) {
+			if (st.teacher.id == id) {
+				sti.add(st);
+			}
+		}
+		return sti;
+	}
+	
+	//Gets all the PTMessages between a parent and teacher in an inbox
+	@GetMapping("teacher/{id}/stinbox/{pid}")
+	List<STMessages> teacherStudentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<STMessages> stm = new ArrayList<STMessages>();
+		List<STMessages> list = stmessage.findAll();
+		for (STMessages st : list) {
+			if (st.stinbox.teacher.id == id && st.stinbox.id == pid) {
+				stm.add(st);
+			}
+		}
+		return stm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("teacher/{id}/stinbox/{pid}/messages")
+	List<String> teacherStudentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> stm = new ArrayList<String>();
+		List<STMessages> list = stmessage.findAll();
+		for (STMessages st : list) {
+			if (st.stinbox.teacher.id == id && st.stinbox.id == pid) {
+				stm.add(st.message);
+			}
+		}
+		return stm;
+	}
+	
+	//Gets all the messages between a parent and a teacher in an inbox
+	@GetMapping("teacher/{id}/stinbox/{pid}/senders")
+	List<String> teacherStudentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
+		List<String> stm = new ArrayList<String>();
+		List<STMessages> list = stmessage.findAll();
+		for (STMessages st : list) {
+			if (st.stinbox.teacher.id == id && st.stinbox.id == pid) {
+				stm.add(st.sender);
+			}
+		}
+		return stm;
+	}
+	
+	@Autowired
+	StudentRepository students;
+
+	//Creates a stinbox
+	@PostMapping("/teacher/{id}/makeSTI/{sid}/titled/{subject}")
+	STInbox createSTInbox(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String subject) {
+		STInbox st = new STInbox(students.findOne(sid), teachers.findOne(id), subject);
+		stinbox.save(st);
+		return st;
+	}
+	
+	//Creates a stmessage
+	@PostMapping("/teacher/{id}/makeSTM/{sid}/message/{message}")
+	STMessages createSTMessages(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String message) {
+		//sid is the id of a stinbox
+		STMessages stm = new STMessages(stinbox.findOne(sid), stinbox.findOne(sid).subject, teachers.findOne(id).name, message);
+		stmessage.save(stm);
+		return stm;
+	}
+	
+	//Deletes an inbox and all associated messages for sti
+	@DeleteMapping("/teacher/{id}/deleteSTI/{stid}")
+	String deleteSTInbox(@PathVariable Integer id, @PathVariable Integer stid) {
+		List<STMessages> list = stmessage.findAll();
+		int messages = 0;
+		for (STMessages stm : list) {
+			if (stm.stinbox.id == stid && stm.stinbox.teacher.id == id) {
+				stmessage.delete(stm);
+				messages++;
+			}
+		}
+		String teach = stinbox.findOne(id).teacher.name;
+		String stu = stinbox.findOne(id).student.name;
+		String sub = stinbox.findOne(id).subject;
+		if (stinbox.findOne(stid).teacher.id == id) {
+			stinbox.delete(id);
+		}
+		return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + stu + " with the subject " + sub;
+	}
+	
 }
