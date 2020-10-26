@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.is;
  * Test for Teacher Controller
  */
 @RunWith(SpringRunner.class)
-public class TestTeacherController
+public class TestTeacher
 {
 	
 	//tests of proper naming
