@@ -169,5 +169,47 @@ public class ParentController {
 		}
 		return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + par + " with the subject " + sub;
 	}
+	
+	//For students through parents
+	//Newly added by Carter
+	
+	@Autowired
+	StudentRepository student;
+	
+	@PutMapping("/parent/{id}/student/{sid}")
+	String addParent(@PathVariable Integer id, @PathVariable Integer sid) {
+		Student s = student.findOne(sid);
+		Parent p = parents.findOne(id);
+		s.setParent(p);
+		return "Added " + p.name + " as " + s.name + "'s parent";
+	}
+	
+	@RequestMapping("/parent/{id}/students")
+	List<Student> getStudents(@PathVariable Integer id) {
+		List<Student> students = new ArrayList<Student>();
+		List<Student> all = student.findAll();
+		for (Student s : all) {
+			if (s.parent.id == id) {
+				students.add(s);
+			}
+		}
+		return students;
+	}
+	
+	@GetMapping("/parent/{id}/student/{sid}")
+	List<Student> getStudent(@PathVariable Integer id, @PathVariable Integer sid) {
+		List<Student> students = new ArrayList<Student>();
+		List<Student> all = student.findAll();
+		for (Student s : all) {
+			if (s.id == sid && s.parent.id == id) {
+				students.add(s);
+			}
+		}
+		return students;
+	}
+	
+	
+	
+	
 
 }
