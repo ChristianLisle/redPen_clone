@@ -56,6 +56,7 @@ public class Teacher {
 	}
     
     public String properNaming(String name) {
+    	name = name.toLowerCase();
     	String output = "";
 		String[] split = name.split(" ");
 		for (int i = 0; i < split.length - 1; i++) {

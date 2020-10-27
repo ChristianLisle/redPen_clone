@@ -1,5 +1,7 @@
 package myProject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -64,5 +66,4 @@ public class STInbox {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-
 }
