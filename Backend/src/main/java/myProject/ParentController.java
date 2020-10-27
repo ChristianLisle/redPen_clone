@@ -2,6 +2,7 @@ package myProject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -176,6 +177,7 @@ public class ParentController {
 	@Autowired
 	StudentRepository student;
 	
+	//Links a student and parent together
 	@PutMapping("/parent/{id}/student/{sid}")
 	String addParent(@PathVariable Integer id, @PathVariable Integer sid) {
 		Student s = student.findOne(sid);
@@ -185,30 +187,76 @@ public class ParentController {
 	}
 	
 	@RequestMapping("/parent/{id}/students")
-	List<Student> getStudents(@PathVariable Integer id) {
-		List<Student> students = new ArrayList<Student>();
-		List<Student> all = student.findAll();
-		for (Student s : all) {
-			if (s.parent.id == id) {
-				students.add(s);
-			}
-		}
-		return students;
+	java.util.Set<Student> getParentsStudents(@PathVariable Integer id) {
+		return parents.findOne(id).getStudents();
 	}
 	
 	@GetMapping("/parent/{id}/student/{sid}")
-	List<Student> getStudent(@PathVariable Integer id, @PathVariable Integer sid) {
-		List<Student> students = new ArrayList<Student>();
+	List<Student> getParentsStudent(@PathVariable Integer id, @PathVariable Integer sid) {
+		List<Student> returned = new ArrayList<Student>();
 		List<Student> all = student.findAll();
 		for (Student s : all) {
 			if (s.id == sid && s.parent.id == id) {
-				students.add(s);
+				returned.add(s);
 			}
 		}
-		return students;
+		return returned;
 	}
 	
+	@Autowired
+	CourseRepository courses;
 	
+	@Autowired
+	CourseRegistrationRepository cr;
+	
+	@GetMapping("/parent/{id}/student/{sid}/courses")
+	java.util.Set<Course> getParentsStudentCourses(@PathVariable Integer id, @PathVariable Integer sid) {
+		List<Student> allS = student.findAll();
+		for (Student s : allS) {
+			if (s.id == sid && s.parent.id == id) {
+				return student.findOne(sid).getCourses();
+			}
+		}
+		return null;
+	}
+	
+	@GetMapping("/parent/{id}/student/{sid}/course/{cid}")
+	Course getParentsStudentSpecificCourse(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable Integer cid) {
+		List<Student> all = student.findAll();
+		List<CourseRegistration> allCR = cr.findAll(); 
+		for (CourseRegistration crr : allCR) {
+			if (crr.student.id == sid && crr.student.parent.id == id && crr.teacherCourse.course.id == cid) {
+				return crr.teacherCourse.course;
+			}
+		}
+		return null;
+	}
+	
+	@GetMapping("/parent/{id}/student/{sid}/tcourse/{cid}")
+	TeacherCourse getParentsStudentSpecificTCourse(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable Integer cid) {
+		List<Student> all = student.findAll();
+		List<CourseRegistration> allCR = cr.findAll(); 
+		for (CourseRegistration crr : allCR) {
+			if (crr.student.id == sid && crr.student.parent.id == id && crr.teacherCourse.course.id == cid) {
+				return crr.teacherCourse;
+			}
+		}
+		return null;
+	}
+	
+	@Autowired
+	CourseRegistrationRepository registrar;
+	
+	@GetMapping("/parent/{id}/student/{sid}/assignments")
+	java.util.Set<Assignment> getParentsStudentAssignments(@PathVariable Integer id, @PathVariable Integer sid) {
+		List<Student> all = student.findAll();
+		for (Student s : all) {
+			if (s.id == sid && s.parent.id == id) {
+				return student.findOne(sid).getAssignments();
+			}
+		}
+		return null;
+	}
 	
 	
 
