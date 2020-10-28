@@ -247,5 +247,15 @@ public class StudentController {
 		return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + stu + " with the subject " + sub;
 	}
 	
+	//Newly added by Carter
+	
+	@Autowired
+	ParentRepository parents;
+	
+	@RequestMapping("/student/{id}/parent")
+	Parent getParent(@PathVariable Integer id) {
+		return students.findOne(id).parent;
+	}
+	
 }
 

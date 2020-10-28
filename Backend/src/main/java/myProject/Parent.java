@@ -61,4 +61,15 @@ public class Parent {
 	public Set<Student> getStudents()	{
 		return students;
 	}
+	
+	public String properNaming(String name) {
+    	name = name.toLowerCase();
+    	String output = "";
+		String[] split = name.split(" ");
+		for (int i = 0; i < split.length - 1; i++) {
+			output += split[i].substring(0, 1).toUpperCase() + split[i].substring(1) + " ";
+		} 
+		output += split[split.length - 1].substring(0, 1).toUpperCase() + split[split.length - 1].substring(1);
+		return output;
+    }
 }
