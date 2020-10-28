@@ -66,4 +66,8 @@ public class STInbox {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
+	
+	public Set<STMessages> getMessages() {
+		return messages;
+	}
 }

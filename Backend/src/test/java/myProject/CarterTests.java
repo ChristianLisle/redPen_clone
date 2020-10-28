@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Test for Teacher Controller
  */
 //@RunWith(SpringRunner.class)
-public class TestTeacher
+public class CarterTests
 {
 	
 	@InjectMocks
@@ -46,6 +46,9 @@ public class TestTeacher
 	
 	@Mock
 	private STMessagesRepository stmessages;
+	
+	@Mock 
+	private TeacherCourseRepository tc;
 	
 	//to check that the properNaming() function returns the name
 	//lower-cased, and then the first letter of each word is capitalized
@@ -70,36 +73,15 @@ public class TestTeacher
 		
 		Student s1 = new Student("Carter M.");
 		s1.id = 1;
-		Student s2 = new Student("Jonah D.");
-		s2.id = 2;
 		
 		STInbox in1 = new STInbox(s1, t, "test");
-		//STInbox in2 = new STInbox(s2, t, "test 2");
 		
 		assertEquals("Cass Z.", in1.teacher.name);
 		assertEquals("Carter M.", in1.student.name);
-	}
-	
-	
-	@Test
-	public void testSTMessages() {
-		Teacher t = new Teacher("Cass Z.");
-		t.id = 1;
 		
-		Student s = new Student("Carter M.");
-		s.id = 1;
+		s1.setName("Jonah D");
 		
-		STInbox sti = new STInbox(s, t, "test");
-		sti.id = 1;
-		
-		STMessages stm1 = new STMessages(sti, sti.subject, t.name, "message 1");
-		STMessages stm2 = new STMessages(sti, sti.subject, s.name, "message 2");
-		
-		ArrayList<STMessages> test = new ArrayList<STMessages>();
-		test.add(stm1);
-		test.add(stm2);
-		
-		//assertEquals(test, sti.getMessages());
+		assertEquals("Jonah D", in1.student.name);
 	}
 	
 	//Tests to make sure that it returns the right parent when
@@ -128,6 +110,5 @@ public class TestTeacher
 		
 		assertEquals(p2, s.getParent());
 	}
-	
     
 }
