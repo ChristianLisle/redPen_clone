@@ -6,18 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+/**
+ * This class handles all interactions that deal with creating, accessing, or updating data specific to Students
+ * 
+ * @author Christian Lisle & Carter Moseley
+ *
+ */
 public class StudentController {
 	@Autowired
 	StudentRepository students;
 	
 	// Student Login/Register mappings
 	
+	/**
+	 * Create a new Student (used to 'register' a student)
+	 * @param s Student
+	 * @return Successfully created Student
+	 */
 	@PostMapping("/register-student")
 	Student createStudent(@RequestBody Student s) {
 		students.save(s);
 		return s;
 	}
 	
+	/**
+	 * Log into RedPen as Student. This method takes a Student (name and password) as input and finds an identical student in the database.
+	 * @param s Student
+	 * @return id of student if login is successful, failure message otherwise.
+	 */
 	@PostMapping("/login-student")
 	String getStudent(@RequestBody Student s)	{
 		int j = (int) students.count(); // count() method does not include the number of deleted entities (this causes issues when iterating over id with deleted entity)
@@ -35,6 +51,12 @@ public class StudentController {
 		return "There are no students with the name " + s.getName();
 	}
 	
+	/**
+	 * Change the password of a student given their id and a NewPassword object.
+	 * @param np Stores the users old and new password, so that user's old password can be validated with the database
+	 * @param id The id of the user attempting to reset their password
+	 * @return Message notifying user if their password was changed successfully
+	 */
 	@PutMapping("/student/{id}/reset-password")
 	String resetPassword(@RequestBody NewPassword np, @PathVariable Integer id)	{
 		Student old_s = students.findOne(id);
@@ -47,23 +69,37 @@ public class StudentController {
 	
 	// Basic student info mappings
 	
+	/**
+	 * Get a student given a student id
+	 * @param id Student id
+	 * @return Student with parameter id
+	 */
 	@GetMapping("/student/{id}")
 	Student getStudent(@PathVariable Integer id) {
 		return students.findOne(id);
 	}
 
+	/**
+	 * Get all students
+	 * @return List of all students
+	 */
 	@RequestMapping("/students")
 	List<Student> getAllStudents() {
 		return students.findAll();
 	}
 	
+	/**
+	 * Delete the student with the given id
+	 * @param id Student id
+	 * @return Message
+	 */
 	@DeleteMapping("/student/{id}")
 	String deleteStudent(@PathVariable Integer id) {
 		String name = students.findOne(id).getName();
 		students.delete(id);
 		return "deleted student " + name;
 	}
-
+	
 	@Autowired
 	CourseRepository courses;
 
@@ -76,7 +112,12 @@ public class StudentController {
 
 	// Students and courses relationship mappings
 	
-	// Method for course registration
+	/**
+	 * Allow Student id to register for TeacherCourse assignedCourse_id
+	 * @param id Student id
+	 * @param assignedCourse_id TeacherCourse id
+	 * @return Course Registration that was created when Student registered for TeacherCourse
+	 */
 	@PutMapping("/student/{id}/register/{assignedCourse_id}")
 	CourseRegistration registerCourse(@PathVariable Integer id, @PathVariable Integer assignedCourse_id) {
 		Student student = students.findOne(id);
@@ -85,13 +126,21 @@ public class StudentController {
 		return registrar.findOne((int) registrar.count()); // count() returns the number of entities (last pos)
 	}
 
-	// Method for getting all registrations for a student
+	/**
+	 * Get all CourseRegistrations that a student has
+	 * @param id Student id
+	 * @return Set of CourseRegistration objects that belong to given (through id) student
+	 */
 	@RequestMapping("/student/{id}/registrations")
 	java.util.Set<CourseRegistration> listRegistrations(@PathVariable Integer id) {
 		return students.findOne(id).getCourseRegistrations();
 	}
 
-	// Method for getting all courses for a specific student
+	/**
+	 * Get all Courses (not CourseRegistrations) that a student has
+	 * @param id Student id
+	 * @return Set of Course objects that the given student (through id) is taking or has taken
+	 */
 	@RequestMapping("/student/{id}/courses")
 	java.util.Set<Course> listCourses(@PathVariable Integer id) {
 		return students.findOne(id).getCourses();
@@ -105,7 +154,13 @@ public class StudentController {
 	
 	// Students and assigned assignments relationship mappings
 	
-	// Method assigns assignment to student
+	/**
+	 * Assign given (through assignment_id) Assignment to given Student (through id).
+	 * This creates an AssignedAssignment that is stored in the database and then returned
+	 * @param id Student id
+	 * @param assignment_id Assignment id
+	 * @return AssignedAssignment that was created when Assignment was assigned to Student
+	 */
 	@PutMapping("/student/{id}/assign/{assignment_id}")
 	AssignedAssignment assignStudentAssignment(@PathVariable Integer id, @PathVariable Integer assignment_id) {
 		Student student = students.findOne(id);
@@ -114,26 +169,43 @@ public class StudentController {
 		return assignedAssignments.findOne((int) assignedAssignments.count()); // count() returns the number of entities (last pos)
 	}
 	
-	// Method returns a list of assignments
+	/**
+	 * Get all Assignments (not the AssignedAssignment) that have been assigned to a student
+	 * @param id Student id
+	 * @return Set of Assignment objects that belong to given (through id) student
+	 */
 	@RequestMapping("/student/{id}/assignments/overview")
 	java.util.Set<Assignment> listAssignments(@PathVariable Integer id)	{
 		return students.getOne(id).getAssignments();
 	}
 	
-	// Method returns a list of assignments with feedback/grade (assignedAssignment object)
+	/**
+	 * Get all AssignedAssignments that have been assigned to a student
+	 * @param id Student id
+	 * @returnSet of AssignedAssignment objects that belong to given (through id) student
+	 */
 	@RequestMapping("/student/{id}/assignments/report")
 	java.util.Set<AssignedAssignment> listAssignedAssignments(@PathVariable Integer id)	{
 		return students.getOne(id).getAssignedAssignments();
 	}
 	
-	// Method returns a single assignment overview (assignment object)
+	/**
+	 * Get a specific Assignment given a student (through id) and assignment id
+	 * @param id Student id
+	 * @param assignment_id Assignment id
+	 * @return Assignment with assignment_id
+	 */
 	@GetMapping("student/{id}/assignment/{assignment_id}/overview")
 	Assignment getAssignment(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
 		Assignment a = assignments.findOne(assignment_id);
 		return a;
 	}
 	
-	// Method returns a single assignment with feedback and grades (assignedAssignment object)
+	/**
+	 * Get a specific AssignedAssignment given a student (through id) and assignment id
+	 * @param id Student id
+	 * @param assignment_id Assignment id
+	 */
 	@GetMapping("student/{id}/assignment/{assignment_id}/report")
 	AssignedAssignment getAssignedAssignment(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
 		List<AssignedAssignment> list = assignedAssignments.findAll();
@@ -146,16 +218,17 @@ public class StudentController {
 	}
 	
 	
-	// Need methods for assigning student to a parent
-	
-	
 	@Autowired
 	STInboxRepository stinbox;
 	
 	@Autowired
 	STMessagesRepository stmessage;
-	
-	//Gets all messages a student has between teachers
+
+	/**
+	 * Gets all messages a Student (given through id) has between Teachers
+	 * @param id Student id
+	 * @return List of STInbox (messages)
+	 */
 	@RequestMapping("/student/{id}/stinbox")
 	List<STInbox> studentTeacherInbox(@PathVariable Integer id) {
 		List<STInbox> sti = new ArrayList<STInbox>();
@@ -168,7 +241,12 @@ public class StudentController {
 		return sti;
 	}
 	
-	//Gets all the PTMessages between a parent and teacher in an inbox
+	/**
+	 * Gets all the STMessages between a Student and Teacher in an inbox
+	 * @param id Student id
+	 * @param sid STInbox id
+	 * @return List of STMessages
+	 */
 	@GetMapping("student/{id}/stinbox/{sid}")
 	List<STMessages> studentTeacherInboxMessages(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<STMessages> stm = new ArrayList<STMessages>();
@@ -181,7 +259,12 @@ public class StudentController {
 		return stm;
 	}
 	
-	//Gets all the messages between a parent and a teacher in an inbox
+	/**
+	 * Gets all the messages between a Student and a Teacher in an inbox
+	 * @param id Student id
+	 * @param sid STInbox id
+	 * @return List of messages from STMessages belonging to STInbox
+	 */
 	@GetMapping("student/{id}/stinbox/{sid}/messages")
 	List<String> studentTeacherInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<String> stm = new ArrayList<String>();
@@ -194,7 +277,12 @@ public class StudentController {
 		return stm;
 	}
 	
-	//Gets all the messages between a parent and a teacher in an inbox
+	/**
+	 * Gets all the messages between a Student and a Teacher in an inbox
+	 * @param id Student id
+	 * @param sid STInbox id
+	 * @return List (String) of message senders 
+	 */
 	@GetMapping("student/{id}/stinbox/{sid}/senders")
 	List<String> studentTeacherInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<String> stm = new ArrayList<String>();
@@ -210,7 +298,13 @@ public class StudentController {
 	@Autowired
 	TeacherRepository teachers;
 	
-	//Creates a stinbox
+	/**
+	 * Create a STInbox and store it in the database
+	 * @param id Student id
+	 * @param tid STInbox id
+	 * @param subject Subject title
+	 * @return STInbox created
+	 */
 	@PostMapping("/student/{id}/makeSTI/{tid}/titled/{subject}")
 	STInbox createSTInbox(@PathVariable Integer id, @PathVariable Integer tid, @PathVariable String subject) {
 		STInbox st = new STInbox(students.findOne(id), teachers.findOne(tid), subject);
