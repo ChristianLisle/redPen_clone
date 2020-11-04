@@ -301,7 +301,7 @@ public class StudentController {
 	/**
 	 * Create a STInbox and store it in the database
 	 * @param id Student id
-	 * @param tid STInbox id
+	 * @param tid Teacher id
 	 * @param subject Subject title
 	 * @return STInbox created
 	 */
@@ -312,16 +312,26 @@ public class StudentController {
 		return st;
 	}
 	
-	//Creates a stmessage
+	/**
+	 * Create a STMessage and store it in the database
+	 * @param id Student id
+	 * @param sid STInbox id
+	 * @param message Message to be stored in the database
+	 * @return Saved STMessages object
+	 */
 	@PostMapping("/student/{id}/makeSTM/{sid}/message/{message}")
 	STMessages createSTMessages(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String message) {
-		//sid is the id of a stinbox
 		STMessages stm = new STMessages(stinbox.findOne(sid), stinbox.findOne(sid).subject, students.findOne(id).name, message);
 		stmessage.save(stm);
 		return stm;
 	}
 	
-	//Deletes an inbox and all associated messages for sti
+	/**
+	 * Delete an inbox and all associated messages for stid
+	 * @param id Student id
+	 * @param stid STInbox id
+	 * @return Message informing user of all deleted messages
+	 */
 	@DeleteMapping("/student/{id}/deleteSTI/{stid}")
 	String deleteSTInbox(@PathVariable Integer id, @PathVariable Integer stid) {
 		List<STMessages> list = stmessage.findAll();
@@ -341,15 +351,17 @@ public class StudentController {
 		return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + stu + " with the subject " + sub;
 	}
 	
-	//Newly added by Carter
-	
 	@Autowired
 	ParentRepository parents;
 	
+	/**
+	 * Get the Parent of a Student
+	 * @param id Student id
+	 * @return Parent of Student with id
+	 */
 	@RequestMapping("/student/{id}/parent")
 	Parent getParent(@PathVariable Integer id) {
 		return students.findOne(id).parent;
 	}
-	
 }
 
