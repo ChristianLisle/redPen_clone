@@ -37,30 +37,65 @@ public class PTInbox {
 		this.subject = subject;
 	}
 
+	/**
+	 * A method that get the id of a ptinbox
+	 * 
+	 * @return id
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * A method that gets the parent of the PTInbox
+	 * 
+	 * @return parent
+	 */
 	public Parent getParent() {
 		return parent;
 	}
 	
+	/**
+	 * Sets the parent of the PTInbox
+	 * 
+	 * @param parent
+	 */
 	public void setParent(Parent parent) {
 		this.parent = parent;
 	}
 	
+	/**
+	 * Gets the teacher of the PTInbox
+	 * 
+	 * @return teacher
+	 */
 	public Teacher getTeacher() {
 		return teacher;
 	}
 	
+	/**
+	 * Sets the teacher of the PTInbox
+	 * 
+	 * @param teacher
+	 */
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
 	
+	/**
+	 * Returns the subject of the PTInbox
+	 * 
+	 * @return subject
+	 */
 	public String getSubject() {
 		return subject;
 	}
 	
+	/**
+	 * A method to set the subject of a PTInbox
+	 * 
+	 * @param subject
+	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}

@@ -94,8 +94,6 @@ public class Student {
 		return parent;
 	}
 	
-	//Newly added by Carter
-	
 	public void setParent(Parent p) {
 		parent = p;
 	}

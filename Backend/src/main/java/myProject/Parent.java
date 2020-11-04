@@ -30,26 +30,58 @@ public class Parent {
 
 	public Parent() {}
 
+	/**
+	 * This sets the parent's name
+	 * 
+	 * @param name
+	 */
 	public Parent(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns the ID of the parent
+	 * 
+	 * @return id
+	 */
 	public Integer getId() {
 		return id;
 	}
-
+	
+	/**
+	 * Returns the name of the parent
+	 * 
+	 * @return name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets the name fo the parent
+	 * 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns the parent's password
+	 * 
+	 * @return password
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * Method to change the parent's password
+	 * 
+	 * @param oldPassword
+	 * @param newPassword
+	 * @return true or false
+	 */
 	public boolean resetPassword(String oldPassword, String newPassword) {
 		if (this.password.equals(oldPassword)) {
 			this.password = newPassword;
@@ -58,10 +90,22 @@ public class Parent {
 			return false;
 	}
 	
+	/**
+	 * Returns the students of a parent
+	 * 
+	 * @return students
+	 */
 	public Set<Student> getStudents()	{
 		return students;
 	}
 	
+	/**
+	 * Properly formats the name of the parent so that it's all lower case except the first letter of each word
+	 * which is upper case
+	 * 
+	 * @param name
+	 * @return output
+	 */
 	public String properNaming(String name) {
     	name = name.toLowerCase();
     	String output = "";

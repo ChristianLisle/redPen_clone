@@ -11,16 +11,34 @@ public class PTInboxController {
 	@Autowired
 	PTInboxRepository inbox;
 
+	/**
+	 * A get mapping that returns the PTInbox of that mapping
+	 * 
+	 * @param id
+	 * @return inbox.findOne(id)
+	 */
 	@GetMapping("/ptinbox/{id}")
 	PTInbox getPTInbox(@PathVariable Integer id) {
 		return inbox.findOne(id);
 	}
 
+	/**
+	 * A request mapping that returns a list of all PTinboxes
+	 * 
+	 * @return inbox.findAll()
+	 */
 	@RequestMapping("/ptinbox")
 	List<PTInbox> all() {
 		return inbox.findAll();
 	}
 
+	/**
+	 * A delete mapping that deletes a PTinbox and returns a string saying who the conversation was between and the subject 
+	 * of the PTInbox
+	 * 
+	 * @param id
+	 * @return "Deleted message between " + teach + " and " + paren + " with the subject " + sub
+	 */
 	@DeleteMapping("/ptinbox/{id}")
 	String deleteP2TInbox(@PathVariable Integer id) {
 		String teach = inbox.findOne(id).teacher.name;
@@ -30,7 +48,12 @@ public class PTInboxController {
 		return "Deleted message between " + teach + " and " + paren + " with the subject " + sub;
 	}
 	
-	// Create a new ptinbox
+	/**
+	 * A post mapping to create a new PTInbox
+	 * 
+	 * @param p
+	 * @return p
+	 */
 	@PostMapping("ptinbox")
 	PTInbox createInbox(@RequestBody PTInbox p) {
 		inbox.save(p);
@@ -40,7 +63,12 @@ public class PTInboxController {
 	@Autowired
 	PTMessagesRepository ptmessages;
 	
-	//Finds all the ptmessages associated with an inbox
+	/**
+	 * A request mapping that returns all ptmessages associated with the PTInbox
+	 * 
+	 * @param id
+	 * @return messages
+	 */
 	@RequestMapping("/ptinbox/{id}/messages")
 	List<PTMessages> findMessages(@PathVariable Integer id) {
 		List<PTMessages> messages = new ArrayList<PTMessages>();
@@ -53,7 +81,12 @@ public class PTInboxController {
 		return messages;
 	}
 	
-	//finds all the messages associated with an inbox
+	/**
+	 * A request mapping that returns a list of all the messages of PTMessages in the PTInbox
+	 * 
+	 * @param id
+	 * @return messages
+	 */
 	@RequestMapping("/ptinbox/{id}/messagesOnly")
 	List<String> findMessageOnly(@PathVariable Integer id) {
 		List<String> messages = new ArrayList<String>();
@@ -66,7 +99,12 @@ public class PTInboxController {
 		return messages;
 	}
 	
-	//finds all the messages associated with an inbox
+	/**
+	 * A request mapping that returns a list of all the senders of PTMessages in the PTInbox
+	 * 
+	 * @param id
+	 * @return messages
+	 */
 	@RequestMapping("/ptinbox/{id}/messagesSender")
 	List<String> findMessagesSender(@PathVariable Integer id) {
 		List<String> messages = new ArrayList<String>();
