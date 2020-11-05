@@ -37,38 +37,83 @@ public class STMessages {
 		this.message = message;
 	}
 
+	/**
+	 * Gets the id of the messages
+	 * 
+	 * @return id
+	 */
 	public Integer getId() {
 		return id;
 	}
-
+	
+	/**
+	 * Gets the inbox of this message
+	 * 
+	 * @return stinbox
+	 */
 	public STInbox getSTInbox() {
 		return stinbox;
 	}
 	
+	/**
+	 * Sets the inbox of the message
+	 * 
+	 * @param stinbox
+	 */
 	public void setSTInbox(STInbox stinbox) {
 		this.stinbox = stinbox;
 	}
 	
+	/**
+	 * Returns the subject of this message
+	 * 
+	 * @return subjet
+	 */
 	public String getSubject() {
 		return subject;
 	}
 	
+	/**
+	 * Sets the subject of the message
+	 * 
+	 * @param subject
+	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 	
+	/**
+	 * Gets the sender of this message
+	 * 
+	 * @return sender
+	 */
 	public String getSender() {
 		return sender;
 	}
 
+	/**
+	 * Sets the sender of a message
+	 * 
+	 * @param sender
+	 */
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
 	
+	/**
+	 * Gets the message of this message
+	 * 
+	 * @return message
+	 */
 	public String getMessage() {
 		return message;
 	}
 
+	/**
+	 * Sets the message of the message
+	 * 
+	 * @param message
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}

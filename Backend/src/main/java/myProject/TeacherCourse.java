@@ -31,14 +31,29 @@ public class TeacherCourse {
     	this.course = c;
     }
     
+    /**
+     * Gets the id of the teacherCourse
+     * 
+     * @return id
+     */
     public Integer getId()	{
     	return id;
     }
     
+    /**
+     * Gets the teacher of the teacherCourse
+     * 
+     * @return teacher
+     */
     public Teacher getTeacher()	{ 
     	return teacher;
     }
     
+    /**
+     * Gets the course of the teacherCourse
+     * 
+     * @return course
+     */
     public Course getCourse()	{
     	return course;
     }
