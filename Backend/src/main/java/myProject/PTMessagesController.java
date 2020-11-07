@@ -22,7 +22,7 @@ public class PTMessagesController {
 	 * @return messages.findOne(id)
 	 */
 	@ApiOperation(value = "Returns the PTMessages of the id {id}")
-	@GetMapping("/ptmessage/{id}")
+	@RequestMapping(method = RequestMethod.GET, path ="/ptmessage/{id}")
 	PTMessages getPTInbox(@PathVariable Integer id) {
 		return messages.findOne(id);
 	}
@@ -33,7 +33,7 @@ public class PTMessagesController {
 	 * @return messages.findAll()
 	 */
 	@ApiOperation(value = "Get all PTMessages that exist")
-	@RequestMapping("/ptmessages")
+	@RequestMapping(method = RequestMethod.GET, path ="/ptmessages")
 	List<PTMessages> all() {
 		return messages.findAll();
 	}
@@ -47,7 +47,7 @@ public class PTMessagesController {
 	 */
 	@ApiOperation(value = "Delete a PTMessage and returns a string saying who was in the message and" + 
 			" the subject of the PTMessage")
-	@DeleteMapping("/ptmessage/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path ="/ptmessage/{id}")
 	String deleteP2TMessages(@PathVariable Integer id) {
 		String send = messages.findOne(id).sender;
 		String sub = messages.findOne(id).subject;
@@ -62,7 +62,7 @@ public class PTMessagesController {
 	 * @return p
 	 */
 	@ApiOperation(value = "Create a new PTMessages")
-	@PostMapping("ptmessage")
+	@RequestMapping(method = RequestMethod.POST, path ="ptmessage")
 	PTMessages createPTMessage(@RequestBody PTMessages p) {
 		messages.save(p);
 		return p;

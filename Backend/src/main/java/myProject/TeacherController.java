@@ -25,7 +25,7 @@ public class TeacherController {
 	 * @return t
 	 */
 	@ApiOperation(value = "To register/add a teacher")
-	@PostMapping("/register-teacher")
+	@RequestMapping(method = RequestMethod.POST, path ="/register-teacher")
 	Teacher createTeacher(@RequestBody Teacher t) {
 		teachers.save(t);
 		return t;
@@ -38,7 +38,7 @@ public class TeacherController {
 	 * @return
 	 */
 	@ApiOperation(value = "Logs in the teacher")
-	@PostMapping("/login-teacher")
+	@RequestMapping(method = RequestMethod.POST, path ="/login-teacher")
 	String getTeacher(@RequestBody Teacher t)	{
 		int j = (int) teachers.count(); // count() method does not include the number of deleted entities (this causes issues when iterating over id with deleted entity)
 		for (int i = 1; i <= j; i++) {
@@ -63,7 +63,7 @@ public class TeacherController {
 	 * @return
 	 */
 	@ApiOperation(value = "Changes the password of a teacher")
-	@PutMapping("/teacher/{id}/reset-password")
+	@RequestMapping(method = RequestMethod.PUT, path ="/teacher/{id}/reset-password")
 	String resetPassword(@RequestBody NewPassword np, @PathVariable Integer id)	{
 		Teacher old_t = teachers.findOne(id);
 		if (old_t.resetPassword(np.getOldPassword(), np.getNewPassword()))	{
@@ -82,7 +82,7 @@ public class TeacherController {
 	 * @return teachers.findOne(id)
 	 */
 	@ApiOperation(value = "Returns a specific teacher whose id matches the {id}")
-	@GetMapping("/teacher/{id}")
+	@RequestMapping(method = RequestMethod.GET, path ="/teacher/{id}")
 	Teacher getTeacher(@PathVariable Integer id) {
 		return teachers.findOne(id);
 	}
@@ -93,7 +93,7 @@ public class TeacherController {
 	 * @return teachers.findAll();
 	 */
 	@ApiOperation(value = "Returns all teachers on record as a list")
-	@RequestMapping("/teachers")
+	@RequestMapping(method = RequestMethod.GET, path ="/teachers")
 	List<Teacher> getAllTeachers() {
 		return teachers.findAll();
 	}
@@ -106,7 +106,7 @@ public class TeacherController {
 	 * @return "deleted teacher " + name
 	 */
 	@ApiOperation(value = "Deletes a specific teacher based on the {id} and returns a string of the teachers name")
-	@DeleteMapping("/teacher/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path ="/teacher/{id}")
 	String deleteTeacher(@PathVariable Integer id) {
 		String name = teachers.findOne(id).getName();
 		teachers.delete(id);
@@ -130,7 +130,7 @@ public class TeacherController {
 	 * @return assignedCourses.findOne((int) assignedCourses.count())
 	 */
 	@ApiOperation(value = "Assign a course {course_id} to a teacher {id}. The course must have been created first.")
-	@PutMapping("/teacher/{id}/assign-course/{course_id}")
+	@RequestMapping(method = RequestMethod.PUT, path ="/teacher/{id}/assign-course/{course_id}")
 	TeacherCourse addTeacher(@PathVariable Integer id, @PathVariable Integer course_id) {
 		Teacher teacher = teachers.findOne(id);					//Gets teacher
 		Course course = courses.findOne(course_id);				//Gets class
@@ -145,7 +145,7 @@ public class TeacherController {
 	 * @return returned
 	 */
 	@ApiOperation(value = "Gets all the courses for a specific teacher {id}")
-	@RequestMapping("/teacher/{id}/courses")
+	@RequestMapping(method = RequestMethod.GET, path ="/teacher/{id}/courses")
 	List<Course> allTeachersCourses(@PathVariable Integer id) {
 		List<Course> returned = new ArrayList<Course>();
 		List<TeacherCourse> allClasses = assignedCourses.findAll();
@@ -170,7 +170,7 @@ public class TeacherController {
 	 * @return pti
 	 */
 	@ApiOperation(value = "Gets all the conversations between a teacher and parents")
-	@RequestMapping("/teacher/{id}/ptinbox")
+	@RequestMapping(method = RequestMethod.GET, path ="/teacher/{id}/ptinbox")
 	List<PTInbox> teacherParentInbox(@PathVariable Integer id) {
 		List<PTInbox> pti = new ArrayList<PTInbox>();
 		List<PTInbox> list = ptinbox.findAll();
@@ -190,7 +190,7 @@ public class TeacherController {
 	 * @return ptm
 	 */
 	@ApiOperation(value = "Gets all the PTMessages between a teacher {id} and parent in a specific PTInbox {pid}")
-	@GetMapping("teacher/{id}/ptinbox/{pid}")
+	@RequestMapping(method = RequestMethod.GET, path ="teacher/{id}/ptinbox/{pid}")
 	List<PTMessages> teacherParentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<PTMessages> ptm = new ArrayList<PTMessages>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -212,7 +212,7 @@ public class TeacherController {
 	 * @return ptm
 	 */
 	@ApiOperation(value = "Gets all the messages between a teacher {id} and parent in a  specific PTInbox {pid}.")
-	@GetMapping("teacher/{id}/ptinbox/{pid}/messages")
+	@RequestMapping(method = RequestMethod.GET, path ="teacher/{id}/ptinbox/{pid}/messages")
 	List<String> teacherParentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -233,7 +233,7 @@ public class TeacherController {
 	 * @return ptm
 	 */
 	@ApiOperation(value = "Gets all the senders between a teacher {id} and a parent in a specific PTInbox")
-	@GetMapping("teacher/{id}/ptinbox/{pid}/senders")
+	@RequestMapping(method = RequestMethod.GET, path ="teacher/{id}/ptinbox/{pid}/senders")
 	List<String> teacherParentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -257,7 +257,7 @@ public class TeacherController {
 	 * @return pt
 	 */
 	@ApiOperation(value = "Creates a PTInbox between a teacher {id} and a parent {pid} with the subject {subject}")
-	@PostMapping("/teacher/{id}/makePTI/{pid}/titled/{subject}")
+	@RequestMapping(method = RequestMethod.POST, path ="/teacher/{id}/makePTI/{pid}/titled/{subject}")
 	PTInbox createPTInbox(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String subject) {
 		PTInbox pt = new PTInbox(parents.findOne(pid), teachers.findOne(id), subject);
 		ptinbox.save(pt);
@@ -275,7 +275,7 @@ public class TeacherController {
 	 */
 	@ApiOperation(value = "Creates a PTMessage between a teacher {id} and a parent with the subject of the message {subject}." + 
 			"Based of an PTInbox {pid}")
-	@PostMapping("/teacher/{id}/makePTM/{pid}/message/{message}")
+	@RequestMapping(method = RequestMethod.POST, path ="/teacher/{id}/makePTM/{pid}/message/{message}")
 	PTMessages createPTMessages(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String message) {
 		PTMessages ptm = new PTMessages(ptinbox.findOne(pid), ptinbox.findOne(pid).subject, teachers.findOne(id).name, message);
 		ptmessage.save(ptm);
@@ -291,7 +291,7 @@ public class TeacherController {
 	 * @return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + par + " with the subject " + sub
 	 */
 	@ApiOperation(value = "Deletes a PTInbox and all associated messages for the PTInbox.")
-	@DeleteMapping("/teacher/{id}/deletePTI/{stid}")
+	@RequestMapping(method = RequestMethod.DELETE, path ="/teacher/{id}/deletePTI/{stid}")
 	String deletePTInbox(@PathVariable Integer id, @PathVariable Integer ptid) {
 		List<PTMessages> list = ptmessage.findAll();
 		int messages = 0;
@@ -323,7 +323,7 @@ public class TeacherController {
 	 * @return sti
 	 */
 	@ApiOperation(value = "Gets all the conversations between a teacher and students")
-	@RequestMapping("/teacher/{id}/stinbox")
+	@RequestMapping(method = RequestMethod.GET, path ="/teacher/{id}/stinbox")
 	List<STInbox> teacherStudentInbox(@PathVariable Integer id) {
 		List<STInbox> sti = new ArrayList<STInbox>();
 		List<STInbox> list = stinbox.findAll();
@@ -343,7 +343,7 @@ public class TeacherController {
 	 * @return stm
 	 */
 	@ApiOperation(value = "Gets all the PTMessages between a teacher {id} and student in a specific STInbox {sid}")
-	@GetMapping("teacher/{id}/stinbox/{pid}")
+	@RequestMapping(method = RequestMethod.GET, path ="teacher/{id}/stinbox/{pid}")
 	List<STMessages> teacherStudentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<STMessages> stm = new ArrayList<STMessages>();
 		List<STMessages> list = stmessage.findAll();
@@ -364,7 +364,7 @@ public class TeacherController {
 	 * @return stm
 	 */
 	@ApiOperation(value = "Gets all the messages between a teacher {id} and student in a  specific STInbox {pid}.")
-	@GetMapping("teacher/{id}/stinbox/{pid}/messages")
+	@RequestMapping(method = RequestMethod.GET, path ="teacher/{id}/stinbox/{pid}/messages")
 	List<String> teacherStudentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> stm = new ArrayList<String>();
 		List<STMessages> list = stmessage.findAll();
@@ -385,7 +385,7 @@ public class TeacherController {
 	 * @return stm
 	 */
 	@ApiOperation(value = "Gets all the senders between a teacher {id} and a student in a specific STInbox {pid}")
-	@GetMapping("teacher/{id}/stinbox/{pid}/senders")
+	@RequestMapping(method = RequestMethod.GET, path ="teacher/{id}/stinbox/{pid}/senders")
 	List<String> teacherStudentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> stm = new ArrayList<String>();
 		List<STMessages> list = stmessage.findAll();
@@ -409,7 +409,7 @@ public class TeacherController {
 	 * @return st
 	 */
 	@ApiOperation(value = "Creates a STInbox between a teacher {id} and a student {sid} with the subject {subject}")
-	@PostMapping("/teacher/{id}/makeSTI/{sid}/titled/{subject}")
+	@RequestMapping(method = RequestMethod.POST, path ="/teacher/{id}/makeSTI/{sid}/titled/{subject}")
 	STInbox createSTInbox(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String subject) {
 		STInbox st = new STInbox(students.findOne(sid), teachers.findOne(id), subject);
 		stinbox.save(st);
@@ -427,7 +427,7 @@ public class TeacherController {
 	 */
 	@ApiOperation(value = "Creates a STMessage between a teacher {id} and a student with the subject of the message {subject}" + 
 			"Based off of a PTInbox {sid}")
-	@PostMapping("/teacher/{id}/makeSTM/{sid}/message/{message}")
+	@RequestMapping(method = RequestMethod.POST, path ="/teacher/{id}/makeSTM/{sid}/message/{message}")
 	STMessages createSTMessages(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String message) {
 		STMessages stm = new STMessages(stinbox.findOne(sid), stinbox.findOne(sid).subject, teachers.findOne(id).name, message);
 		stmessage.save(stm);
@@ -443,7 +443,7 @@ public class TeacherController {
 	 * @return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + stu + " with the subject " + sub
 	 */
 	@ApiOperation(value = "Deletes a STInbox and all associated messages for the STInbox.")
-	@DeleteMapping("/teacher/{id}/deleteSTI/{stid}")
+	@RequestMapping(method = RequestMethod.DELETE, path ="/teacher/{id}/deleteSTI/{stid}")
 	String deleteSTInbox(@PathVariable Integer id, @PathVariable Integer stid) {
 		List<STMessages> list = stmessage.findAll();
 		int messages = 0;

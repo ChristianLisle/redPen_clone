@@ -22,7 +22,7 @@ public class TeacherCourseController {
 	 * @return assignedCourses.findOne(id)
 	 */
 	@ApiOperation(value = "Returns the teacher course of the id {id}")
-	@GetMapping("/teacherCourse/{id}")
+	@RequestMapping(method = RequestMethod.GET, path ="/teacherCourse/{id}")
 	TeacherCourse getTeacherCourse(@PathVariable Integer id) {
 		return assignedCourses.findOne(id);
 	}
@@ -33,7 +33,7 @@ public class TeacherCourseController {
 	 * @return assignedCourses.findAll()
 	 */
 	@ApiOperation(value = "Returns all of the teacher courses that exist")
-	@RequestMapping("/teacherCourses")
+	@RequestMapping(method = RequestMethod.GET, path ="/teacherCourses")
 	List<TeacherCourse> all() {
 		return assignedCourses.findAll();
 	}
@@ -45,7 +45,7 @@ public class TeacherCourseController {
 	 * @return "deleted teachers class" + assignedCourses.findOne(id).teacher.name + ":"+ assignedCourses.findOne(id).course.name
 	 */
 	@ApiOperation(value = "Deletes a teacher course")
-	@DeleteMapping("/teacherCourse/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path ="/teacherCourse/{id}")
 	String deleteTeacherToClass(@PathVariable Integer id) {
 		assignedCourses.delete(id);
 		return "deleted teachers class" + assignedCourses.findOne(id).teacher.name + ":"
@@ -62,7 +62,7 @@ public class TeacherCourseController {
 	 * @return s
 	 */
 	@ApiOperation(value = "Gets a list of all students taking a course with a specific teacher")
-	@RequestMapping("/teacherCourse/{id}/students")
+	@RequestMapping(method = RequestMethod.GET, path ="/teacherCourse/{id}/students")
 	List<Student> getStudentsInTeacherCourse(@PathVariable Integer id) {
 		List<Student> s = new ArrayList<Student>();
 		List<CourseRegistration> list = registrar.findAll();
