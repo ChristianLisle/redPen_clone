@@ -28,7 +28,7 @@ public class StudentController {
 	 * @return Successfully created Student
 	 */
 	@ApiOperation(value = "Create a new Student (used to 'register' a student)")
-	@PostMapping("/register-student")
+	@RequestMapping(method = RequestMethod.POST, path = "/register-student")
 	Student createStudent(@RequestBody Student s) {
 		students.save(s);
 		return s;
@@ -40,7 +40,7 @@ public class StudentController {
 	 * @return id of student if login is successful, failure message otherwise.
 	 */
 	@ApiOperation(value = "Log into RedPen as Student. This method takes a Student (name and password) as input and finds an identical student in the database.")
-	@PostMapping("/login-student")
+	@RequestMapping(method = RequestMethod.POST, path = "/login-student")
 	String getStudent(@RequestBody Student s)	{
 		int j = (int) students.count(); // count() method does not include the number of deleted entities (this causes issues when iterating over id with deleted entity)
 		for (int i = 1; i <= (int) j; i++) {
@@ -64,7 +64,7 @@ public class StudentController {
 	 * @return Message notifying user if their password was changed successfully
 	 */
 	@ApiOperation(value = "Change the password of a student given their id and a NewPassword object.")
-	@PutMapping("/student/{id}/reset-password")
+	@RequestMapping(method = RequestMethod.PUT, path = "/student/{id}/reset-password")
 	String resetPassword(@RequestBody NewPassword np, @PathVariable Integer id)	{
 		Student old_s = students.findOne(id);
 		if (old_s.resetPassword(np.getOldPassword(), np.getNewPassword()))	{
@@ -82,7 +82,7 @@ public class StudentController {
 	 * @return Student with parameter id
 	 */
 	@ApiOperation(value = "Get a student given a student id")
-	@GetMapping("/student/{id}")
+	@RequestMapping(method = RequestMethod.GET, path = "/student/{id}")
 	Student getStudent(@PathVariable Integer id) {
 		return students.findOne(id);
 	}
@@ -92,7 +92,7 @@ public class StudentController {
 	 * @return List of all students
 	 */
 	@ApiOperation(value = "Get all students")
-	@RequestMapping("/students")
+	@RequestMapping(method = RequestMethod.GET, path = "/students")
 	List<Student> getAllStudents() {
 		return students.findAll();
 	}
@@ -103,7 +103,7 @@ public class StudentController {
 	 * @return Message
 	 */
 	@ApiOperation(value = "Delete the student with the given id")
-	@DeleteMapping("/student/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/student/{id}")
 	String deleteStudent(@PathVariable Integer id) {
 		String name = students.findOne(id).getName();
 		students.delete(id);
@@ -129,7 +129,7 @@ public class StudentController {
 	 * @return Course Registration that was created when Student registered for TeacherCourse
 	 */
 	@ApiOperation(value = "Allow Student id to register for TeacherCourse assignedCourse_id")
-	@PutMapping("/student/{id}/register/{assignedCourse_id}")
+	@RequestMapping(method = RequestMethod.PUT, path = "/student/{id}/register/{assignedCourse_id}")
 	CourseRegistration registerCourse(@PathVariable Integer id, @PathVariable Integer assignedCourse_id) {
 		Student student = students.findOne(id);
 		TeacherCourse assignedCourse = assignedCourses.findOne(assignedCourse_id);
@@ -143,7 +143,7 @@ public class StudentController {
 	 * @return Set of CourseRegistration objects that belong to given (through id) student
 	 */
 	@ApiOperation(value = "Get all CourseRegistrations that a student has")
-	@RequestMapping("/student/{id}/registrations")
+	@RequestMapping(method = RequestMethod.GET, path = "/student/{id}/registrations")
 	java.util.Set<CourseRegistration> listRegistrations(@PathVariable Integer id) {
 		return students.findOne(id).getCourseRegistrations();
 	}
@@ -154,7 +154,7 @@ public class StudentController {
 	 * @return Set of Course objects that the given student (through id) is taking or has taken
 	 */
 	@ApiOperation(value = "Get all Courses (not CourseRegistrations) that a student has")
-	@RequestMapping("/student/{id}/courses")
+	@RequestMapping(method = RequestMethod.GET, path = "/student/{id}/courses")
 	java.util.Set<Course> listCourses(@PathVariable Integer id) {
 		return students.findOne(id).getCourses();
 	}
@@ -175,7 +175,7 @@ public class StudentController {
 	 * @return AssignedAssignment that was created when Assignment was assigned to Student
 	 */
 	@ApiOperation(value = "Assign given (through assignment_id) Assignment to given Student (through id).")
-	@PutMapping("/student/{id}/assign/{assignment_id}")
+	@RequestMapping(method = RequestMethod.PUT, path = "/student/{id}/assign/{assignment_id}")
 	AssignedAssignment assignStudentAssignment(@PathVariable Integer id, @PathVariable Integer assignment_id) {
 		Student student = students.findOne(id);
 		Assignment assignment = assignments.findOne(assignment_id);
@@ -189,7 +189,7 @@ public class StudentController {
 	 * @return Set of Assignment objects that belong to given (through id) student
 	 */
 	@ApiOperation(value = "Get all Assignments (not the AssignedAssignment) that have been assigned to a student")
-	@RequestMapping("/student/{id}/assignments/overview")
+	@RequestMapping(method = RequestMethod.GET, path = "/student/{id}/assignments/overview")
 	java.util.Set<Assignment> listAssignments(@PathVariable Integer id)	{
 		return students.getOne(id).getAssignments();
 	}
@@ -200,7 +200,7 @@ public class StudentController {
 	 * @returnSet of AssignedAssignment objects that belong to given (through id) student
 	 */
 	@ApiOperation(value = "Get all AssignedAssignments that have been assigned to a student")
-	@RequestMapping("/student/{id}/assignments/report")
+	@RequestMapping(method = RequestMethod.GET, path = "/student/{id}/assignments/report")
 	java.util.Set<AssignedAssignment> listAssignedAssignments(@PathVariable Integer id)	{
 		return students.getOne(id).getAssignedAssignments();
 	}
@@ -212,7 +212,7 @@ public class StudentController {
 	 * @return Assignment with assignment_id
 	 */
 	@ApiOperation(value = "Get a specific Assignment given a student (through id) and assignment id")
-	@GetMapping("student/{id}/assignment/{assignment_id}/overview")
+	@RequestMapping(method = RequestMethod.GET, path = "student/{id}/assignment/{assignment_id}/overview")
 	Assignment getAssignment(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
 		Assignment a = assignments.findOne(assignment_id);
 		return a;
@@ -224,7 +224,7 @@ public class StudentController {
 	 * @param assignment_id Assignment id
 	 */
 	@ApiOperation(value = "Get a specific AssignedAssignment given a student (through id) and assignment id")
-	@GetMapping("student/{id}/assignment/{assignment_id}/report")
+	@RequestMapping(method = RequestMethod.GET, path = "student/{id}/assignment/{assignment_id}/report")
 	AssignedAssignment getAssignedAssignment(@PathVariable Integer id, @PathVariable Integer assignment_id)	{
 		List<AssignedAssignment> list = assignedAssignments.findAll();
 		for (AssignedAssignment aa : list)	{
@@ -248,7 +248,7 @@ public class StudentController {
 	 * @return List of STInbox (messages)
 	 */
 	@ApiOperation(value = "Gets all messages a Student (given through id) has between Teachers")
-	@RequestMapping("/student/{id}/stinbox")
+	@RequestMapping(method = RequestMethod.GET, path = "/student/{id}/stinbox")
 	List<STInbox> studentTeacherInbox(@PathVariable Integer id) {
 		List<STInbox> sti = new ArrayList<STInbox>();
 		List<STInbox> list = stinbox.findAll();
@@ -267,7 +267,7 @@ public class StudentController {
 	 * @return List of STMessages
 	 */
 	@ApiOperation(value = "Gets all the STMessages between a Student and Teacher in an inbox")
-	@GetMapping("student/{id}/stinbox/{sid}")
+	@RequestMapping(method = RequestMethod.GET, path = "student/{id}/stinbox/{sid}")
 	List<STMessages> studentTeacherInboxMessages(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<STMessages> stm = new ArrayList<STMessages>();
 		List<STMessages> list = stmessage.findAll();
@@ -286,7 +286,7 @@ public class StudentController {
 	 * @return List of messages from STMessages belonging to STInbox
 	 */
 	@ApiOperation(value = "Gets all the messages between a Student and a Teacher in an inbox")
-	@GetMapping("student/{id}/stinbox/{sid}/messages")
+	@RequestMapping(method = RequestMethod.GET, path = "student/{id}/stinbox/{sid}/messages")
 	List<String> studentTeacherInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<String> stm = new ArrayList<String>();
 		List<STMessages> list = stmessage.findAll();
@@ -305,7 +305,7 @@ public class StudentController {
 	 * @return List (String) of message senders 
 	 */
 	@ApiOperation(value = "Gets all the messages between a Student and a Teacher in an inbox")
-	@GetMapping("student/{id}/stinbox/{sid}/senders")
+	@RequestMapping(method = RequestMethod.GET, path = "student/{id}/stinbox/{sid}/senders")
 	List<String> studentTeacherInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<String> stm = new ArrayList<String>();
 		List<STMessages> list = stmessage.findAll();
@@ -328,7 +328,7 @@ public class StudentController {
 	 * @return STInbox created
 	 */
 	@ApiOperation(value = "Create a STInbox and store it in the database")
-	@PostMapping("/student/{id}/makeSTI/{tid}/titled/{subject}")
+	@RequestMapping(method = RequestMethod.POST, path = "/student/{id}/makeSTI/{tid}/titled/{subject}")
 	STInbox createSTInbox(@PathVariable Integer id, @PathVariable Integer tid, @PathVariable String subject) {
 		STInbox st = new STInbox(students.findOne(id), teachers.findOne(tid), subject);
 		stinbox.save(st);
@@ -343,7 +343,7 @@ public class StudentController {
 	 * @return Saved STMessages object
 	 */
 	@ApiOperation(value = "Create a STMessage and store it in the database")
-	@PostMapping("/student/{id}/makeSTM/{sid}/message/{message}")
+	@RequestMapping(method = RequestMethod.POST, path = "/student/{id}/makeSTM/{sid}/message/{message}")
 	STMessages createSTMessages(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String message) {
 		STMessages stm = new STMessages(stinbox.findOne(sid), stinbox.findOne(sid).subject, students.findOne(id).name, message);
 		stmessage.save(stm);
@@ -357,7 +357,7 @@ public class StudentController {
 	 * @return Message informing user of all deleted messages
 	 */
 	@ApiOperation(value = "Delete an inbox and all associated messages for stid")
-	@DeleteMapping("/student/{id}/deleteSTI/{stid}")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/student/{id}/deleteSTI/{stid}")
 	String deleteSTInbox(@PathVariable Integer id, @PathVariable Integer stid) {
 		List<STMessages> list = stmessage.findAll();
 		int messages = 0;
@@ -385,7 +385,7 @@ public class StudentController {
 	 * @return Parent of Student with id
 	 */
 	@ApiOperation(value = "Get the Parent of a Student")
-	@RequestMapping("/student/{id}/parent")
+	@RequestMapping(method = RequestMethod.GET, path = "/student/{id}/parent")
 	Parent getParent(@PathVariable Integer id) {
 		return students.findOne(id).parent;
 	}

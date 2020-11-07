@@ -17,19 +17,19 @@ public class CourseRegistrationController {
 	// Basic CouseRegistration mappings
 
 	@ApiOperation(value = "get CourseRegistration {id}")
-	@GetMapping("/registration/{id}")
+	@RequestMapping(method = RequestMethod.GET, path = "/registration/{id}")
 	CourseRegistration getCourseRegistration(@PathVariable Integer id) {
 		return registrar.findOne(id);
 	}
 
 	@ApiOperation(value = "Get all CourseRegistrations")
-	@RequestMapping("/registrations")
+	@RequestMapping(method = RequestMethod.GET, path = "/registrations")
 	List<CourseRegistration> hello() {
 		return registrar.findAll();
 	}
 
 	@ApiOperation(value = "update CourseRegistration {id}")
-	@PutMapping("/registration/{id}")
+	@RequestMapping(method = RequestMethod.PUT, path = "/registration/{id}")
 	CourseRegistration updateCourseRegistration(@RequestBody CourseRegistration s, @PathVariable Integer id) {
 		CourseRegistration old_s = registrar.findOne(id);
 		old_s.setGrade(s.getGrade());
@@ -41,13 +41,13 @@ public class CourseRegistrationController {
 	}
 	
 	@ApiOperation(value = "Get CourseRegistration {id}'s grade")
-	@GetMapping("/registration/{id}/grade")
+	@RequestMapping(method = RequestMethod.GET, path = "/registration/{id}/grade")
 	Double getCourseRegistrationGrade(@PathVariable Integer id)	{
 		return registrar.findOne(id).getGrade();
 	}
 	
 	@ApiOperation(value = "Update CourseRegistration {id}'s grade")
-	@PutMapping("/registration/{id}/grade")
+	@RequestMapping(method = RequestMethod.PUT, path = "/registration/{id}/grade")
 	CourseRegistration updateCourseRegistrationGrade(@PathVariable Integer id, @RequestBody Double grade)	{
 		CourseRegistration old_cr = registrar.findOne(id);
 		old_cr.setGrade(grade);
@@ -56,7 +56,7 @@ public class CourseRegistrationController {
 	}
 	
 	@ApiOperation(value = "Complete CourseRegistration {id} (complete class and finalize grade)")
-	@PutMapping("/registration/{id}/complete")
+	@RequestMapping(method = RequestMethod.PUT, path = "/registration/{id}/complete")
 	CourseRegistration completeCourse(@PathVariable Integer id)	{
 		CourseRegistration old_cr = registrar.findOne(id);
 		old_cr.complete();
@@ -65,7 +65,7 @@ public class CourseRegistrationController {
 	}
 	
 	@ApiOperation(value = "Delete CourseRegistration {id}")
-	@DeleteMapping("/registration/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/registration/{id}")
 	String deleteCourseRegistration(@PathVariable Integer id) {
 		registrar.delete(id);
 		return "deleted " + id;

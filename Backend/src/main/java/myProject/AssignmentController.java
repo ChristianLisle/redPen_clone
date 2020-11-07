@@ -15,25 +15,25 @@ public class AssignmentController {
 	AssignmentRepository assignments;
 
 	@ApiOperation(value = "Get Assignment {id}")
-	@GetMapping("/assignment/{id}")
+	@RequestMapping(method = RequestMethod.GET, path = "/assignment/{id}")
 	Assignment getAssignment(@PathVariable Integer id) {
 		return assignments.findOne(id);
 	}
 	
 	@ApiOperation(value = "Get AssignedAssignment linked to Assignment {id}")
-	@GetMapping("/assignment/{id}/assigned")
+	@RequestMapping(method = RequestMethod.GET, path = "/assignment/{id}/assigned")
 	java.util.Set<AssignedAssignment> getAssignedAssignments(@PathVariable Integer id)	{
 		return assignments.getOne(id).getAssignedAssignments();
 	}
 
 	@ApiOperation(value = "Get all Assignment objects in database")
-	@RequestMapping("/assignments")
+	@RequestMapping(method = RequestMethod.GET, path = "/assignments")
 	List<Assignment> hello() {
 		return assignments.findAll();
 	}
 
 	@ApiOperation(value = "Update Assignment {id}")
-	@PutMapping("/assignment/{id}/update")
+	@RequestMapping(method = RequestMethod.PUT, path = "/assignment/{id}/update")
 	Assignment updateAssignment(@RequestBody Assignment s, @PathVariable Integer id) {
 		Assignment old_a = assignments.findOne(id);
 		old_a.setName(s.getName());
@@ -43,7 +43,7 @@ public class AssignmentController {
 	}
 
 	@ApiOperation(value = "Delete Assignment {id} (remove from database)")
-	@DeleteMapping("/assignment/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/assignment/{id}")
 	String deleteAssignment(@PathVariable Integer id) {
 		assignments.delete(id);
 		return "deleted " + id;

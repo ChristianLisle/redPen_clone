@@ -13,13 +13,13 @@ public class AssignedAssignmentController {
 	AssignedAssignmentRepository assignedAssignments;
 
 	@ApiOperation(value = "Get AssignedAssignment {id}")
-	@GetMapping("/assigned-assignment/{id}")
+	@RequestMapping(method = RequestMethod.GET, path = "/assigned-assignment/{id}")
 	AssignedAssignment getAssignedAssignment(@PathVariable Integer id) {
 		return assignedAssignments.findOne(id);
 	}
 
 	@ApiOperation(value = "Update AssignedAssignment {id} (update grade/feedback)")
-	@PutMapping("/assigned-assignment/{id}/update")
+	@RequestMapping(method = RequestMethod.PUT, path = "/assigned-assignment/{id}/update")
 	AssignedAssignment updateAssignment(@RequestBody AssignedAssignment a, @PathVariable Integer id) {
 		AssignedAssignment old_a = assignedAssignments.findOne(id);
 		old_a.setGrade(a.getGrade());
@@ -29,7 +29,7 @@ public class AssignedAssignmentController {
 	}
 	
 	@ApiOperation(value = "Delete AssignedAssignment {id}")
-	@DeleteMapping("/assigned-assignment/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/assigned-assignment/{id}")
 	String deleteAssignedAssignment(@PathVariable Integer id) {
 		assignedAssignments.delete(id);
 		return "deleted " + id;
