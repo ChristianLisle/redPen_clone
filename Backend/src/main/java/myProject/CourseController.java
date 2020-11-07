@@ -1,10 +1,15 @@
 package myProject;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "CourseController")
 @RestController
 public class CourseController {
 	@Autowired
@@ -18,26 +23,26 @@ public class CourseController {
 
 	// Basic Course mappings
 
-	// Get course {id}
+	@ApiOperation(value = "Get course {id}")
 	@GetMapping("/course/{id}")
 	Course getCourse(@PathVariable Integer id) {
 		return courses.findOne(id);
 	}
 
-	// Get all courses
+	@ApiOperation(value = "Get all courses")
 	@RequestMapping("/courses")
 	List<Course> hello() {
 		return courses.findAll();
 	}
 
-	// Create a new course
+	@ApiOperation(value = "Create a new course")
 	@PostMapping("course")
 	Course createCourse(@RequestBody Course s) {
 		courses.save(s);
 		return s;
 	}
 
-	// Update a course
+	@ApiOperation(value = "Update course {id}")
 	@PutMapping("/course/{id}/update")
 	Course updateCourse(@RequestBody Course c, @PathVariable Integer id) {
 		Course old_c = courses.findOne(id);
@@ -47,7 +52,7 @@ public class CourseController {
 		return old_c;
 	}
 
-	// Delete course {id}
+	@ApiOperation(value = "Delete course {id}")
 	@DeleteMapping("/course/{id}")
 	String deleteCourse(@PathVariable Integer id) {
 		courses.delete(id);
@@ -62,7 +67,7 @@ public class CourseController {
 
 	// Course student and teacher mappings
 
-	// Get students taking course {id} (teacher is irrelevant)
+	@ApiOperation(value = "Get students taking course {id} (teacher is irrelevant)")
 	@RequestMapping("/course/{id}/students")
 	List<Student> getStudents(@PathVariable Integer id) {
 		List<Student> s = new ArrayList<Student>();
@@ -75,7 +80,7 @@ public class CourseController {
 		return s;
 	}
 
-	// Get teachers of course {id}
+	@ApiOperation(value = "Get teachers of course {id}")
 	@RequestMapping("/course/{id}/teachers")
 	List<Teacher> getTeachers(@PathVariable Integer id) {
 		List<Teacher> t = new ArrayList<Teacher>();
@@ -90,7 +95,7 @@ public class CourseController {
 
 	// Course assignment mappings
 
-	// Create assignment for course {id}
+	@ApiOperation(value = "Create assignment for course {id}")
 	@PostMapping("/course/{id}/assignment")
 	Assignment createCourseAssignment(@PathVariable Integer id, @RequestBody Assignment assignment) {
 		Assignment a = new Assignment(assignment);
@@ -99,13 +104,13 @@ public class CourseController {
 		return a;
 	}
 
-	// Get assignments for course {id}
+	@ApiOperation(value = "Get assignments for course {id}")
 	@RequestMapping("/course/{id}/assignments")
 	java.util.Set<Assignment> getCourseAssignments(@PathVariable Integer id) {
 		return courses.getOne(id).getAssignments();
 	}
 
-	// Assign Assignment {assignment_id} to students in course {id}
+	@ApiOperation(value = "Assign Assignment {assignment_id} to students in course {id}")
 	@PutMapping("/course/{id}/assign-assignment/{assignment_id}")
 	List<AssignedAssignment> assignAllStudents(@PathVariable Integer id, @PathVariable Integer assignment_id) {
 		List<AssignedAssignment> aa = new ArrayList<AssignedAssignment>();
