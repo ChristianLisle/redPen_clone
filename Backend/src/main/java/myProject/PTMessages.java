@@ -37,38 +37,83 @@ public class PTMessages {
 		this.message = message;
 	}
 
+	/**
+	 * Returns the id of the PTMessages
+	 * 
+	 * @return id
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * Returns the PTInbox that is associated with this PTMessages
+	 * 
+	 * @return ptinbox
+	 */
 	public PTInbox getPTInbox() {
 		return ptinbox;
 	}
 	
+	/**
+	 * Sets the PTInbox of this PTMessages
+	 * 
+	 * @param ptinbox
+	 */
 	public void setPTInbox(PTInbox ptinbox) {
 		this.ptinbox = ptinbox;
 	}
 	
+	/**
+	 * Gets the subject of this PTMessages
+	 * 
+	 * @return subject
+	 */
 	public String getSubject() {
 		return subject;
 	}
 	
+	/**
+	 * Sets the subject of this PTMessages
+	 * 
+	 * @param subject
+	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 	
+	/**
+	 * Gets the sender of a PTMessage
+	 * 
+	 * @return sender
+	 */
 	public String getSender() {
 		return sender;
 	}
 
+	/**
+	 * Sets the sender of a PTMessage
+	 * 
+	 * @param sender
+	 */
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
 	
+	/**
+	 * Gets the message of a PTMessage
+	 * 
+	 * @return message
+	 */
 	public String getMessage() {
 		return message;
 	}
-
+	
+	/**
+	 * Sets the message of a PTMessage
+	 * 
+	 * @param message
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}

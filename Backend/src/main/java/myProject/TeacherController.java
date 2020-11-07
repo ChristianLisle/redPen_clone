@@ -7,19 +7,37 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "TeacherController")
 @RestController
 public class TeacherController {
 	@Autowired
 	TeacherRepository teachers;
 	
 	// Teacher Login/Register mappings
-	
+
+	/**
+	 * A post mapping to register/add a teacher
+	 * 
+	 * @param t
+	 * @return t
+	 */
+	@ApiOperation(value = "To register/add a teacher")
 	@PostMapping("/register-teacher")
 	Teacher createTeacher(@RequestBody Teacher t) {
 		teachers.save(t);
 		return t;
 	}
 	
+	/**
+	 * A post mapping that logs in the teacher
+	 * 
+	 * @param t
+	 * @return
+	 */
+	@ApiOperation(value = "Logs in the teacher")
 	@PostMapping("/login-teacher")
 	String getTeacher(@RequestBody Teacher t)	{
 		int j = (int) teachers.count(); // count() method does not include the number of deleted entities (this causes issues when iterating over id with deleted entity)
@@ -37,6 +55,14 @@ public class TeacherController {
 		return "There are no teachers with the name " + t.getName();
 	}
 	
+	/**
+	 * A put mapping to change the password of a teacher
+	 * 
+	 * @param np
+	 * @param id
+	 * @return
+	 */
+	@ApiOperation(value = "Changes the password of a teacher")
 	@PutMapping("/teacher/{id}/reset-password")
 	String resetPassword(@RequestBody NewPassword np, @PathVariable Integer id)	{
 		Teacher old_t = teachers.findOne(id);
@@ -49,16 +75,37 @@ public class TeacherController {
 
 	// Basic teacher info mappings
 	
+	/**
+	 * A get mapping that returns a specific teacher whose id matches the {id}
+	 * 
+	 * @param id
+	 * @return teachers.findOne(id)
+	 */
+	@ApiOperation(value = "Returns a specific teacher whose id matches the {id}")
 	@GetMapping("/teacher/{id}")
 	Teacher getTeacher(@PathVariable Integer id) {
 		return teachers.findOne(id);
 	}
 	
+	/**
+	 * A request mapping that returns all teachers on record as a list
+	 * 
+	 * @return teachers.findAll();
+	 */
+	@ApiOperation(value = "Returns all teachers on record as a list")
 	@RequestMapping("/teachers")
 	List<Teacher> getAllTeachers() {
 		return teachers.findAll();
 	}
 
+	/**
+	 * A delete mapping that deletes a specific teacher based on the {id} and returns a string saying it delete a teacher with 
+	 * the specific teachers name
+	 * 
+	 * @param id
+	 * @return "deleted teacher " + name
+	 */
+	@ApiOperation(value = "Deletes a specific teacher based on the {id} and returns a string of the teachers name")
 	@DeleteMapping("/teacher/{id}")
 	String deleteTeacher(@PathVariable Integer id) {
 		String name = teachers.findOne(id).getName();
@@ -74,8 +121,15 @@ public class TeacherController {
 	
 	// Teacher course mappings
 	
-	//For assigning a course to a teacher
-	//The class must have already been created. This just links them
+	/**
+	 * A put mapping to assign a course {course_id} to a teacher {id}. The course must have been created first. 
+	 * This just links them together
+	 * 
+	 * @param id
+	 * @param course_id
+	 * @return assignedCourses.findOne((int) assignedCourses.count())
+	 */
+	@ApiOperation(value = "Assign a course {course_id} to a teacher {id}. The course must have been created first.")
 	@PutMapping("/teacher/{id}/assign-course/{course_id}")
 	TeacherCourse addTeacher(@PathVariable Integer id, @PathVariable Integer course_id) {
 		Teacher teacher = teachers.findOne(id);					//Gets teacher
@@ -84,8 +138,13 @@ public class TeacherController {
 		return assignedCourses.findOne((int) assignedCourses.count());			//Returns the last item in that tables (the newest one added)
 	}
 	
-	//Gets all courses a teacher is in
-	//Shows all courses that this teacher teaches
+	/**
+	 * A request mapping that gets all the courses for a specific teacher {id}
+	 * 
+	 * @param id
+	 * @return returned
+	 */
+	@ApiOperation(value = "Gets all the courses for a specific teacher {id}")
 	@RequestMapping("/teacher/{id}/courses")
 	List<Course> allTeachersCourses(@PathVariable Integer id) {
 		List<Course> returned = new ArrayList<Course>();
@@ -104,7 +163,13 @@ public class TeacherController {
 	@Autowired
 	PTMessagesRepository ptmessage;
 	
-	//Gets all conversations a teacher has between parents
+	/**
+	 * Gets all the conversations between a teacher and parents
+	 * 
+	 * @param id
+	 * @return pti
+	 */
+	@ApiOperation(value = "Gets all the conversations between a teacher and parents")
 	@RequestMapping("/teacher/{id}/ptinbox")
 	List<PTInbox> teacherParentInbox(@PathVariable Integer id) {
 		List<PTInbox> pti = new ArrayList<PTInbox>();
@@ -117,7 +182,14 @@ public class TeacherController {
 		return pti;
 	}
 	
-	//Gets all the PTMessages between a parent and teacher in an inbox
+	/**
+	 * Gets all the PTMessages between a teacher {id} and parent in a specific PTInbox {pid}
+	 * 
+	 * @param id
+	 * @param pid
+	 * @return ptm
+	 */
+	@ApiOperation(value = "Gets all the PTMessages between a teacher {id} and parent in a specific PTInbox {pid}")
 	@GetMapping("teacher/{id}/ptinbox/{pid}")
 	List<PTMessages> teacherParentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<PTMessages> ptm = new ArrayList<PTMessages>();
@@ -130,7 +202,16 @@ public class TeacherController {
 		return ptm;
 	}
 	
-	//Gets all the messages between a parent and a teacher in an inbox
+
+	/**
+	 * Gets all the messages between a teacher {id} and parent in a  specific PTInbox {pid}.
+	 * This returns an arraylist of strings of all the messages in the PTMessages
+	 * 
+	 * @param id
+	 * @param pid
+	 * @return ptm
+	 */
+	@ApiOperation(value = "Gets all the messages between a teacher {id} and parent in a  specific PTInbox {pid}.")
 	@GetMapping("teacher/{id}/ptinbox/{pid}/messages")
 	List<String> teacherParentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
@@ -143,7 +224,15 @@ public class TeacherController {
 		return ptm;
 	}
 	
-	//Gets all the messages between a parent and a teacher in an inbox
+	/**
+	 * Gets all the senders between a teacher {id} and a parent in a specific PTInbox
+	 * This returns an arraylist of strings of all the senders in the PTMessages
+	 * 
+	 * @param id
+	 * @param pid
+	 * @return ptm
+	 */
+	@ApiOperation(value = "Gets all the senders between a teacher {id} and a parent in a specific PTInbox")
 	@GetMapping("teacher/{id}/ptinbox/{pid}/senders")
 	List<String> teacherParentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
@@ -159,7 +248,15 @@ public class TeacherController {
 	@Autowired
 	ParentRepository parents;
 
-	//Creates a ptinbox
+	/**
+	 * Creates a PTInbox between a teacher {id} and a parent {pid} with the subject {subject}
+	 * 
+	 * @param id
+	 * @param pid
+	 * @param subject
+	 * @return pt
+	 */
+	@ApiOperation(value = "Creates a PTInbox between a teacher {id} and a parent {pid} with the subject {subject}")
 	@PostMapping("/teacher/{id}/makePTI/{pid}/titled/{subject}")
 	PTInbox createPTInbox(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String subject) {
 		PTInbox pt = new PTInbox(parents.findOne(pid), teachers.findOne(id), subject);
@@ -167,16 +264,33 @@ public class TeacherController {
 		return pt;
 	}
 	
-	//Creates a ptmessage
+	/**
+	 * Creates a PTMessage between a teacher {id} and a parent with the subject of the message {subject}
+	 * This is based off of a PTInbox {pid}
+	 * 
+	 * @param id
+	 * @param pid
+	 * @param message
+	 * @return ptm
+	 */
+	@ApiOperation(value = "Creates a PTMessage between a teacher {id} and a parent with the subject of the message {subject}." + 
+			"Based of an PTInbox {pid}")
 	@PostMapping("/teacher/{id}/makePTM/{pid}/message/{message}")
 	PTMessages createPTMessages(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String message) {
-		//pid is the id of a ptinbox
 		PTMessages ptm = new PTMessages(ptinbox.findOne(pid), ptinbox.findOne(pid).subject, teachers.findOne(id).name, message);
 		ptmessage.save(ptm);
 		return ptm;
 	}
 	
-	//Deletes an inbox and all associated messages for pti
+	/**
+	 * Deletes a PTInbox and all associated messages for the PTInbox. The returns string says who the inbox is between and 
+	 * how many associated messages were deleted
+	 * 
+	 * @param id
+	 * @param ptid
+	 * @return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + par + " with the subject " + sub
+	 */
+	@ApiOperation(value = "Deletes a PTInbox and all associated messages for the PTInbox.")
 	@DeleteMapping("/teacher/{id}/deletePTI/{stid}")
 	String deletePTInbox(@PathVariable Integer id, @PathVariable Integer ptid) {
 		List<PTMessages> list = ptmessage.findAll();
@@ -202,7 +316,13 @@ public class TeacherController {
 	@Autowired
 	STMessagesRepository stmessage;
 	
-	//Gets all conversations a teacher has between parents
+	/**
+	 * Gets all the conversations between a teacher and students
+	 * 
+	 * @param id
+	 * @return sti
+	 */
+	@ApiOperation(value = "Gets all the conversations between a teacher and students")
 	@RequestMapping("/teacher/{id}/stinbox")
 	List<STInbox> teacherStudentInbox(@PathVariable Integer id) {
 		List<STInbox> sti = new ArrayList<STInbox>();
@@ -215,7 +335,14 @@ public class TeacherController {
 		return sti;
 	}
 	
-	//Gets all the PTMessages between a parent and teacher in an inbox
+	/**
+	 * Gets all the PTMessages between a teacher {id} and student in a specific STInbox {sid}
+	 * 
+	 * @param id
+	 * @param pid
+	 * @return stm
+	 */
+	@ApiOperation(value = "Gets all the PTMessages between a teacher {id} and student in a specific STInbox {sid}")
 	@GetMapping("teacher/{id}/stinbox/{pid}")
 	List<STMessages> teacherStudentInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<STMessages> stm = new ArrayList<STMessages>();
@@ -228,7 +355,15 @@ public class TeacherController {
 		return stm;
 	}
 	
-	//Gets all the messages between a parent and a teacher in an inbox
+	/**
+	 * Gets all the messages between a teacher {id} and student in a  specific STInbox {pid}.
+	 * This returns an arraylist of strings of all the messages in the STMessages
+	 * 
+	 * @param id
+	 * @param pid
+	 * @return stm
+	 */
+	@ApiOperation(value = "Gets all the messages between a teacher {id} and student in a  specific STInbox {pid}.")
 	@GetMapping("teacher/{id}/stinbox/{pid}/messages")
 	List<String> teacherStudentInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> stm = new ArrayList<String>();
@@ -241,7 +376,15 @@ public class TeacherController {
 		return stm;
 	}
 	
-	//Gets all the messages between a parent and a teacher in an inbox
+	/**
+	 * Gets all the senders between a teacher {id} and a student in a specific STInbox
+	 * This returns an arraylist of strings of all the senders in the PTMessages
+	 * 
+	 * @param id
+	 * @param pid
+	 * @return stm
+	 */
+	@ApiOperation(value = "Gets all the senders between a teacher {id} and a student in a specific STInbox {pid}")
 	@GetMapping("teacher/{id}/stinbox/{pid}/senders")
 	List<String> teacherStudentInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> stm = new ArrayList<String>();
@@ -257,7 +400,15 @@ public class TeacherController {
 	@Autowired
 	StudentRepository students;
 
-	//Creates a stinbox
+	/**
+	 * Creates a STInbox between a teacher {id} and a student {sid} with the subject {subject}
+	 * 
+	 * @param id
+	 * @param pid
+	 * @param subject
+	 * @return st
+	 */
+	@ApiOperation(value = "Creates a STInbox between a teacher {id} and a student {sid} with the subject {subject}")
 	@PostMapping("/teacher/{id}/makeSTI/{sid}/titled/{subject}")
 	STInbox createSTInbox(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String subject) {
 		STInbox st = new STInbox(students.findOne(sid), teachers.findOne(id), subject);
@@ -265,16 +416,33 @@ public class TeacherController {
 		return st;
 	}
 	
-	//Creates a stmessage
+	/**
+	 * Creates a STMessage between a teacher {id} and a student with the subject of the message {subject}
+	 * This is based off of a PTInbox {sid}
+	 * 
+	 * @param id
+	 * @param pid
+	 * @param message
+	 * @return stm
+	 */
+	@ApiOperation(value = "Creates a STMessage between a teacher {id} and a student with the subject of the message {subject}" + 
+			"Based off of a PTInbox {sid}")
 	@PostMapping("/teacher/{id}/makeSTM/{sid}/message/{message}")
 	STMessages createSTMessages(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable String message) {
-		//sid is the id of a stinbox
 		STMessages stm = new STMessages(stinbox.findOne(sid), stinbox.findOne(sid).subject, teachers.findOne(id).name, message);
 		stmessage.save(stm);
 		return stm;
 	}
 	
-	//Deletes an inbox and all associated messages for sti
+	/**
+	 * Deletes a STInbox and all associated messages for the STInbox. The returns string says who the inbox is between and 
+	 * how many associated messages were deleted
+	 * 
+	 * @param id
+	 * @param stid
+	 * @return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + stu + " with the subject " + sub
+	 */
+	@ApiOperation(value = "Deletes a STInbox and all associated messages for the STInbox.")
 	@DeleteMapping("/teacher/{id}/deleteSTI/{stid}")
 	String deleteSTInbox(@PathVariable Integer id, @PathVariable Integer stid) {
 		List<STMessages> list = stmessage.findAll();
