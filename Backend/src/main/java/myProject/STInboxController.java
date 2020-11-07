@@ -22,7 +22,7 @@ public class STInboxController {
 	 * @return inbox.findOne(id)
 	 */
 	@ApiOperation(value = "Returns the STInbox of that mapping")
-	@GetMapping("/stinbox/{id}")
+	@RequestMapping(method = RequestMethod.GET, path ="/stinbox/{id}")
 	STInbox getSTInbox(@PathVariable Integer id) {
 		return inbox.findOne(id);
 	}
@@ -33,7 +33,7 @@ public class STInboxController {
 	 * @return inbox.findAll()
 	 */
 	@ApiOperation(value = "Returns a list of all STinboxes")
-	@RequestMapping("/stinbox")
+	@RequestMapping(method = RequestMethod.GET, path ="/stinbox")
 	List<STInbox> all() {
 		return inbox.findAll();
 	}
@@ -47,7 +47,7 @@ public class STInboxController {
 	 */
 	@ApiOperation(value = "Deletes a STinbox and returns a string saying who the conversation was between and the subject" + 
 			" of the STInbox")
-	@DeleteMapping("/stinbox/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path ="/stinbox/{id}")
 	String deleteS2TInbox(@PathVariable Integer id) {
 		String teach = inbox.findOne(id).teacher.name;
 		String stud = inbox.findOne(id).student.name;
@@ -63,7 +63,7 @@ public class STInboxController {
 	 * @return s
 	 */
 	@ApiOperation(value = "Creates a new STInbox")
-	@PostMapping("stinbox")
+	@RequestMapping(method = RequestMethod.POST, path ="stinbox")
 	STInbox createSTInbox(@RequestBody STInbox s) {
 		inbox.save(s);
 		return s;
@@ -79,7 +79,7 @@ public class STInboxController {
 	 * @return messages
 	 */
 	@ApiOperation(value = "Returns all stmessages associated with the STInbox {id}")
-	@RequestMapping("/stinbox/{id}/messages")
+	@RequestMapping(method = RequestMethod.GET, path ="/stinbox/{id}/messages")
 	List<STMessages> findMessages(@PathVariable Integer id) {
 		List<STMessages> messages = new ArrayList<STMessages>();
 		List<STMessages> stm = stmessages.findAll();
@@ -98,7 +98,7 @@ public class STInboxController {
 	 * @return messages
 	 */
 	@ApiOperation(value = "Returns a list of all the messages of STMessages in the STInbox")
-	@RequestMapping("/stinbox/{id}/messagesOnly")
+	@RequestMapping(method = RequestMethod.GET, path ="/stinbox/{id}/messagesOnly")
 	List<String> findMessageOnly(@PathVariable Integer id) {
 		List<String> messages = new ArrayList<String>();
 		List<STMessages> stm = stmessages.findAll();
@@ -117,7 +117,7 @@ public class STInboxController {
 	 * @return messages
 	 */
 	@ApiOperation(value = "Returns a list of all the senders of STMessages in the STInbox {id}")
-	@RequestMapping("/stinbox/{id}/messagesSender")
+	@RequestMapping(method = RequestMethod.GET, path ="/stinbox/{id}/messagesSender")
 	List<String> findMessagesSender(@PathVariable Integer id) {
 		List<String> messages = new ArrayList<String>();
 		List<STMessages> stm = stmessages.findAll();

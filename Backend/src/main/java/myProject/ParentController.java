@@ -25,7 +25,7 @@ public class ParentController {
 	 * @return p
 	 */
 	@ApiOperation(value = "Add/create a parent")
-	@PostMapping("/register-parent")
+	@RequestMapping(method = RequestMethod.POST, path ="/register-parent")
 	Parent createParent(@RequestBody Parent p) {
 		parents.save(p);
 		return p;
@@ -39,7 +39,7 @@ public class ParentController {
 	 * @return String to let the user know if they successfully log in or if something is wrong with their choice
 	 */
 	@ApiOperation(value = "User attempt to log in. It will show feedback to know if successful or not")
-	@PostMapping("/login-parent")
+	@RequestMapping(method = RequestMethod.POST, path ="/login-parent")
 	String getParent(@RequestBody Parent p)	{
 		int j = (int) parents.count(); // count() method does not include the number of deleted entities (this causes issues when iterating over id with deleted entity)
 		for (int i = 1; i <= j; i++) {
@@ -65,7 +65,7 @@ public class ParentController {
 	 * @return String to let the parent know if the password has been reset or not
 	 */
 	@ApiOperation(value = "To reset a parents password. If successful or not, lets parent know what happened")
-	@PutMapping("/parent/{id}/reset-password")
+	@RequestMapping(method = RequestMethod.PUT, path ="/parent/{id}/reset-password")
 	String resetPassword(@RequestBody NewPassword np, @PathVariable Integer id)	{
 		Parent old_p = parents.findOne(id);
 		if (old_p.resetPassword(np.getOldPassword(), np.getNewPassword()))	{
@@ -84,7 +84,7 @@ public class ParentController {
 	 * @return parents.findOne(id)
 	 */
 	@ApiOperation(value = "Returns the parent whose ID matches")
-	@GetMapping("/parent/{id}")
+	@RequestMapping(method = RequestMethod.GET, path ="/parent/{id}")
 	Parent getParent(@PathVariable Integer id) {
 		return parents.findOne(id);
 	}
@@ -95,7 +95,7 @@ public class ParentController {
 	 * @return parents.findAll()
 	 */
 	@ApiOperation(value = "Returns all parents on record")
-	@RequestMapping("/parents")
+	@RequestMapping(method = RequestMethod.GET, path ="/parents")
 	List<Parent> getAllParents() {
 		return parents.findAll();
 	}
@@ -107,7 +107,7 @@ public class ParentController {
 	 * @return String to let user know which parent has been deleted
 	 */
 	@ApiOperation(value = "Deletes a parent and displays a string saying which parent has been deleted")
-	@DeleteMapping("/parent/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path ="/parent/{id}")
 	String deleteParent(@PathVariable Integer id) {
 		String name = parents.findOne(id).getName();
 		parents.delete(id);
@@ -127,7 +127,7 @@ public class ParentController {
 	 * @return pti
 	 */
 	@ApiOperation(value = "Returns all the messages between a selected parent {id} and all teachers")
-	@RequestMapping("/parent/{id}/ptinbox")
+	@RequestMapping(method = RequestMethod.GET, path ="/parent/{id}/ptinbox")
 	List<PTInbox> parentTeacherInbox(@PathVariable Integer id) {
 		List<PTInbox> pti = new ArrayList<PTInbox>();
 		List<PTInbox> list = ptinbox.findAll();
@@ -147,7 +147,7 @@ public class ParentController {
 	 * @return ptm
 	 */
 	@ApiOperation(value = "Returns all the messages for a selected parent {id} in a selected PTIbox {pid}")
-	@GetMapping("parent/{id}/ptinbox/{pid}")
+	@RequestMapping(method = RequestMethod.GET, path ="parent/{id}/ptinbox/{pid}")
 	List<PTMessages> parentTeacherInboxMessages(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<PTMessages> ptm = new ArrayList<PTMessages>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -169,7 +169,7 @@ public class ParentController {
 	 */
 	@ApiOperation(value = "Returns all the messages for a selected parent {id} in a selected PTIbox {pid}. Returns an arraylist of the "
 			+ "conversations")
-	@GetMapping("parent/{id}/ptinbox/{pid}/messages")
+	@RequestMapping(method = RequestMethod.GET, path ="parent/{id}/ptinbox/{pid}/messages")
 	List<String> parentTeacherInboxMessagesOnly(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -191,7 +191,7 @@ public class ParentController {
 	 */
 	@ApiOperation(value = "Returns all the messages for a selected parent {id} in a selected PTIbox {pid}. The return here is " 
 			+ "an arraylist of strings with all the senders")
-	@GetMapping("parent/{id}/ptinbox/{pid}/senders")
+	@RequestMapping(method = RequestMethod.GET, path ="parent/{id}/ptinbox/{pid}/senders")
 	List<String> parentTeacherInboxMessagesSender(@PathVariable Integer id, @PathVariable Integer pid) {
 		List<String> ptm = new ArrayList<String>();
 		List<PTMessages> list = ptmessage.findAll();
@@ -216,7 +216,7 @@ public class ParentController {
 	 */
 	@ApiOperation(value = "Creates a PTIbox with the parent {id}, the teacher they want to talk with {tid} and the subject" 
 			+ " it is to have {subject}")
-	@PostMapping("/parent/{id}/makePTI/{tid}/titled/{subject}")
+	@RequestMapping(method = RequestMethod.POST, path ="/parent/{id}/makePTI/{tid}/titled/{subject}")
 	PTInbox createPTInbox(@PathVariable Integer id, @PathVariable Integer tid, @PathVariable String subject) {
 		PTInbox pt = new PTInbox(parents.findOne(id), teachers.findOne(tid), subject);
 		ptinbox.save(pt);
@@ -234,7 +234,7 @@ public class ParentController {
 	 */
 	@ApiOperation(value = "Creates a PTMessages based on the parent {id}, the ptinbox this conversation uses {pid}"  
 			+ "and the message this should contain {message}")
-	@PostMapping("/parent/{id}/makePTM/{pid}/message/{message}")
+	@RequestMapping(method = RequestMethod.POST, path ="/parent/{id}/makePTM/{pid}/message/{message}")
 	PTMessages createPTMessages(@PathVariable Integer id, @PathVariable Integer pid, @PathVariable String message) {
 		PTMessages ptm = new PTMessages(ptinbox.findOne(pid), ptinbox.findOne(pid).subject, parents.findOne(id).name, message);
 		ptmessage.save(ptm);
@@ -250,7 +250,7 @@ public class ParentController {
 	 * @return "Deleted all " + messages + " messages and the inbox between " + teach + " and " + par + " with the subject " + sub
 	 */
 	@ApiOperation(value = "Deletes PTInbox and all the assocaited PTMessages for the PTInbox")
-	@DeleteMapping("/parent/{id}/deletePTI/{stid}")
+	@RequestMapping(method = RequestMethod.DELETE, path ="/parent/{id}/deletePTI/{stid}")
 	String deletePTInbox(@PathVariable Integer id, @PathVariable Integer ptid) {
 		List<PTMessages> list = ptmessage.findAll();
 		int messages = 0;
@@ -282,7 +282,7 @@ public class ParentController {
 	 * @return "Added " + p.name + " as " + s.name + "'s parent"
 	 */
 	@ApiOperation(value = "Links a student and parent together by setting the parent {id} as the student's {sid} parent")
-	@PutMapping("/parent/{id}/student/{sid}")
+	@RequestMapping(method = RequestMethod.PUT, path ="/parent/{id}/student/{sid}")
 	String addParent(@PathVariable Integer id, @PathVariable Integer sid) {
 		Student s = student.findOne(sid);
 		Parent p = parents.findOne(id);
@@ -297,7 +297,7 @@ public class ParentController {
 	 * @return parents.findOne(id).getStudents()
 	 */
 	@ApiOperation(value = "Finds all the students of a parent")
-	@RequestMapping("/parent/{id}/students")
+	@RequestMapping(method = RequestMethod.GET, path ="/parent/{id}/students")
 	java.util.Set<Student> getParentsStudents(@PathVariable Integer id) {
 		return parents.findOne(id).getStudents();
 	}
@@ -311,7 +311,7 @@ public class ParentController {
 	 * @return returned
 	 */
 	@ApiOperation(value = "Returns with a specific student {sid} of a parent {id}")
-	@GetMapping("/parent/{id}/student/{sid}")
+	@RequestMapping(method = RequestMethod.GET, path ="/parent/{id}/student/{sid}")
 	List<Student> getParentsStudent(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<Student> returned = new ArrayList<Student>();
 		List<Student> all = student.findAll();
@@ -337,7 +337,7 @@ public class ParentController {
 	 * @return student.findOne(sid).getCourses() or null
 	 */
 	@ApiOperation(value = "Finds all courses for a student {sid} of a parent {id}")
-	@GetMapping("/parent/{id}/student/{sid}/courses")
+	@RequestMapping(method = RequestMethod.GET, path ="/parent/{id}/student/{sid}/courses")
 	java.util.Set<Course> getParentsStudentCourses(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<Student> allS = student.findAll();
 		for (Student s : allS) {
@@ -357,7 +357,7 @@ public class ParentController {
 	 * @return
 	 */
 	@ApiOperation(value = "Finds a specific course {cid} of a student {sid} under a parent {id}")
-	@GetMapping("/parent/{id}/student/{sid}/course/{cid}")
+	@RequestMapping(method = RequestMethod.GET, path ="/parent/{id}/student/{sid}/course/{cid}")
 	Course getParentsStudentSpecificCourse(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable Integer cid) {
 		List<Student> all = student.findAll();
 		List<CourseRegistration> allCR = cr.findAll(); 
@@ -378,7 +378,7 @@ public class ParentController {
 	 * @return crr.teacherCourse or null
 	 */
 	@ApiOperation(value = "Finds a teachers course {cid} of a student {sid} under a parent {id}")
-	@GetMapping("/parent/{id}/student/{sid}/tcourse/{cid}")
+	@RequestMapping(method = RequestMethod.GET, path ="/parent/{id}/student/{sid}/tcourse/{cid}")
 	TeacherCourse getParentsStudentSpecificTCourse(@PathVariable Integer id, @PathVariable Integer sid, @PathVariable Integer cid) {
 		List<Student> all = student.findAll();
 		List<CourseRegistration> allCR = cr.findAll(); 
@@ -401,7 +401,7 @@ public class ParentController {
 	 * @return student.findOne(sid).getAssignments() or null
 	 */
 	@ApiOperation(value = "Finds all assignments of a student {sid} under a parent {id}")
-	@GetMapping("/parent/{id}/student/{sid}/assignments")
+	@RequestMapping(method = RequestMethod.GET, path ="/parent/{id}/student/{sid}/assignments")
 	java.util.Set<Assignment> getParentsStudentAssignments(@PathVariable Integer id, @PathVariable Integer sid) {
 		List<Student> all = student.findAll();
 		for (Student s : all) {

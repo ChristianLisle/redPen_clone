@@ -22,7 +22,7 @@ public class STMessagesController {
 	 * @return messages.findOne(id)
 	 */
 	@ApiOperation(value = "Returns the STMessages of the id {id}")
-	@GetMapping("/stmessage/{id}")
+	@RequestMapping(method = RequestMethod.GET, path ="/stmessage/{id}")
 	STMessages getSTInbox(@PathVariable Integer id) {
 		return messages.findOne(id);
 	}
@@ -33,7 +33,7 @@ public class STMessagesController {
 	 * @return messages.findAll()
 	 */
 	@ApiOperation(value = "Get all STMessages that exist")
-	@RequestMapping("/stmessages")
+	@RequestMapping(method = RequestMethod.GET, path ="/stmessages")
 	List<STMessages> all() {
 		return messages.findAll();
 	}
@@ -47,7 +47,7 @@ public class STMessagesController {
 	 */
 	@ApiOperation(value = "Delete a STMessage and returns a string saying who was in the message and" + 
 			" the subject of the STMessage")
-	@DeleteMapping("/stmessage/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path ="/stmessage/{id}")
 	String deleteS2TMessages(@PathVariable Integer id) {
 		String send = messages.findOne(id).sender;
 		String mess = messages.findOne(id).message;
@@ -62,7 +62,7 @@ public class STMessagesController {
 	 * @return p
 	 */
 	@ApiOperation(value = "Create a new STMessages")
-	@PostMapping("stmessage")
+	@RequestMapping(method = RequestMethod.POST, path ="stmessage")
 	STMessages createSTMessage(@RequestBody STMessages s) {
 		messages.save(s);
 		return s;
