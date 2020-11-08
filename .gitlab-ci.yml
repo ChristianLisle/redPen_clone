@@ -21,6 +21,11 @@ maven-test:
         - cd Backend
         - mvn test
         - mvn package
+    only:
+        refs:
+            - master
+        changes:
+            - Backend/**/*
 
 auto-deploy:
     stage: autodeploy
