@@ -1,0 +1,56 @@
+
+#entrance {
+  margin-top: 15px;
+  text-align: center;
+  min-width: 400px;
+  width: 80%;
+  max-width: 800px;
+  margin: 15% auto 15% auto;
+}
+
+#container  {
+  min-width: 600px;
+  width: 100%;
+  max-width: 1440px;
+}
+
+#chat {
+  float: left;
+  min-width: 400px;
+  width: 80%;
+  max-width: 80%;
+}
+
+#log  {
+  background-color: #ededed;
+  border: 1px black solid;
+  min-height: 400px;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+#log p  {
+  margin-left: 5px;
+}
+
+#userList {
+  text-align: center;
+  float: left;
+  width: 20%;
+}
+
+#about  {
+  clear: both;
+}
+
+button  {
+  font-size: 1.1em;
+  transition: all 0.25s ease-in-out 0s;
+  cursor: pointer;
+}
+
+button:hover, button:active {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border-color: #ffffff;
+}
