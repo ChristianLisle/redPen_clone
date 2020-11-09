@@ -110,8 +110,6 @@ public class WebSocketServer {
 	 * frontend can later use to display the list of connected users
 	 */
 	private void updateUserList() {
-		// broadcast list of all users so site can have a list displaying all users
-		// connected
 		List<String> userList = new ArrayList<String>();
 		sessionUsernameMap.forEach((Session, String) -> {
 			userList.add(String);
