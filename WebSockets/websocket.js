@@ -4,8 +4,8 @@ const chat = document.getElementById("log");
 
 function connect() {
     var username = new URLSearchParams(window.location.search).get('username'); // get username from url parameters
-    var url = "ws://localhost:8080/websocket/" + username;
-    //var url = "ws://echo.websocket.org";
+    var url = "ws://localhost:8080/websocket/" + username; // development url
+    //var url = "ws://coms-309-ug-05.cs.iastate.edu:8080/websocket/" + username; //url necessary for running on VM
 
     ws = new WebSocket(url);
 
