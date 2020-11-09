@@ -1,0 +1,23 @@
+<html>
+
+<head>
+  <title>Chat</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+
+<body onload="connect();">
+  <div id="container">
+    <div id="chat">
+      <div id="log"><p id="log"></p></div>
+      <input type="text" size="51" id="msg" placeholder="Message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'" />
+      <button id="sendChat" type="button" onclick="send();">Send</button>
+    </div>
+    <div id="userList">
+      <h3>Connected Users</h3>
+      <ul id="list"></ul>
+    </div>
+  </div>
+  <button id="leave" onclick="location.href='index.html'">Leave</button>
+</body>
+<script src="websocket.js"></script>
+</html>
