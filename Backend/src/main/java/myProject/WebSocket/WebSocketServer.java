@@ -40,7 +40,7 @@ public class WebSocketServer {
 		sessionUsernameMap.put(session, username);
 		usernameSessionMap.put(username, session);
 
-		String message = username + " has joined the chat";
+		String message = username + " connected";
 		broadcast(message);
 
 		updateUserList(); // helper method
@@ -73,7 +73,7 @@ public class WebSocketServer {
 
 		String message = username + " disconnected";
 		broadcast(message);
-		
+
 		updateUserList();
 	}
 
@@ -105,8 +105,13 @@ public class WebSocketServer {
 
 	}
 
+	/**
+	 * Broadcast a list of all users connected. This is simply a string that the
+	 * frontend can later use to display the list of connected users
+	 */
 	private void updateUserList() {
-		// broadcast list of all users so site can have a list displaying all users connected
+		// broadcast list of all users so site can have a list displaying all users
+		// connected
 		List<String> userList = new ArrayList<String>();
 		sessionUsernameMap.forEach((Session, String) -> {
 			userList.add(String);

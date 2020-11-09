@@ -14,8 +14,8 @@ function connect() {
         if (!event.data.includes('userList'))  {
 
           // display on browser
-          if (event.data.includes('has joined the chat') || event.data.includes('disconnected')) {
-            outputMessage("Server: " + event.data);
+          if (event.data.includes('connected') || event.data.includes('disconnected')) {
+            outputMessage("<span style='font-weight: bold'>Server</span>: " + event.data);
           }
           else {
             outputMessage(event.data);
@@ -43,7 +43,7 @@ function send() {  // this is how to send messages
 
 function outputMessage(msg) {
   var p = document.createElement('p');
-  p.innerText = msg;
+  p.innerHTML = msg;
   chat.appendChild(p);
   chat.scrollTop = chat.scrollHeight; // automatically scroll to bottom of chat messages
 }

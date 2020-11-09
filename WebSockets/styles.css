@@ -6,3 +6,14 @@
   max-width: 800px;
   margin: 15% auto 15% auto;
 }
+
+#container  {
+  min-width: 600px;
+  width: 100%;
+  max-width: 1080px;
+}
+
+#log  {
+  height: 400px;
+  overflow-y: scroll;
+}
