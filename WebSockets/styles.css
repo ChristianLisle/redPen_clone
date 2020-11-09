@@ -9,10 +9,9 @@
 }
 
 #container  {
-
   min-width: 600px;
   width: 100%;
-  max-width: 1080px;
+  max-width: 1440px;
 }
 
 #chat {
@@ -42,4 +41,16 @@
 
 #about  {
   clear: both;
+}
+
+button  {
+  font-size: 1.1em;
+  transition: all 0.25s ease-in-out 0s;
+  cursor: pointer;
+}
+
+button:hover, button:active {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border-color: #ffffff;
 }
