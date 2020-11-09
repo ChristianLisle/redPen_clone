@@ -1,5 +1,4 @@
 
-
 #entrance {
   margin-top: 15px;
   text-align: center;
@@ -10,6 +9,7 @@
 }
 
 #container  {
+
   min-width: 600px;
   width: 100%;
   max-width: 1080px;
@@ -23,19 +23,23 @@
 }
 
 #log  {
-  height: 400px;
+  background-color: #ededed;
+  border: 1px black solid;
+  min-height: 400px;
+  height: 80%;
   overflow-y: scroll;
 }
 
+#log p  {
+  margin-left: 5px;
+}
+
 #userList {
+  text-align: center;
   float: left;
   width: 20%;
 }
 
-#leave  {
-  font-size: 1.3em;
+#about  {
   clear: both;
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
 }

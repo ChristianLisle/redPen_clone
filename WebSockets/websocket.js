@@ -10,7 +10,6 @@ function connect() {
     ws = new WebSocket(url);
 
     ws.onmessage = function(event) { // Called when client receives a message from the server
-        console.log(event.data);
         if (!event.data.includes('userList'))  {
 
           // display on browser
@@ -24,21 +23,22 @@ function connect() {
 
         }
         else {
-          console.log(event.data);
           updateUserList(event.data);
         }
     };
 
     ws.onopen = function(event) { // called when connection is opened
-        outputMessage("Connected to RedPen chat");
+        outputMessage("<span style='font-weight: bold'>Server</span>: You have connected to RedPen chat");
     };
 }
 
 function send() {  // this is how to send messages
-    var content = textBox.value;
+  var content = textBox.value;
+  if (content !== "") {
     textBox.value = "";
     textBox.focus();
     ws.send(content);
+  }
 }
 
 function outputMessage(msg) {
@@ -54,9 +54,9 @@ function updateUserList(usernames) {
   list.innerHTML = "";
 
   for (var i = 1; i < nameList.length - 1; i++) {
-    var li = document.createElement('li');
-    li.innerHTML = nameList[i];
-    list.appendChild(li);
+    var p = document.createElement('p');
+    p.innerHTML = nameList[i];
+    list.appendChild(p);
   }
 }
 

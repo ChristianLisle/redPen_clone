@@ -31,16 +31,16 @@ public class WebSocketServer {
 	private static Map<Session, String> sessionUsernameMap = new Hashtable<>();
 	private static Map<String, Session> usernameSessionMap = new Hashtable<>();
 
-	private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
+	//private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
 
 	@OnOpen
 	public void onOpen(Session session, @PathParam("username") String username) throws IOException {
-		logger.info("Entered into Open");
+		//logger.info("Entered into Open");
 
 		sessionUsernameMap.put(session, username);
 		usernameSessionMap.put(username, session);
 
-		String message = username + " connected";
+		String message = "user " + username + " connected";
 		broadcast(message);
 
 		updateUserList(); // helper method
@@ -49,7 +49,7 @@ public class WebSocketServer {
 	@OnMessage
 	public void onMessage(Session session, String message) throws IOException {
 		// Handle new messages
-		logger.info("Entered into Message: Got Message: " + message);
+		//logger.info("Entered into Message: Got Message: " + message);
 		String username = sessionUsernameMap.get(session);
 
 		if (message.startsWith("@")) // Direct message to a user using the format "@username <message>"
@@ -65,7 +65,7 @@ public class WebSocketServer {
 
 	@OnClose
 	public void onClose(Session session) throws IOException {
-		logger.info("Entered into Close");
+		//logger.info("Entered into Close");
 
 		String username = sessionUsernameMap.get(session);
 		sessionUsernameMap.remove(session);
@@ -80,14 +80,14 @@ public class WebSocketServer {
 	@OnError
 	public void onError(Session session, Throwable throwable) {
 		// Do error handling here
-		logger.info("Entered into Error");
+		//logger.info("Entered into Error");
 	}
 
 	private void sendMessageToPArticularUser(String username, String message) {
 		try {
 			usernameSessionMap.get(username).getBasicRemote().sendText(message);
 		} catch (IOException e) {
-			logger.info("Exception: " + e.getMessage().toString());
+			//logger.info("Exception: " + e.getMessage().toString());
 			e.printStackTrace();
 		}
 	}
@@ -97,7 +97,7 @@ public class WebSocketServer {
 			try {
 				session.getBasicRemote().sendText(message);
 			} catch (IOException e) {
-				logger.info("Exception: " + e.getMessage().toString());
+				//logger.info("Exception: " + e.getMessage().toString());
 				e.printStackTrace();
 			}
 

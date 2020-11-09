@@ -9,15 +9,22 @@
   <div id="container">
     <div id="chat">
       <div id="log"></p></div>
-      <input type="text" size="51" id="msg" placeholder="Message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'" />
+      <input type="text" size="67" id="msg" placeholder="Message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'" />
       <button id="sendChat" type="button" onclick="send();">Send</button>
     </div>
     <div id="userList">
-      <h3>Connected Users</h3>
-      <ul id="list"></ul>
+      <p><img src="logo.png" height="100px" width="100px" style="border-radius: 10px;" /></p>
+      <h4>Connected Users</h4>
+      <div id="list"></div>
+      <button id="leave" onclick="location.href='index.html'">Leave</button>
     </div>
   </div>
-  <button id="leave" onclick="location.href='index.html'">Leave</button>
+  <div id="about">
+    <h4>About:</h4>
+    <p>You can type @username with someone's username to directly message them!</p>
+  </div>
+
+
 </body>
 <script src="websocket.js"></script>
 </html>
