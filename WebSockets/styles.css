@@ -1,3 +1,5 @@
+
+
 #entrance {
   margin-top: 15px;
   text-align: center;
@@ -13,7 +15,27 @@
   max-width: 1080px;
 }
 
+#chat {
+  float: left;
+  min-width: 400px;
+  width: 80%;
+  max-width: 80%;
+}
+
 #log  {
   height: 400px;
   overflow-y: scroll;
+}
+
+#userList {
+  float: left;
+  width: 20%;
+}
+
+#leave  {
+  font-size: 1.3em;
+  clear: both;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
 }

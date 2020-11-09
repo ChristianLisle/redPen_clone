@@ -30,7 +30,7 @@ function connect() {
     };
 
     ws.onopen = function(event) { // called when connection is opened
-        outputMessage("Connected to " + event.currentTarget.url + "\n");
+        outputMessage("Connected to RedPen chat");
     };
 }
 
