@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--
         <activity android:name=".utils.StringActivity"></activity>
         <activity android:name=".utils.MainActivity">
             <intent-filter>
@@ -20,6 +21,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        -->
+        <activity
+            android:name=".BaseScreen"
+            android:label= "Base Screen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TeacherLogin"
+            android:label="Teacher Login"/>
+        <activity
+            android:name=".ParentLogin"
+            android:label="Parent Login"/>
+        <activity
+            android:name=".StudentLogin"
+            android:label="Student Login"/>
+        <activity
+            android:name=".TeacherHome"
+            android:label="Teacher Home"/>
+
     </application>
 
 </manifest>

@@ -1,0 +1,128 @@
+package com.example.redpen;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.redpen.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class TeacherLogin extends AppCompatActivity {
+
+    private RequestQueue q;
+    String failReply = "";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.teacherlogin);
+        q = Volley.newRequestQueue(this);
+
+        Button tlbutton = (Button) findViewById(R.id.TLButton);
+        TextView tv = (TextView) findViewById(R.id.t_return);
+        EditText user = (EditText) findViewById(R.id.t_user);
+        EditText pass = (EditText) findViewById(R.id.t_pass);
+        final String username = user.getText().toString();
+        final String password = pass.getText().toString();
+
+        if (getIntent().hasExtra("Fail")) {
+            String text = getIntent().getExtras().getString("Fail");
+            tv.setText(text);
+        }
+
+        tlbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jsonParse(username, password);
+            }
+        });
+
+
+    }
+
+    private void jsonParse(final String u, final String p) {
+        String loginURL = "http://coms-309-ug-05.cs.iastate.edu:8080/login-teacher";
+
+        JSONObject object = new JSONObject();
+        try {
+            object.put("username", u);
+            object.put("password", p);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, loginURL, object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String returned = response.toString();
+                        String noName = "There are no teachers with the name " + u;
+                        if (returned.equals("Incorrect password")) {
+                            Intent redo = new Intent(getApplicationContext(), TeacherLogin.class);
+                            redo.putExtra("Fail", returned);
+                            startActivity(redo);
+                        } else if (returned.equals(noName)) {
+                            Intent redo = new Intent(getApplicationContext(), TeacherLogin.class);
+                            redo.putExtra("Fail", returned);
+                            startActivity(redo);
+                        } else {
+                            Intent cont = new Intent(getApplicationContext(), TeacherHome.class);
+                            cont.putExtra("Name", u);
+                            startActivity(cont);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
