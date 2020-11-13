@@ -84,7 +84,8 @@ public class TeacherLogin extends AppCompatActivity {
                             startActivity(redo);
                         } else {
                             Intent cont = new Intent(getApplicationContext(), TeacherHome.class);
-                            cont.putExtra("Name", u);
+                            cont.putExtra("Name", u);                           //Passes the name
+                            cont.putExtra("id", Integer.parseInt(returned));    //Passes the id
                             startActivity(cont);
                         }
                     }
