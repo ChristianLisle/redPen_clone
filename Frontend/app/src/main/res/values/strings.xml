@@ -11,4 +11,5 @@
     <!-- <string name="username">Username</string> -->
     <string name="password">password</string>
     <string name="teacher_logged_in">Teacher Logged In</string>
+    <string name="student_logged_in">Student Logged In</string>
 </resources>

@@ -23,12 +23,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TeacherHome extends AppCompatActivity {
+public class ParentHome extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.teacherhome);
+        setContentView(R.layout.parenthome);
 
 
 
@@ -36,16 +36,3 @@ public class TeacherHome extends AppCompatActivity {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

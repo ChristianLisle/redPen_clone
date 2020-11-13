@@ -43,6 +43,13 @@
         <activity
             android:name=".TeacherHome"
             android:label="Teacher Home"/>
+        <activity
+            android:name=".ParentHome"
+            android:label="Parent Home"/>
+        <activity
+            android:name=".StudentHome"
+            android:label="Student Home"/>
+
 
     </application>
 

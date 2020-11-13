@@ -29,16 +29,16 @@ public class BaseScreen extends AppCompatActivity {
         Button pLogin = (Button) findViewById(R.id.ParentLog);
         pLogin.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Intent goTeacher = new Intent(getApplicationContext(), ParentLogin.class);
-                startActivity(goTeacher);
+                Intent goParent = new Intent(getApplicationContext(), ParentLogin.class);
+                startActivity(goParent);
             }
         });
 
         Button sLogin = (Button) findViewById(R.id.StudentLog);
         sLogin.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Intent goTeacher = new Intent(getApplicationContext(), StudentLogin.class);
-                startActivity(goTeacher);
+                Intent goStudent = new Intent(getApplicationContext(), StudentLogin.class);
+                startActivity(goStudent);
             }
         });
     }
