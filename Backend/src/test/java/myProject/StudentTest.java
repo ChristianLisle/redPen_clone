@@ -37,6 +37,9 @@ public class StudentTest {
 	
 	@Mock
 	private TeacherCourseRepository assignedCourses;
+	
+	@Mock
+	private ParentRepository parents;
 
 	@Before
 	public void init() {
@@ -75,7 +78,7 @@ public class StudentTest {
 	}
 
 	@Test
-	public void getAllStudents() {
+	public void testGetAllStudents() {
 		// Test getAllStudents on empty student repository
 		List<Student> studentList = studentController.getAllStudents();
 		assertThat(studentList.size(), is(0));
@@ -87,7 +90,7 @@ public class StudentTest {
 	}
 	
 	@Test
-	public void registerForCourse()	{
+	public void testRegisterForCourse()	{
 		// Construct Student
 		Student s = new Student("Christian Lisle");
 		s.id = 3;
@@ -108,5 +111,39 @@ public class StudentTest {
 		
 		assertThat(registrar.findOne(0), is(cr));
 		
+	}
+	
+	@Test
+	public void testGetParent()	{
+		// Construct Student
+		Student s = new Student("Christian Lisle");
+		s.id = 4;
+		
+		// Construct parent
+		Parent p = new Parent("Cherie Lisle");
+		p.id = 1;
+		
+		// Make relationship between student and parent and store them in corresponding databases (repositories)
+		s.setParent(p);
+		when(students.findOne(4)).thenReturn(s);
+		when(parents.findOne(1)).thenReturn(p);
+		
+		// Check that Student getParent() method works
+		assertThat(studentController.getStudent(4).getParent(), is(p));
+		// Check that StudentController getParent(id) works
+		assertThat(studentController.getParent((studentController.getStudent(4).getId())), is(p));
+	}
+	
+	@Test
+	public void testDeleteStudent()	{
+		// Construct Student
+		Student s = new Student("Christian Lisle");
+		s.id = 5;
+		
+		when(students.findOne(5)).thenReturn(s);
+		studentController.createStudent(s);
+		
+		// Delete the student (through StudentController)
+		assertThat(studentController.deleteStudent(5), is("deleted student Christian Lisle"));
 	}
 }
