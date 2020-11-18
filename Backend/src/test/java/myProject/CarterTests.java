@@ -41,6 +41,9 @@ public class CarterTests
 	@InjectMocks
 	private StudentController student;
 	
+	@InjectMocks
+	private CourseController course;
+	
 	@Mock
 	private STInboxRepository stinbox;
 	
@@ -109,6 +112,49 @@ public class CarterTests
 		s.setParent(p2);
 		
 		assertEquals(p2, s.getParent());
+	}
+	
+	//--------------  Additional tests for demo 4 -------------------------------------
+	
+	//This method tests the messages and makes sure that it saves the name of
+	//the sender as something static so that even if the sender changes their
+	//name it will still be their name when they sent it
+	@Test
+	public void testMessages() {
+		Student s = new Student("Carter Moseley");
+		s.id = 1;
+		Teacher t = new Teacher("Dan Zorn");
+		t.id = 1;
+		
+		STInbox in1 = new STInbox(s, t, "test");
+		in1.id = 1;
+		
+		STMessages test = new STMessages(in1, "subject", t.name, "message");
+		assertEquals(t.name, test.getSender());
+		
+		t.setName("Cass Briggs");
+		
+		assertEquals("Dan Zorn", test.getSender());
+	}
+	
+	//This makes sure that TeacherCourse uses stores the classes and not each part as
+	//static fields. This way when the teacher or the course changes, so does the 
+	//TeacherCourse so that it matches.
+	@Test
+	public void testTeacherCourse() {
+		Teacher t = new Teacher("Dan Zorn");
+		t.id = 1;
+		
+		Course c = new Course("COM S 230", "Discrete Math");
+		c.id = 1;
+		
+		TeacherCourse teachCourse = new TeacherCourse(t,c);
+		
+		t.setName("Cass Briggs");
+		c.setCourseDescription("Proofs");
+		
+		assertEquals(t.getName(), teachCourse.getTeacher().getName());
+		assertEquals(c.getCourseDescription(), teachCourse.getCourse().getCourseDescription());
 	}
     
 }
