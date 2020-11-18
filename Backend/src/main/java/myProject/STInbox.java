@@ -101,13 +101,4 @@ public class STInbox {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	
-	/**
-	 * Gets the messages of this inbox
-	 * 
-	 * @return messages
-	 */
-	public Set<STMessages> getMessages() {
-		return messages;
-	}
 }
