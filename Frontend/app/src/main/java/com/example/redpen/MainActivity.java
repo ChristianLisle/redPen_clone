@@ -16,8 +16,6 @@ import java.net.URISyntaxException;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.redpen.R;
-
 public class MainActivity extends AppCompatActivity {
 
     private WebSocketClient mWebSocketClient;
