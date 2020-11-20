@@ -87,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
              * To test the clientside without the backend, simply connect to an echo server such as:
              *  "ws://echo.websocket.org"
              */
-            uri = new URI("ws://10.0.2.2:8080/example"); // 10.0.2.2 = localhost
+            //uri = new URI("http://coms-309-ug-05.cs.iastate.edu/");
+            uri = new URI("ws://echo.websocket.org");
+
             // uri = new URI("ws://echo.websocket.org");
         } catch (URISyntaxException e) {
             e.printStackTrace();
