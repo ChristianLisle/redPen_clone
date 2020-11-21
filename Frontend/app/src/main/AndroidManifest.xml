@@ -49,6 +49,9 @@
         <activity
             android:name=".StudentHome"
             android:label="Student Home"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="Main Activity"/>
 
 
     </application>

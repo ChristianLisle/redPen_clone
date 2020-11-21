@@ -41,6 +41,14 @@ public class BaseScreen extends AppCompatActivity {
                 startActivity(goStudent);
             }
         });
+
+        Button webSocket = (Button) findViewById(R.id.webS);
+        webSocket.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                Intent webs = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(webs);
+            }
+        });
     }
 
 }
